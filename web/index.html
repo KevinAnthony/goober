@@ -1,0 +1,247 @@
+<div id="root"></div>
+<script src="https://unpkg.com/react@16.12.0/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16.12.0/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone@7.8.3/babel.js"></script>
+<script src="https://unpkg.com/mathjs@10.1.1/lib/browser/math.js"></script>
+<style></style>
+<script type="text/babel">
+    function App() {
+        const [containers, setContainerList] = React.useState([]);
+        const [container, setContainer] = React.useState(
+            {
+                width: 0,
+                height: 0,
+                box: "",
+                color: {R: 0, G: 0, B: 0, A: 0},
+                bins: [],
+                unit: "px",
+            }
+        );
+        React.useEffect(() => {
+            fetchBins().then(resp => {
+                setContainerList(resp)
+            })
+        }, []);
+
+        return <div
+            style={{
+                display: "grid",
+                gridTemplateColumns: `auto 1fr`,
+            }}>
+            <div>
+                <SideMenu containers={containers} setOptionCallback={setContainer}/>
+            </div>
+            <div
+                style={{
+                    gridColumnStart:2,
+                    width: `${container.width}${container.unit}`,
+                    fontSize: "32pt",
+                    fontFamily: "FontAwesome, sans-serif",
+                    color: "#ccff00",
+                    padding: "10px"
+                }}>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center"
+                    }}>
+                    <Container container={container}/>
+                </div>
+            </div>
+        </div>
+    }
+
+    function Container ({container}) {
+        let gridGrid = Array(container.width).fill(null).map((_, posX) => (
+            Array(parseInt(container.height)).fill(null).map((_, posY) => (
+                <BackgroundGrid key={`grid-${posX}-${posY}`} a="0" x={posX} y={posY} width="1" height="1"/>
+            ))
+        ));
+
+        return <div
+        style={{
+            background: `rgb(${container.color.R}, ${container.color.G}, ${container.color.B})`
+        }}>
+            <div
+            style={{
+                width: `${container.width}${container.unit}`,
+                fontSize: "32pt",
+                fontFamily: "Helvetica, sans-serif",
+                color: "#ccff00",
+                textAlign: "center",
+                padding: "10px"
+            }}>{container.box}</div>
+            <div
+            className={'grid-container'}
+            style={{
+                width: `${container.width}${container.unit}`,
+                gridTemplateColumns: `repeat(${container.width}, 1${container.unit})`,
+                gridTemplateRows: `repeat(${container.height}, 1${container.unit})`,
+            }}
+        >
+            {gridGrid}
+            {
+                container.bins.map(bin => (
+                    <Bin
+                        className="grid-bin"
+                        key={`bin-${bin.start_x}-${bin.start_y}`}
+                        bin={bin}/>
+                ))
+            }
+        </div>
+        </div>
+    }
+
+    function Bin({bin}) {
+        const x = bin.start_x + 1
+        const y = bin.start_y + 1
+        const stopX = x + parseInt(bin.width)
+        const stopY = y + parseInt(bin.height)
+        return <div
+                className='grid-bin'
+                style={{
+                    gridColumnStart: x,
+                    gridColumnEnd:stopX,
+                    gridRowStart:y,
+                    gridRowEnd:stopY,
+                    backgroundColor: `rgba(${bin.color.R}, ${bin.color.G}, ${bin.color.B}, .5)`,
+            }}
+            >
+           <div style={{ whiteSpace: "pre" }}>{getTextForBinContent(bin.content)}</div>
+        </div>
+    }
+
+    function BackgroundGrid({style,x=0, y=0, width=1, height=1,r=0,g=0,b=0, a=.5}) {
+        x = parseInt(x) + 1
+        y = parseInt(y) + 1
+        const stopX = x + parseInt(width)
+        const stopY = y + parseInt(height)
+        return <div
+            className='grid-grid'
+            style={{
+                gridColumnStart: x,
+                gridColumnEnd:stopX,
+                gridRowStart:y,
+                gridRowEnd:stopY,
+                backgroundColor: `rgba(${r}, ${g}, ${b}, ${a})`,
+                ...style
+            }}
+        >
+        </div>
+    }
+    function SideMenu ({containers, setOptionCallback}) {
+        const [state, setState] = React.useState("")
+        return <div
+                style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "flex-start"
+                }}
+                className="box">
+                }}
+                {containers.map((container) => (
+                        <button
+                                onMouseEnter={(e) => {
+                                    e.target.style.color = '#0e83cd';
+                                    e.target.style.backgroundColor = '#fff';
+                                }}
+                                onMouseLeave={(e) => {
+                                    e.target.style.backgroundColor = '#0e83cd';
+                                    e.target.style.color = '#fff';
+                                }}
+                                className={state.active === container.box ? 'bin-sel-button active' : 'bin-sel-button'}
+                                onClick={() => {
+                                    setState(container.box)
+                                    setOptionCallback(container)
+                                }}
+
+                        >{container.box}</button>
+                ))
+                }
+        </div>
+    }
+    ReactDOM.render( <App/>, document.getElementById('root'))
+
+    function fetchBins() {
+        return window.fetch("http://127.0.0.1:8080/container",
+            {
+                method: 'GET',
+                redirect: 'follow',
+                referrerPolicy: 'no-referrer'
+            })
+            .then(r => {
+                return r.json();
+            })
+    }
+
+    function getTextForBinContent(obj) {
+        switch (obj.type) {
+            case "bolt":
+                return getTextForBolt(obj.bolt)
+            case "washer":
+                return getTextForWasher(obj.washer)
+            case "screw":
+                return getTextForScrew(obj.screw)
+            default:
+                return `${obj.type} is undefined`
+        }
+    }
+
+    function getTextForBolt(bolt) {
+        switch (bolt.unit) {
+            case "mm":
+                return `Bolt
+----------------
+Size:\t${bolt.thread_size} - ${bolt.thread_pitch} X ${bolt.length}${bolt.unit}
+Head:\t${fmt(bolt.head)}
+Finish:\t${fmt(bolt.finish)}`
+            default:
+                return `${bolt.unit} is undefined`
+        }
+    }
+
+    function getTextForWasher(washer) {
+        switch (washer.unit) {
+            case "mm":
+                return `Washer
+----------------
+Size:\t${washer.size}
+Head:\t${fmt(washer.type)}
+Finish:\t${fmt(washer.finish)}`
+            default:
+                return `${washer.unit} is undefined`
+        }
+    }
+
+
+    function getTextForScrew(screw) {
+        console.log(screw)
+        switch (screw.unit) {
+            case "in":
+                return `Screw
+----------------
+Size:\t${screw.size} X ${decToFraction(screw.length)}${screw.unit}
+Type:\t${fmt(screw.type)}
+Head:\t${fmt(screw.head)} - ${fmt(screw.drive)}
+Finish:\t${fmt(screw.finish)}`
+            default:
+                return `${screw.unit} is undefined`
+        }
+    }
+
+    function fmt(str) {
+        return str.split("_").map((name) => {
+            return name[0].toUpperCase() + name.slice(1)}).join(" ")
+    }
+
+    function decToFraction(length) {
+        length = parseFloat(length);
+        if (length < 1) {
+            return math.format(math.fraction(length), { fraction: 'ratio' })
+        }
+        const int = parseInt(length)
+        const remainder = length - int;
+        return remainder > 0 ? `${int} ${math.format(math.fraction(remainder), { fraction: 'ratio' })}` : `${int}`
+    }
+</script>
+</body>
