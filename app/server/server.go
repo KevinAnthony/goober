@@ -1,10 +1,12 @@
 package server
 
 import (
+	"github.com/kevinanthony/goober/app/handler"
 	"github.com/kevinanthony/goober/app/model"
-	"github.com/kevinanthony/gorps/http/encoder"
+	"github.com/kevinanthony/gorps/encoder"
+	"github.com/kevinanthony/gorps/http"
 	"image/color"
-	"net/http"
+	native "net/http"
 
 	goji "goji.io"
 	"goji.io/pat"
@@ -14,19 +16,25 @@ type HTTPServer struct {
 	mux *goji.Mux
 }
 
-func NewServer() HTTPServer {
+func NewServer(bin handler.Bin) HTTPServer {
 	srv := HTTPServer{
 		mux: goji.NewMux(),
 	}
-	srv.mux.HandleFunc(handle(http.MethodPost, "/container", getContainer))
+
+	srv.mux.HandleFunc(http.Handle(http.MethodPost, "/bin", bin.Create))
+	srv.mux.HandleFunc(http.Handle(http.MethodGet, "/bin/:binID", bin.Get))
+	srv.mux.HandleFunc(http.Handle(http.MethodPut, "/bin/:binID", bin.Update))
+	srv.mux.HandleFunc(http.Handle(http.MethodDelete, "/bin/:binID", bin.Delete))
+
 	srv.mux.HandleFunc(handle(http.MethodGet, "/container", getContainer))
-	srv.mux.HandleFunc(handle(http.MethodPost, "/container/bin", getContainer))
+
 	return srv
 }
 
-func handle(method, path string, f func(w http.ResponseWriter, _ *http.Request)) (goji.Pattern, func(http.ResponseWriter, *http.Request)) {
+func handle(method, path string, f func(w native.ResponseWriter, _ *native.Request),
+) (goji.Pattern, func(native.ResponseWriter, *native.Request)) {
 	switch method {
-	case http.MethodHead:
+	case native.MethodHead:
 		return pat.Head(path), f
 	case http.MethodPost:
 		return pat.Post(path), f
@@ -34,11 +42,11 @@ func handle(method, path string, f func(w http.ResponseWriter, _ *http.Request))
 		return pat.Get(path), f
 	case http.MethodPut:
 		return pat.Put(path), f
-	case http.MethodPatch:
+	case native.MethodPatch:
 		return pat.Patch(path), f
 	case http.MethodDelete:
 		return pat.Delete(path), f
-	case http.MethodOptions:
+	case native.MethodOptions:
 		return pat.Options(path), f
 	default:
 		panic("unknown or unsupported http method: " + method)
@@ -46,7 +54,7 @@ func handle(method, path string, f func(w http.ResponseWriter, _ *http.Request))
 }
 
 func (s HTTPServer) Run() {
-	svr := &http.Server{
+	svr := &native.Server{
 		Addr:    ":8080",
 		Handler: s.mux,
 	}
@@ -58,7 +66,7 @@ func (s HTTPServer) Run() {
 	}
 }
 
-func getContainer(w http.ResponseWriter, _ *http.Request) {
+func getContainer(w native.ResponseWriter, _ *native.Request) {
 	containers := []model.Container{
 		{
 			Label:  "Box #0001",
@@ -75,8 +83,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadCap,
 							Length:      10,
 							ThreadSize:  "M5",
@@ -93,8 +102,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadHex,
 							Length:      10,
 							ThreadSize:  "M5",
@@ -111,8 +121,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadHex,
 							Length:      15,
 							ThreadSize:  "M5",
@@ -129,8 +140,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadHex,
 							Length:      15,
 							ThreadSize:  "M5",
@@ -147,8 +159,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255},
 					Contents: model.Contents{
 						Type: model.ContentWasher,
+						Unit: model.UnitMillimeter,
 						Washer: &model.Washer{
-							Unit:   model.UnitMillimeter,
+
 							Size:   "M5",
 							Type:   model.WasherSplit,
 							Finish: model.MaterialFinishStainless,
@@ -163,8 +176,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{B: 255},
 					Contents: model.Contents{
 						Type: model.ContentWasher,
+						Unit: model.UnitMillimeter,
 						Washer: &model.Washer{
-							Unit:   model.UnitMillimeter,
 							Size:   "M5",
 							Type:   model.WasherFender,
 							Finish: model.MaterialFinishStainless,
@@ -179,8 +192,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{B: 255},
 					Contents: model.Contents{
 						Type: model.ContentWasher,
+						Unit: model.UnitMillimeter,
 						Washer: &model.Washer{
-							Unit:   model.UnitMillimeter,
 							Size:   "M5",
 							Type:   model.WasherNormal,
 							Finish: model.MaterialFinishStainless,
@@ -195,8 +208,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255, G: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
 							Head:        model.BoltHeadHex,
 							Length:      30,
 							ThreadSize:  "M6",
@@ -213,8 +226,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255, G: 255},
 					Contents: model.Contents{
 						Type: model.ContentScrew,
+						Unit: model.UnitInch,
 						Screw: &model.Screw{
-							Unit:   model.UnitInch,
+
 							Length: 30,
 							Size:   "#8",
 							Type:   model.ScrewTypeSelfTapping,
@@ -232,8 +246,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{B: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
 							Head:        model.BoltHeadHex,
 							Length:      10,
 							ThreadSize:  "M6",
@@ -250,8 +264,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{B: 255},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadHex,
 							Length:      20,
 							ThreadSize:  "M6",
@@ -268,8 +283,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 128, G: 128, B: 128},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
 							Head:        model.BoltHeadHex,
 							Length:      15,
 							ThreadSize:  "M6",
@@ -286,8 +301,8 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 128, G: 128, B: 128},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
 							Head:        model.BoltHeadHex,
 							Length:      35,
 							ThreadSize:  "M6",
@@ -304,8 +319,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 128, G: 128, B: 128},
 					Contents: model.Contents{
 						Type: model.ContentBolt,
+						Unit: model.UnitMillimeter,
 						Bolt: &model.Bolt{
-							Unit:        model.UnitMillimeter,
+
 							Head:        model.BoltHeadHex,
 							Length:      20,
 							ThreadSize:  "M8",
@@ -331,8 +347,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{R: 255, G: 255},
 					Contents: model.Contents{
 						Type: model.ContentScrew,
+						Unit: model.UnitInch,
 						Screw: &model.Screw{
-							Unit:   model.UnitInch,
+
 							Length: 5.0 / 16.0,
 							Size:   "#9",
 							Type:   model.ScrewTypeWood,
@@ -350,8 +367,9 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 					Color:     color.RGBA{G: 255},
 					Contents: model.Contents{
 						Type: model.ContentScrew,
+						Unit: model.UnitInch,
 						Screw: &model.Screw{
-							Unit:   model.UnitInch,
+
 							Length: 2.5,
 							Size:   "#8",
 							Type:   model.ScrewTypeDrywall,
@@ -372,6 +390,6 @@ func getContainer(w http.ResponseWriter, _ *http.Request) {
 
 	w.Header().Set("Contents-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "*")
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(native.StatusOK)
 	_, _ = w.Write(bts)
 }

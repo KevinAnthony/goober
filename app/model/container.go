@@ -62,6 +62,7 @@ type Bin struct {
 }
 
 type Contents struct {
+	Unit   UnitType    `json:"unit"`
 	Type   ContentType `json:"type"`
 	Bolt   *Bolt       `json:"bolt,omitempty"`
 	Washer *Washer     `json:"washer,omitempty"`
@@ -69,7 +70,6 @@ type Contents struct {
 }
 
 type Bolt struct {
-	Unit        UnitType       `json:"unit"`
 	Head        BoltHeadType   `json:"head"`
 	Length      float32        `json:"length"`
 	ThreadSize  string         `json:"thread_size"`
@@ -78,7 +78,6 @@ type Bolt struct {
 }
 
 type Screw struct {
-	Unit   UnitType       `json:"unit"`
 	Length float32        `json:"length"`
 	Size   string         `json:"size"`
 	Type   ScrewType      `json:"type"`
@@ -88,7 +87,6 @@ type Screw struct {
 }
 
 type Washer struct {
-	Unit   UnitType       `json:"unit"`
 	Size   string         `json:"size"`
 	Type   WasherType     `json:"type"`
 	Finish MaterialFinish `json:"finish"`

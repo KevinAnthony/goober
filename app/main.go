@@ -2,8 +2,10 @@ package main
 
 import (
 	"github.com/kevinanthony/goober/app/config"
+	"github.com/kevinanthony/goober/app/handler"
 	"github.com/kevinanthony/goober/app/repository"
 	"github.com/kevinanthony/goober/app/server"
+	"github.com/kevinanthony/goober/app/service"
 )
 
 func main() {
@@ -12,7 +14,13 @@ func main() {
 		panic(err)
 	}
 
-	repository.NewMongo(cfg.Mongo)
+	db, close := repository.NewMongo(cfg.Mongo)
 
-	server.NewServer().Run()
+	repo := repository.NewBin(db)
+	svc := service.NewBin(repo)
+	hdlr := handler.NewBin(svc)
+
+	server.NewServer(hdlr).Run()
+
+	close()
 }

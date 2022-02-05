@@ -9,3 +9,5 @@ require (
 	go.mongodb.org/mongo-driver v1.8.2
 	goji.io v2.0.2+incompatible
 )
+
+replace github.com/kevinanthony/gorps => /Users/kevinanthony/go/src/github.com/KevinAnthony/gorps
