@@ -28,7 +28,7 @@ function SideMenu({containers, setOptionCallback}) {
                         width: "16em",
                         height: "4em"
                     }}
-                    key={container.box}
+                    key={`side-button-${container.id}`}
                     onClick={() => {
                         setState(container.box)
                         setOptionCallback(container)

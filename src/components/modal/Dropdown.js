@@ -8,7 +8,7 @@ import Paper from '@mui/material/Paper';
 import Popper from '@mui/material/Popper';
 import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
-import {splitAndUppercase} from "../util/formatting";
+import {splitAndUppercase} from "../../util/formatting";
 
 export default function Dropdown({options, selected, onSelected}) {
     const [open, setOpen] = React.useState(false);
@@ -42,7 +42,7 @@ export default function Dropdown({options, selected, onSelected}) {
     };
 
     return (
-        <React.Fragment>
+        <div>
             <ButtonGroup variant="contained" ref={anchorRef} aria-label="split button">
                 <Button onClick={handleClick}>{options[selectedIndex]}</Button>
                 <Button
@@ -89,6 +89,6 @@ export default function Dropdown({options, selected, onSelected}) {
                     </Grow>
                 )}
             </Popper>
-        </React.Fragment>
+        </div>
     );
 }

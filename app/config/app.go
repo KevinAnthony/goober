@@ -3,7 +3,7 @@ package config
 import "github.com/caarlos0/env/v6"
 
 type AppConfig struct {
-	Mongo Mongo
+	Postgres Postgres
 }
 
 func InitConfig() (AppConfig, error) {

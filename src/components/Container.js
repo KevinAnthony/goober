@@ -5,42 +5,52 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import BackgroundGrid from './BackgroundGrid.js'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus, faSave} from '@fortawesome/free-solid-svg-icons';
-import BinEdit from "./modal/BinEdit";
+import {createBin, putBin} from "../net/bin";
+import {BinNew} from "./modal/BinNew";
+import {Typography} from "@mui/material";
 
 function Container({container}) {
-    function addBin() {
-        container.bins.push({
-            color: {R: 0, G: 255, B: 255},
-            height: 5,
-            width: 5,
-            start_x: 10,
-            start_y: 20,
-            content: {
-                type: "screw",
-                screw: {
-                    unit: "in",
-                    length: 5,
-                    size: "#10",
-                    type: "drywall",
-                    head: "round",
-                    drive: "phillips",
-                    finish: "black_oxide"
-                }
-            },
-        },)
-        setBins([...container.bins])
-    }
-
     function removeBin(index) {
         container.bins.splice(index, 1)
 
         setBins([...container.bins])
     }
 
-    function updateBin(index, bin) {
-        container.bins.splice(index, 1, bin)
+    function updateBin(index, bin, save = true) {
+        if (!save) {
+            container.bins.splice(index, 1, bin)
+            setBins([...container.bins])
 
-        setBins([...container.bins])
+            return
+        }
+        if (index >= container.bins.length) {
+            bin.container_id = container.id
+
+            createBin(bin).then((b) => {
+                b.container_id = container.id
+                container.bins.push(b)
+                setBins([...container.bins])
+            })
+        } else {
+            putBin(bin).then((b) => {
+                container.bins.splice(index, 1, b)
+                setBins([...container.bins])
+            })
+        }
+    }
+
+    const [editIndex, setEditIndex] = React.useState(-1);
+
+    React.useEffect(() => {
+        setEditIndex(-1);
+    }, [])
+
+    function handleBinEditClose() {
+        setEditIndex(-1);
+    }
+
+    function handleBinEditOpen() {
+        setEditIndex(container.bins.length + 1);
     }
 
     let gridGrid = Array(container.width).fill(null).map((_, posX) => (
@@ -53,10 +63,10 @@ function Container({container}) {
     React.useEffect(() => {
         setBins(container.bins)
     }, [container]);
-    return <div>
+    return <>
         <div
             style={{
-                background: `rgb(${container.color.R}, ${container.color.G}, ${container.color.B})`
+                background: `rgb(${container.color.r}, ${container.color.g}, ${container.color.b})`
             }}>
             <div
                 style={{
@@ -68,7 +78,7 @@ function Container({container}) {
                     textAlign: "center",
                     padding: "10px"
                 }}>
-                <div style={{gridColumnStart: "2"}}>{container.box}</div>
+                <Typography variant="h2" component="h2" style={{gridColumnStart: "2"}}>{container.box}</Typography>
                 <div
                     style={{
                         gridColumnStart: "3",
@@ -80,7 +90,7 @@ function Container({container}) {
 
                     <ButtonGroup variant="contained" aria-label="outlined contained button group">
                         <Button
-                            onClick={addBin}
+                            onClick={handleBinEditOpen}
                             style={{
                                 padding: "4px",
                                 width: "4em",
@@ -113,7 +123,7 @@ function Container({container}) {
                             removeCallback={removeBin}
                             updateCallback={updateBin}
                             className="grid-bin"
-                            key={`bin-${bin.start_x}-${bin.start_y}`}
+                            key={`bin-${bin.id}`}
                             index={index}
                             container={container}
                             bin={bin}/>
@@ -121,8 +131,8 @@ function Container({container}) {
                 }
             </div>
         </div>
-
-    </div>
+        <BinNew index={editIndex} closedCallback={handleBinEditClose} updateCallback={updateBin}/>
+    </>
 }
 
 export default Container

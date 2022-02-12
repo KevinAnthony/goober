@@ -1,8 +1,8 @@
 import logo from './logo.svg';
 import React from 'react';
-import * as get from './net/get.js'
+import {getContainerAll} from './net/container.js'
 import './containers.css';
-import Container from "./Container";
+import Container from "./components/Container";
 import SideMenu from "./SideMenu";
 
 function App() {
@@ -12,13 +12,13 @@ function App() {
             width: 0,
             height: 0,
             box: "",
-            color: {R: 0, G: 0, B: 0, A: 0},
+            color: {r: 0, g: 0, b: 0, a: 0},
             bins: [],
             unit: "px",
         }
     );
     React.useEffect(() => {
-        get.fetchBins().then(resp => {
+        getContainerAll().then(resp => {
             setContainerList(resp)
             if (resp.length > 0) {
                 setContainer(resp[0])

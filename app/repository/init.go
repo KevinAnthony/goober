@@ -3,62 +3,43 @@ package repository
 import (
 	"context"
 	"fmt"
-	"go.mongodb.org/mongo-driver/mongo/readpref"
-	"log"
-	"time"
-
+	"github.com/go-pg/pg/v10"
+	_ "github.com/go-pg/pg/v10"
 	"github.com/kevinanthony/goober/app/config"
-
-	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-type Connection interface {
-	Bin() Connection
-	Container() Connection
-}
-
-type connection struct {
-	client     *mongo.Client
-	database   *mongo.Database
-	collection *mongo.Collection
-}
-
-func NewMongo(cfg config.Mongo) (Connection, func()) {
-	fmt.Println(cfg.GetConnectionURI())
-	client, err := mongo.NewClient(options.Client().ApplyURI(cfg.GetConnectionURI()))
-	if err != nil {
-		log.Fatal(err)
+func GetDBConnection(cfg config.Postgres) *pg.DB {
+	options := &pg.Options{
+		Addr:         fmt.Sprintf("%s:%d", cfg.Host, cfg.Port),
+		User:         cfg.User,
+		Password:     cfg.Password,
+		Database:     cfg.Database,
+		ReadTimeout:  cfg.ReadTimeout,
+		WriteTimeout: cfg.WriteTimeout,
 	}
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	err = client.Connect(ctx)
-	if err != nil {
+	options.OnConnect = func(ctx context.Context, cn *pg.Conn) error {
+		_, err := cn.Exec("set search_path = ?", cfg.Schema)
+
+		return err
+	}
+
+	conn := pg.Connect(options)
+	if err := conn.Ping(context.Background()); err != nil {
 		panic(err)
 	}
 
-	err = client.Ping(ctx, readpref.Primary())
-	if err != nil {
-		panic(err)
-	}
-
-	return connection{
-			client:   client,
-			database: client.Database("goober"),
-		}, func() {
-			cancel()
-
-			_ = client.Disconnect(ctx)
-		}
+	conn.AddQueryHook(&hook{})
+	return conn
 }
 
-func (c connection) Bin() Connection {
-	c.collection = c.database.Collection("bin")
+type hook struct{}
 
-	return c
+func (h hook) BeforeQuery(ctx context.Context, event *pg.QueryEvent) (context.Context, error) {
+	query, _ := event.FormattedQuery()
+	fmt.Println(string(query))
+	return ctx, nil
 }
 
-func (c connection) Container() Connection {
-	c.collection = c.database.Collection("bin")
-
-	return c
+func (h hook) AfterQuery(ctx context.Context, event *pg.QueryEvent) error {
+	return nil
 }
