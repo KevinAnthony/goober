@@ -15,7 +15,7 @@ before_install:
   - go get -t -v ./...
   - curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" |
     sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
-    lopaecho "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 before_script:
   # go
