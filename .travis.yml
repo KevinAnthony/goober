@@ -27,7 +27,7 @@ before_script:
 script:
   # go
   - go build -o=./goober ./app
-  - docker build -f Dockerfile_WebService -t latest -t kevinanthony/goober-app .
+  - docker build -f Dockerfile_WebService -t kevinanthony/goober-app:latest -t kevinanthony/goober-app:$TRAVIS_BUILD_ID .
   #react
 
 after_success:
