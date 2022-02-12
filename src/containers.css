@@ -1,0 +1,25 @@
+body {
+    background-color: #222222;
+}
+
+.grid-container {
+    display: grid;
+    padding: 10px;
+}
+
+.grid-bin {
+    font-size: 14px;
+    font-family: FontAwesome, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 3px;
+    position: relative;
+    z-index: 3;
+}
+
+.grid-grid {
+    border: 1px grey dashed;
+    z-index: 1;
+}
+
