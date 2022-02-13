@@ -3,8 +3,9 @@ go:
   - 1.16.x
 
 env:
-  - LINT_VER=v1.43.0
-  - CGO_ENABLED=0
+  global:
+    - LINT_VER=v1.43.0
+    - CGO_ENABLED=0
 
 git:
   depth: 1
