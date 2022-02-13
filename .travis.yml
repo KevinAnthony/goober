@@ -28,6 +28,7 @@ script:
   - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # go
   - go build -o=./build/go/goober ./app
-  - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER .
+  #- docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER .
+  - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest .
   - docker push kevinaanthony/goober-app --all-tags
   #react
