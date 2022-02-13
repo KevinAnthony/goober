@@ -16,7 +16,6 @@ before_install:
   - curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" |
     sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
   - echo "$TRAVIS_TAG";
-  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
 before_script:
   # go
@@ -26,6 +25,7 @@ before_script:
   - bash <(curl -s https://codecov.io/bash)
   # react
 script:
+  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
   # go
   - go build -o=./build/go/goober ./app
   - docker build -f Dockerfile_WebService -t kevinanthony/goober-app:latest -t kevinanthony/goober-app:$TRAVIS_BUILD_NUMBER .
