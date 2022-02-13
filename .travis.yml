@@ -4,6 +4,7 @@ go:
 
 env:
   - LINT_VER=v1.43.0
+  - CGO_ENABLED=0
 
 git:
   depth: 1
