@@ -15,7 +15,7 @@ ENV PG_SCHEMA "$PG_SCHEMA"
 
 
 # add binary
-ADD ./build/go /go/bin
+COPY ./build/go /go/bin/
 
 # run binary
 CMD /go/bin/goober
