@@ -27,6 +27,8 @@ jobs:
         - CGO_ENABLED=0 go build -v -x -o=./build/go/goober ./app
 
       after_success:
+        echo -n "tag"
+        echo "$TRAVIS_TAG"
         - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER .
         - docker push kevinaanthony/goober-app --all-tags
     -
