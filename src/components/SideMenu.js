@@ -4,7 +4,6 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 
 function SideMenu({containers, setOptionCallback}) {
-    const [state, setState] = React.useState("")
     return <Box
         sx={{
             display: 'flex',
@@ -30,7 +29,6 @@ function SideMenu({containers, setOptionCallback}) {
                     }}
                     key={`side-button-${container.id}`}
                     onClick={() => {
-                        setState(container.box)
                         setOptionCallback(container)
                     }}
                 >{container.box}</Button>

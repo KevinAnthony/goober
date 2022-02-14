@@ -1,6 +1,8 @@
+const host = process.env.REACT_APP_SERVICE_URL
+
 export function createBin(bin) {
     console.log(JSON.stringify(bin))
-    return window.fetch("http://127.0.0.1:8080/bin",
+    return window.fetch(`http://${host}/bin`,
         {
             method: 'POST',
             redirect: 'follow',
@@ -17,7 +19,7 @@ export function createBin(bin) {
 
 export function putBin(bin) {
     const json = JSON.stringify(bin)
-    return window.fetch(`http://localhost:8080/bin/${bin.id}`,
+    return window.fetch(`http://${host}/bin/${bin.id}`,
         {
             method: 'PUT',
             redirect: 'follow',
@@ -37,7 +39,7 @@ export function putBin(bin) {
 }
 
 export function deleteBin(bin) {
-    return window.fetch(`http://127.0.0.1:8080/bin/${bin.id}`,
+    return window.fetch(`http://${host}/bin/${bin.id}`,
         {
             method: 'DELETE',
             redirect: 'follow',
@@ -49,7 +51,7 @@ export function deleteBin(bin) {
 }
 
 export function getBin(bin) {
-    return window.fetch(`http://127.0.0.1:8080/bin/${bin.id}`,
+    return window.fetch(`http://${host}/bin/${bin.id}`,
         {
             method: 'GET',
             redirect: 'follow',

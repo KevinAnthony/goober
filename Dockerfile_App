@@ -1,0 +1,14 @@
+FROM alpine:3.15
+
+# requires for https to work
+RUN apk add --no-cache ca-certificates
+
+# add binary
+COPY ./build/go/goober /go/bin/
+
+EXPOSE 8080
+
+# run binary
+CMD /go/bin/goober
+
+

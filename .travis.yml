@@ -1,0 +1,69 @@
+jobs:
+  include:
+    -
+      language: go
+      go:
+        - 1.16.x
+
+      git:
+        depth: 1
+
+      notifications:
+        email: false
+
+      before_install:
+        - go get -t -v ./...
+        - curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/v1.43.0/install.sh" |
+          sh -s -- -b "$(go env GOPATH)/bin" "v1.43.0"
+
+      before_script:
+        - golangci-lint run
+        - go test -v -race ./...
+        - go test -covermode=count -coverprofile=coverage.txt ./...
+        - bash <(curl -s https://codecov.io/bash)
+
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - CGO_ENABLED=0 go build -v -x -o=./build/go/goober ./app
+
+      deploy:
+        provider: script
+        script:
+          - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . && 
+            docker push kevinaanthony/goober-app --all-tags
+        on:
+          tags: true
+
+    -
+      language:
+        node_js
+
+      node_js:
+        - "stable"
+
+      git:
+        depth: 1
+
+      notifications:
+        email: false
+
+      cache:
+        directories:
+          - node_modules
+
+      before_install:
+        - npm install
+
+      before_script:
+        #- npm test
+
+      script:
+        - npm run build
+
+      deploy:
+        provider: script
+        script:
+          - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . &&
+            docker push kevinaanthony/goober-app --all-tags
+        on:
+          tags: true

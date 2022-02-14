@@ -1,5 +1,7 @@
+const host = process.env.REACT_APP_SERVICE_URL
+
 export function getContainerAll() {
-    return window.fetch("http://127.0.0.1:8080/container/all",
+    return window.fetch(`http://${host}/container/all`,
         {
             method: 'GET',
             redirect: 'follow',

@@ -5,7 +5,6 @@ import {faTrash, faCog} from "@fortawesome/free-solid-svg-icons";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import React from "react";
 import {BinEdit} from "./modal/BinEdit";
-import {getBin} from "../net/bin";
 
 function Bin(props) {
     const {removeCallback, updateCallback, bin, index} = props

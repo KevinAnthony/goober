@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import React from 'react';
 import {getContainerAll} from './net/container.js'
 import './containers.css';
 import Container from "./components/Container";
-import SideMenu from "./SideMenu";
+import SideMenu from "./components/SideMenu";
 
 function App() {
     const [containers, setContainerList] = React.useState([]);
@@ -17,6 +16,8 @@ function App() {
             unit: "px",
         }
     );
+    console.log(process.env.GOOBER_SERVICE_URL);
+    console.log(process.env);
     React.useEffect(() => {
         getContainerAll().then(resp => {
             setContainerList(resp)
