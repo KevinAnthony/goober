@@ -1,34 +1,58 @@
-language: go
-go:
-  - 1.16.x
+jobs:
+  include:
+    -
+      language: go
+      go:
+        - 1.16.x
 
-env:
-  global:
-    - LINT_VER=v1.43.0
+      env:
+        global:
+          - LINT_VER=v1.43.0
 
-git:
-  depth: 1
+      git:
+        depth: 1
 
-notifications:
-  email: false
+      notifications:
+        email: false
 
-before_install:
-  - go get -t -v ./...
-  - curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" |
-    sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
-  - echo "$TRAVIS_TAG";
+      before_install:
+        - go get -t -v ./...
+        - curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" |
+          sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
 
-before_script:
-  # go
-  - golangci-lint run
-  - go test -v -race ./...
-  - go test -covermode=count -coverprofile=coverage.txt ./...
-  - bash <(curl -s https://codecov.io/bash)
-  # react
-script:
-  - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  # go
-  - CGO_ENABLED=0 go build -v -x -o=./build/go/goober ./app
-  - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER .
-  - docker push kevinaanthony/goober-app --all-tags
-  #react
+      before_script:
+        - golangci-lint run
+        - go test -v -race ./...
+        - go test -covermode=count -coverprofile=coverage.txt ./...
+        - bash <(curl -s https://codecov.io/bash)
+
+      script:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+        - CGO_ENABLED=0 go build -v -x -o=./build/go/goober ./app
+
+      after_success:
+        - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER .
+        - docker push kevinaanthony/goober-app --all-tags
+    -
+      language:
+        node_js
+
+      node_js:
+        - "stable"
+
+      cache:
+        directories:
+          - node_modules
+
+      before_install:
+        - npm install
+
+      before_script:
+        #- npm test
+
+      script:
+        - npm run build
+
+      after_success:
+        - docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$TRAVIS_BUILD_NUMBER .
+        - docker push kevinaanthony/goober-web --all-tags

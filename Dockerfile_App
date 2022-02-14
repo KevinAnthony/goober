@@ -6,8 +6,9 @@ RUN apk add --no-cache ca-certificates
 # add binary
 COPY ./build/go/goober /go/bin/
 
+EXPOSE 8080
+
 # run binary
 CMD /go/bin/goober
 
-EXPOSE 8080
 
