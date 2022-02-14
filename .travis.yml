@@ -33,7 +33,6 @@ jobs:
             docker push kevinaanthony/goober-app --all-tags
         on:
           tags: true
-      after_success:
 
     -
       language:
@@ -61,6 +60,10 @@ jobs:
       script:
         - npm run build
 
-      after_success:
-        - docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$TRAVIS_BUILD_NUMBER .
-        - docker push kevinaanthony/goober-web --all-tags
+      deploy:
+        provider: script
+        script:
+          - docker build -f Dockerfile_WebService -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . &&
+            docker push kevinaanthony/goober-app --all-tags
+        on:
+          tags: true
