@@ -3,13 +3,6 @@ FROM alpine:3.15
 # requires for https to work
 RUN apk add --no-cache ca-certificates
 
-ENV PG_HOSTNAME=$PG_HOSTNAME
-ENV PG_USERNAME=$PG_USERNAME
-ENV PG_PASSWORD=$PG_PASSWORD
-ENV PG_DATABASE=$PG_DATABASE
-ENV PG_SCHEMA=$PG_SCHEMA
-
-
 # add binary
 COPY ./build/go/goober /go/bin/
 
