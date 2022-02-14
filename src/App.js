@@ -1,9 +1,8 @@
-import logo from './logo.svg';
 import React from 'react';
 import {getContainerAll} from './net/container.js'
 import './containers.css';
 import Container from "./components/Container";
-import SideMenu from "./SideMenu";
+import SideMenu from "./components/SideMenu";
 
 function App() {
     const [containers, setContainerList] = React.useState([]);

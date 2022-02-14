@@ -36,7 +36,7 @@ export function BinEdit({
         }
 
         setBin(bin)
-    }, [index, binState])
+    }, [bin, index, binState])
 
     const [binRed, binBlue, binGreen, binYellow, binOrange, binGrey] =
         [red[500], indigo[500], green[500], amber[500], orange[500], blueGrey[500]]
@@ -79,10 +79,15 @@ export function BinEdit({
                                 switch (newType) {
                                     case "bolt":
                                         binState.bolt = {}
+                                        break
                                     case "screw":
                                         binState.screw = {}
+                                        break
                                     case "washer":
                                         binState.washer = {}
+                                        break
+                                    default:
+                                        console.log("unknown type", newType)
                                 }
                                 setBin(binState)
                                 setContainer(getFieldsForContent(binState, 0))

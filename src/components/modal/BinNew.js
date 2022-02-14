@@ -1,10 +1,8 @@
 import React from "react";
 import {BinEdit} from "./BinEdit";
-import {ToggleButton, ToggleButtonGroup} from "@mui/material";
-
 
 export function BinNew({index, closedCallback, updateCallback}) {
-    const [bin, setBin] = React.useState({
+    const [bin] = React.useState({
         color: {r: 0, g: 0, b: 0},
         height: 0,
         width: 0,
@@ -14,7 +12,6 @@ export function BinNew({index, closedCallback, updateCallback}) {
             content_type: "bolt",
             bolt: {}
         }]
-
     })
 
     return <BinEdit index={index}

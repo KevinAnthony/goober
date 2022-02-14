@@ -17,7 +17,7 @@ export default function Dropdown({options, selected, onSelected}) {
 
     React.useEffect(() => {
         setSelectedIndex(options.findIndex(o => o === selected))
-    }, [])
+    }, [options, selected])
 
     const handleClick = () => {
         console.info(`You clicked ${options[selectedIndex]}`);
