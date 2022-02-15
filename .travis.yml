@@ -23,8 +23,10 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
 
       script:
-        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - CGO_ENABLED=0 go build -o=./build/go/goober ./app
+
+      before_deploy:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       deploy:
         provider: script
@@ -50,6 +52,9 @@ jobs:
 
       script:
         - npm run build
+
+      before_deploy:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       deploy:
         provider: script
