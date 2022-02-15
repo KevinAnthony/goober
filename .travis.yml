@@ -30,7 +30,8 @@ jobs:
         provider: script
         script: docker build -f Dockerfile_App -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . && 
             docker push kevinaanthony/goober-app --all-tags
-#        on:
+        on:
+          all_branches: true
 #          tags: true
     -
       language:
@@ -59,5 +60,6 @@ jobs:
         provider: script
         script: docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$TRAVIS_BUILD_NUMBER . &&
             docker push kevinaanthony/goober-web --all-tags
-#        on:
+        on:
+          all_branches: true
 #          tags: true
