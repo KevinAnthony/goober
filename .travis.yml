@@ -1,15 +1,15 @@
+notifications:
+  email: false
+
+git:
+  depth: 1
+
 jobs:
   include:
     -
       language: go
       go:
         - 1.16.x
-
-      git:
-        depth: 1
-
-      notifications:
-        email: false
 
       before_install:
         - go get -t -v ./...
@@ -23,16 +23,19 @@ jobs:
         - bash <(curl -s https://codecov.io/bash)
 
       script:
-        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
         - CGO_ENABLED=0 go build -o=./build/go/goober ./app
+
+      before_deploy:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
 
       deploy:
         provider: script
-        script:
-          - docker build -f Dockerfile_App -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . && 
+        skip_cleanup: true
+        script: docker build -f Dockerfile_App -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$TRAVIS_BUILD_NUMBER . && 
             docker push kevinaanthony/goober-app --all-tags
         on:
           tags: true
+
     -
       language:
         node_js
@@ -40,29 +43,22 @@ jobs:
       node_js:
         - "stable"
 
-      git:
-        depth: 1
-
-      notifications:
-        email: false
-
       cache:
         directories:
           - node_modules
 
       before_install:
         - npm install
-
-      before_script:
-        #- npm test
-
       script:
         - npm run build
 
+      before_deploy:
+        - echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+
       deploy:
         provider: script
-        script:
-          - docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$TRAVIS_BUILD_NUMBER . &&
+        skip_cleanup: true
+        script: docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$TRAVIS_BUILD_NUMBER . &&
             docker push kevinaanthony/goober-web --all-tags
         on:
           tags: true
