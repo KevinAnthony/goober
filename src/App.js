@@ -3,7 +3,6 @@ import {getContainerAll} from './net/container.js'
 import './containers.css';
 import Container from "./components/Container";
 import SideMenu from "./components/SideMenu";
-import env from "react-dotenv";
 
 function App() {
     const [containers, setContainerList] = React.useState([]);
@@ -18,8 +17,6 @@ function App() {
         }
     );
 
-    console.log("env", env)
-    console.log("env", process.env)
     React.useEffect(() => {
         getContainerAll().then(resp => {
             setContainerList(resp)
