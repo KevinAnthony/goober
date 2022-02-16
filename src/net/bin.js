@@ -1,4 +1,6 @@
-const host = process.env.REACT_APP_SERVICE_URL
+import env from "react-dotenv";
+
+const host = env.APP_URL
 
 export function createBin(bin) {
     console.log(JSON.stringify(bin))

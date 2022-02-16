@@ -3,6 +3,7 @@ import {getContainerAll} from './net/container.js'
 import './containers.css';
 import Container from "./components/Container";
 import SideMenu from "./components/SideMenu";
+import env from "react-dotenv";
 
 function App() {
     const [containers, setContainerList] = React.useState([]);
@@ -16,8 +17,8 @@ function App() {
             unit: "px",
         }
     );
-    console.log(process.env.GOOBER_SERVICE_URL);
-    console.log(process.env);
+
+    console.log("env", process.env)
     React.useEffect(() => {
         getContainerAll().then(resp => {
             setContainerList(resp)
