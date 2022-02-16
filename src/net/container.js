@@ -1,7 +1,6 @@
 const host = process.env.REACT_APP_API_URL
 
 export function getContainerAll() {
-    console.log("getContainerAll", process.env)
     return window.fetch(`http://${host}/container/all`,
         {
             method: 'GET',
