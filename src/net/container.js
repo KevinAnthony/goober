@@ -1,4 +1,4 @@
-const host = process.env.REACT_APP_SERVICE_URL
+const host = process.env.REACT_APP_API_URL
 
 export function getContainerAll() {
     return window.fetch(`http://${host}/container/all`,

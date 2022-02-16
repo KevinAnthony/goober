@@ -16,8 +16,7 @@ function App() {
             unit: "px",
         }
     );
-    console.log(process.env.GOOBER_SERVICE_URL);
-    console.log(process.env);
+
     React.useEffect(() => {
         getContainerAll().then(resp => {
             setContainerList(resp)
