@@ -19,6 +19,7 @@ function App() {
     );
 
     console.log("env", env)
+    console.log("env", process.env)
     React.useEffect(() => {
         getContainerAll().then(resp => {
             setContainerList(resp)
