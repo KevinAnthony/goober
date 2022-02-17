@@ -15,7 +15,7 @@ type Container struct {
 	Color     Color      `json:"color" pg:"color"`
 	Width     int        `json:"width" pg:"width"`
 	Height    int        `json:"height" pg:"height"`
-	Label     string     `json:"box" pg:"label"`
+	Label     string     `json:"label" pg:"label"`
 	Unit      UnitType   `json:"unit"  pg:"unit,type:goober.unit_t"`
 	Bins      []Bin      `json:"bins" pg:"rel:has-many"`
 }

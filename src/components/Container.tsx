@@ -1,68 +1,80 @@
 import React from 'react';
-import Bin from './Bin.js';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
-import BackgroundGrid from './BackgroundGrid.js'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faPlus, faSave} from '@fortawesome/free-solid-svg-icons';
-import {createBin, putBin} from "../net/bin";
-import {BinNew} from "./modal/BinNew";
 import {Typography} from "@mui/material";
+import {ContainerObj} from "../model/container";
+import {BackgroundGrid} from "./BackgroundGrid";
+import {ColorObj} from "../model/color";
+import {BinObj} from "../model/bin";
+import {BinNet} from "../net/bin";
+import {Bin} from "./Bin";
 
-function Container({container}) {
-    function removeBin(index) {
-        container.bins.splice(index, 1)
+interface Props  {
+    container: ContainerObj,
+}
 
-        setBins([...container.bins])
+function Container({container}: Props) {
+    const [bins, setBins] = React.useState(() => container.bin)
+    console.log("for use ATM", bins)
+
+    const binNet = new BinNet()
+
+    React.useEffect(() => {
+        setBins(container.bin)
+    }, [container]);
+
+    function removeBin(index: number) {
+        container.bin.splice(index, 1)
+
+        setBins([...container.bin])
     }
 
-    function updateBin(index, bin, save = true) {
+    function updateBin(index: number, bin: BinObj, save: boolean) {
         if (!save) {
-            container.bins.splice(index, 1, bin)
-            setBins([...container.bins])
+            container.bin.splice(index, 1, bin)
+            setBins([...container.bin])
 
             return
         }
-        if (index >= container.bins.length) {
-            bin.container_id = container.id
+        if (index >= container.bin.length) {
+            bin.containerID = container.id
 
-            createBin(bin).then((b) => {
-                b.container_id = container.id
-                container.bins.push(b)
-                setBins([...container.bins])
+            binNet.createBin(bin).then((b:BinObj) => {
+                b.containerID = container.id
+                container.bin.push(b)
+                setBins([...container.bin])
             })
         } else {
-            putBin(bin).then((b) => {
-                container.bins.splice(index, 1, b)
-                setBins([...container.bins])
+            binNet.putBin(bin).then((b:BinObj) => {
+                container.bin.splice(index, 1, b)
+                setBins([...container.bin])
             })
         }
     }
 
-    const [editIndex, setEditIndex] = React.useState(-1);
+    // const [editIndex, setEditIndex] = React.useState(-1);
+    const [_, setEditIndex] = React.useState(-1);
 
     React.useEffect(() => {
         setEditIndex(-1);
     }, [])
 
-    function handleBinEditClose() {
-        setEditIndex(-1);
-    }
+    // function handleBinEditClose() {
+    //     setEditIndex(-1);
+    // }
 
     function handleBinEditOpen() {
-        setEditIndex(container.bins.length + 1);
+        setEditIndex(container.bin.length + 1);
     }
-
     let gridGrid = Array(container.width).fill(null).map((_, posX) => (
-        Array(parseInt(container.height)).fill(null).map((_, posY) => (
-            <BackgroundGrid key={`grid-${posX}-${posY}`} a="0" x={posX} y={posY} width="1" height="1"/>
+        Array(container.height).fill(null).map((_, posY) => (
+            <BackgroundGrid key={`grid-${posX}-${posY}`} background={ColorObj.Parse({a:0})} x={posX} y={posY}/>
         ))
     ));
 
-    const [bins, setBins] = React.useState([])
-    React.useEffect(() => {
-        setBins(container.bins)
-    }, [container]);
+
     return <>
         <div
             style={{
@@ -78,13 +90,13 @@ function Container({container}) {
                     textAlign: "center",
                     padding: "10px"
                 }}>
-                <Typography variant="h2" component="h2" style={{gridColumnStart: "2"}}>{container.box}</Typography>
+                <Typography variant="h2" component="h2" style={{gridColumnStart: "2"}}>{container.label}</Typography>
                 <div
                     style={{
                         gridColumnStart: "3",
                         display: "flex",
                         alignSelf: "center",
-                        justify: "right:",
+                        justifyContent: "right",
                         flexFlow: "row-reverse",
                     }}>
 
@@ -112,26 +124,25 @@ function Container({container}) {
                 className={'grid-container'}
                 style={{
                     width: `${container.width}${container.unit}`,
+                    height: `${container.height}${container.unit}`,
                     gridTemplateColumns: `repeat(${container.width}, 1${container.unit})`,
                     gridTemplateRows: `repeat(${container.height}, 1${container.unit})`,
                 }}
             >
                 {gridGrid}
                 {
-                    bins.map((bin, index) => (
+                    bins.map((bin:BinObj, index:number) => (
                         <Bin
                             removeCallback={removeBin}
                             updateCallback={updateBin}
-                            className="grid-bin"
                             key={`bin-${bin.id}`}
                             index={index}
-                            container={container}
                             bin={bin}/>
                     ))
                 }
             </div>
         </div>
-        <BinNew index={editIndex} closedCallback={handleBinEditClose} updateCallback={updateBin}/>
+        {/*<BinNew index={editIndex} closedCallback={handleBinEditClose} updateCallback={updateBin}/>*/}
     </>
 }
 

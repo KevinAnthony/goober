@@ -1,9 +1,15 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
+import {ContainerObj} from "../model/container";
 
-function SideMenu({containers, setOptionCallback}) {
+interface Props  {
+    containers: Array<ContainerObj>,
+    setOptionCallback: Dispatch<SetStateAction<ContainerObj>>,
+}
+
+export function SideMenu({containers, setOptionCallback}: Props) {
     return <Box
         sx={{
             display: 'flex',
@@ -21,7 +27,7 @@ function SideMenu({containers, setOptionCallback}) {
                     width: "16em",
                     height: "4em"
                 }}>New</Button>
-            {containers.map((container) => (
+            {containers.map((container: ContainerObj) => (
                 <Button
                     style={{
                         width: "16em",
@@ -31,12 +37,9 @@ function SideMenu({containers, setOptionCallback}) {
                     onClick={() => {
                         setOptionCallback(container)
                     }}
-                >{container.box}</Button>
+                >{container.label}</Button>
             ))
             }
         </ButtonGroup>
     </Box>
 }
-
-
-export default SideMenu
