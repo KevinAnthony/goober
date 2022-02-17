@@ -63,8 +63,6 @@ export function BinEdit({
         setBin(binState)
         updateCallback(binState)
     };
-    console.log(index)
-    console.log(content)
     return (
         <div style={{
             position: 'absolute',
@@ -124,9 +122,7 @@ export function BinEdit({
                                 id="loc-x" variant="outlined" label="Location X" type="number"
                                 defaultValue={binState.x} onClick={(e: MouseEvent<HTMLInputElement>) => {
                                 const target = e.target as HTMLInputElement
-                                console.log(target.value)
                                 binState.x = parseInt(target.value)
-                                console.log(binState.x)
                                 updateCallback(binState)
                             }}
                                 style={{width: "80px"}}/>
