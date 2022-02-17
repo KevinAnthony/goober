@@ -1,12 +1,20 @@
 export class WasherObj {
     public readonly _id: string;
     public readonly _contentID: string;
-    public  _size: string;
-    public  _type: string;
-    public  _material: string;
+    public _size: string;
+    public _type: string;
+    public _material: string;
 
-    public static Parse(d: any): WasherObj | null {
+    public static Parse(d: any): WasherObj {
+        if (!d) {
+            return WasherObj.Empty()
+        }
+
         return new WasherObj(d);
+    }
+
+    public static Empty(): WasherObj {
+        return new WasherObj({});
     }
 
     private constructor(d: any) {
@@ -17,11 +25,11 @@ export class WasherObj {
         this._material = d.material;
     }
 
-    get id(): string{
+    get id(): string {
         return this._id
     }
 
-    get contentID(): string{
+    get contentID(): string {
         return this._contentID
     }
 
@@ -29,7 +37,7 @@ export class WasherObj {
         return this._size
     }
 
-    set size(value: string){
+    set size(value: string) {
         this._size = value
     }
 
@@ -37,7 +45,7 @@ export class WasherObj {
         return this._type
     }
 
-    set type(value: string){
+    set type(value: string) {
         this._type = value
     }
 
@@ -45,7 +53,7 @@ export class WasherObj {
         return this._material
     }
 
-    set material(value: string){
+    set material(value: string) {
         this._material = value
     }
 }

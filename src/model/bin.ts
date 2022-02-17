@@ -117,7 +117,6 @@ export class BinObj {
     }
 
     getText(index: number): string {
-        console.log("getText", this)
         switch (this.content[index].contentType) {
             case "bolt":
                 return this.getBoltText(index)

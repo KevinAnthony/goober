@@ -1,15 +1,23 @@
 export class ScrewObj {
     private readonly _id: string;
     private readonly _contentID: string;
-    private  _length: number;
-    private  _size: string;
-    private  _type: string;
-    private  _head: string;
-    private  _drive: string;
-    private  _material: string;
+    private _length: number;
+    private _size: string;
+    private _type: string;
+    private _head: string;
+    private _drive: string;
+    private _material: string;
 
-    public static Parse(d: any): ScrewObj | null {
+    public static Parse(d: any): ScrewObj {
+        if (!d) {
+            return ScrewObj.Empty()
+        }
+
         return new ScrewObj(d);
+    }
+
+    static Empty(): ScrewObj {
+        return new ScrewObj({});
     }
 
     private constructor(d: any) {
@@ -24,11 +32,11 @@ export class ScrewObj {
     }
 
     //getters
-    get id(): string{
+    get id(): string {
         return this._id
     }
 
-    get contentID(): string{
+    get contentID(): string {
         return this._contentID
     }
 
@@ -48,7 +56,7 @@ export class ScrewObj {
         return this._size
     }
 
-    set size(value: string){
+    set size(value: string) {
         this._size = value
     }
 
@@ -56,7 +64,7 @@ export class ScrewObj {
         return this._type
     }
 
-    set type(value: string){
+    set type(value: string) {
         this._type = value
     }
 
@@ -64,7 +72,7 @@ export class ScrewObj {
         return this._head
     }
 
-    set head(value: string){
+    set head(value: string) {
         this._head = value
     }
 
@@ -72,7 +80,7 @@ export class ScrewObj {
         return this._drive
     }
 
-    set drive(value: string){
+    set drive(value: string) {
         this._drive = value
     }
 
@@ -80,7 +88,8 @@ export class ScrewObj {
         return this._material
     }
 
-    set material(value: string){
+    set material(value: string) {
         this._material = value
     }
+
 }

@@ -12,7 +12,6 @@ export function BackgroundGrid({x, y, background}: Props) {
     y += 1
     const stopX = x + 1
     const stopY = y + 1
-    console.log(x,stopX,y, stopY)
     return <div
         className='grid-grid'
         style={{

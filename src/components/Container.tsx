@@ -17,7 +17,6 @@ interface Props  {
 
 function Container({container}: Props) {
     const [bins, setBins] = React.useState(() => container.bin)
-    console.log("for use ATM", bins)
 
     const binNet = new BinNet()
 

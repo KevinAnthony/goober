@@ -7,8 +7,16 @@ export class BoltObj {
     private _threadPitch: string;
     private _material: string;
 
-    public static Parse(d: string): BoltObj | null {
+    public static Parse(d: string): BoltObj {
+        if (!d) {
+            return BoltObj.Empty()
+        }
+        
         return new BoltObj(d);
+    }
+
+    public static Empty(): BoltObj {
+        return new BoltObj({})
     }
 
     private constructor(d: any) {
@@ -47,7 +55,7 @@ export class BoltObj {
         return this._head
     }
 
-    set head(value: string){
+    set head(value: string) {
         this._head = value
     }
 
@@ -55,7 +63,7 @@ export class BoltObj {
         return this._material
     }
 
-    set material(value: string){
+    set material(value: string) {
         this._material = value
     }
 
@@ -63,7 +71,7 @@ export class BoltObj {
         return this._threadSize
     }
 
-    set threadSize(value: string){
+    set threadSize(value: string) {
         this._threadSize = value
     }
 
@@ -71,7 +79,7 @@ export class BoltObj {
         return this._threadPitch
     }
 
-    set threadPitch(value: string){
+    set threadPitch(value: string) {
         this._threadPitch = value
     }
 }

@@ -5,6 +5,7 @@ import {faTrash, faCog} from "@fortawesome/free-solid-svg-icons";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {BinObj} from "../model/bin";
 import {ColorObj} from "../model/color";
+import {BinEdit} from "./modal/BinEdit";
 
 interface Props {
     bin: BinObj,
@@ -21,17 +22,8 @@ export function Bin({removeCallback, updateCallback, bin, index}: Props) {
     const [startY, setStartY] = React.useState<number>(bin.y + 1)
     const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width)
     const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height)
-    console.log(startX, stopX, startY, stopY)
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // @ts-ignore
-    const [editIndex, setEditIndex] = React.useState<number>();
+    const [editIndex, setEditIndex] = React.useState<number>(-1);
 
-    React.useEffect(() => {
-        setEditIndex(-1);
-    }, [])
-
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // @ts-ignore
     function handleBinEditClose() {
         setEditIndex(-1);
     }
@@ -40,8 +32,6 @@ export function Bin({removeCallback, updateCallback, bin, index}: Props) {
         setEditIndex(index);
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // @ts-ignore
     function handleRedraw(b: BinObj) {
         setColor(b.color)
         setStartX((b.x + 1))
@@ -84,11 +74,12 @@ export function Bin({removeCallback, updateCallback, bin, index}: Props) {
         </ButtonGroup>
         <div style={{whiteSpace: "pre"}}>{bin.getText(0)}</div>
         <div/>
-        {/*<BinEdit index={editIndex}*/}
-        {/*         bin={bin}*/}
-        {/*         closedCallback={handleBinEditClose}*/}
-        {/*         updateCallback={handleRedraw}*/}
-        {/*         saveCallback={updateCallback}*/}
-        {/*/>*/}
+        <BinEdit index={editIndex}
+                 bin={bin}
+                 closedCallback={handleBinEditClose}
+                 updateCallback={handleRedraw}
+                 saveCallback={updateCallback}
+                 title={"Edit Bin"}
+        />
     </div>
 }
