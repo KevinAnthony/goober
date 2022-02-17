@@ -1,13 +1,13 @@
 import React from 'react';
 import {ColorObj} from "../model/color";
 
-interface Props  {
+interface props  {
     x: number,
     y: number,
     background: ColorObj,
 }
 
-export function BackgroundGrid({x, y, background}: Props) {
+export function BackgroundGrid({x, y, background}: props) {
     x += 1
     y += 1
     const stopX = x + 1

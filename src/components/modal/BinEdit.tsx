@@ -1,13 +1,9 @@
-import React from "react";
-import {
-    Box, ButtonGroup, Button,
-    Dialog, DialogTitle,
-    TextField, ToggleButtonGroup, ToggleButton
-} from "@mui/material";
-import {indigo, red, green, amber, orange, blueGrey} from '@mui/material/colors';
-import {rgb2hex, hex2rgb} from "../../util/formatting";
+import React, {MouseEvent} from "react";
+import {Box, Button, ButtonGroup, Dialog, DialogTitle, TextField, ToggleButton, ToggleButtonGroup} from "@mui/material";
+import {amber, blueGrey, green, indigo, orange, red} from '@mui/material/colors';
+import {hex2rgb, rgb2hex} from "../../util/formatting";
 import {BinObj} from "../../model/bin";
-import OutlinedBox from "./OutlineBox";
+import {OutlinedBox} from "./OutlineBox";
 import {ColorButton} from "./ColorButton";
 import {BoltObj} from "../../model/bolt";
 import {WasherObj} from "../../model/washer";
@@ -29,7 +25,7 @@ interface props {
     index: number,
     updateCallback: (bin: BinObj) => void,
     closedCallback: () => void,
-    saveCallback: (index: number, bin: BinObj, save:boolean) => void
+    saveCallback: (index: number, bin: BinObj, save: boolean) => void
     title: string
 }
 
@@ -67,7 +63,7 @@ export function BinEdit({
         setBin(binState)
         updateCallback(binState)
     };
-console.log(index)
+    console.log(index)
     console.log(content)
     return (
         <div style={{
@@ -109,7 +105,7 @@ console.log(index)
                                         console.log("unknown type", newType)
                                 }
                                 setBin(binState)
-                                setContainer(getFieldsForContent(binState, 0, updateCallback) )
+                                setContainer(getFieldsForContent(binState, 0, updateCallback))
 
                             }}
                         >
@@ -126,9 +122,11 @@ console.log(index)
                         }}>
                             <TextField
                                 id="loc-x" variant="outlined" label="Location X" type="number"
-                                defaultValue={binState.x} onClick={(e) => {
-                                    console.dir(e)
-                                // binState.x = e.target.value
+                                defaultValue={binState.x} onClick={(e: MouseEvent<HTMLInputElement>) => {
+                                const target = e.target as HTMLInputElement
+                                console.log(target.value)
+                                binState.x = parseInt(target.value)
+                                console.log(binState.x)
                                 updateCallback(binState)
                             }}
                                 style={{width: "80px"}}/>
@@ -224,23 +222,23 @@ console.log(index)
     );
 }
 
-function getFieldsForContent(bin: BinObj, index:number, updateCallback: (bin: BinObj) => void): JSX.Element {
+function getFieldsForContent(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
     switch (bin.content[index].contentType) {
         case undefined: {
             return <p>content_type undefined</p>
         }
         case "bolt":
-            return getFieldsForBolt(bin,index, updateCallback)
+            return getFieldsForBolt(bin, index, updateCallback)
         case "washer":
-            return getFieldsForWasher(bin,index, updateCallback)
+            return getFieldsForWasher(bin, index, updateCallback)
         case "screw":
-            return getFieldsForScrew(bin,index, updateCallback)
+            return getFieldsForScrew(bin, index, updateCallback)
         default:
             return <p>{`${bin.content[index].contentType} is undefined`}</p>
     }
 }
 
-function getFieldsForBolt(bin: BinObj,index:number, updateCallback: (bin: BinObj) => void):JSX.Element {
+function getFieldsForBolt(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
     return <div style={{
         display: "flex",
         justifyContent: "center",
@@ -300,7 +298,7 @@ function getFieldsForBolt(bin: BinObj,index:number, updateCallback: (bin: BinObj
     </div>
 }
 
-function getFieldsForWasher(bin: BinObj, index:number, updateCallback: (bin: BinObj) => void):JSX.Element {
+function getFieldsForWasher(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
     return <div style={{
         display: "flex",
         justifyContent: "center",
@@ -347,7 +345,7 @@ function getFieldsForWasher(bin: BinObj, index:number, updateCallback: (bin: Bin
     </div>
 }
 
-function getFieldsForScrew(bin: BinObj,index:number, updateCallback: (bin: BinObj) => void):JSX.Element {
+function getFieldsForScrew(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
     return <div style={{
         display: "flex",
         justifyContent: "center",

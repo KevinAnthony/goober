@@ -11,11 +11,11 @@ import {BinObj} from "../model/bin";
 import {BinNet} from "../net/bin";
 import {Bin} from "./Bin";
 
-interface Props  {
+interface props  {
     container: ContainerObj,
 }
 
-function Container({container}: Props) {
+export function Container({container}: props) {
     const [bins, setBins] = React.useState(() => container.bin)
 
     const binNet = new BinNet()
@@ -145,4 +145,3 @@ function Container({container}: Props) {
     </>
 }
 
-export default Container

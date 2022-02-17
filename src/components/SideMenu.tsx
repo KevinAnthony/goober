@@ -4,12 +4,12 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import {ContainerObj} from "../model/container";
 
-interface Props  {
+interface props  {
     containers: Array<ContainerObj>,
     setOptionCallback: Dispatch<SetStateAction<ContainerObj>>,
 }
 
-export function SideMenu({containers, setOptionCallback}: Props) {
+export function SideMenu({containers, setOptionCallback}: props) {
     return <Box
         sx={{
             display: 'flex',

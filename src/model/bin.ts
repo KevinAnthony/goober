@@ -73,8 +73,8 @@ export class BinObj {
     }
 
     set x(value: number) {
-        if (value < 1) {
-            throw new Error("x cannot be smaller then 1")
+        if (value < 0) {
+            throw new Error("x cannot be negative")
         }
 
         this._x = value
@@ -85,8 +85,8 @@ export class BinObj {
     }
 
     set y(value: number) {
-        if (value < 1) {
-            throw new Error("y cannot be smaller then 1")
+        if (value < 0) {
+            throw new Error("x cannot be negative")
         }
 
         this._y = value

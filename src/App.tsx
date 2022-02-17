@@ -4,7 +4,7 @@ import './containers.css';
 import { SideMenu } from './components/SideMenu';
 import { ContainerNet } from "./net/container";
 import {ContainerObj} from "./model/container";
-import Container from "./components/Container";
+import {Container} from "./components/Container";
 
 function App() {
   const [containers, setContainerList] = React.useState<Array<ContainerObj>>([]);

@@ -7,7 +7,7 @@ import {BinObj} from "../model/bin";
 import {ColorObj} from "../model/color";
 import {BinEdit} from "./modal/BinEdit";
 
-interface Props {
+interface props {
     bin: BinObj,
     index: number,
     removeCallback: (index: number) => void,
@@ -15,7 +15,7 @@ interface Props {
 }
 
 // @ts-ignore
-export function Bin({removeCallback, updateCallback, bin, index}: Props) {
+export function Bin({removeCallback, updateCallback, bin, index}: props) {
 
     const [color, setColor] = React.useState<ColorObj>(bin.color)
     const [startX, setStartX] = React.useState<number>(bin.x + 1)
