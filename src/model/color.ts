@@ -8,6 +8,19 @@ export class ColorObj {
         return new ColorObj(d);
     }
 
+    public static Empty(): ColorObj {
+        return new ColorObj({})
+    }
+
+    public JSON(): object {
+        return {
+            r: this._r,
+            g: this._g,
+            b: this._b,
+            a: this._a
+        }
+    }
+
     private constructor(d: any) {
         if (!d) {
             return;

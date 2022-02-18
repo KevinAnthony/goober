@@ -50,7 +50,7 @@ export function BinEdit({
 
         setBin(bin)
     }, [bin, binIndex, binState])
-    React.useEffect(()=>{
+    React.useEffect(() => {
         setContent(bin.content[contentIndex])
     }, [contentIndex])
 
@@ -122,30 +122,50 @@ export function BinEdit({
                             gap: "10px"
                         }}>
                             <TextField
-                                id="loc-x" variant="outlined" label="Location X" type="number"
-                                defaultValue={binState.x} onClick={(e: MouseEvent<HTMLInputElement>) => {
-                                const target = e.target as HTMLInputElement
-                                binState.x = parseInt(target.value)
-                                updateCallback(binState)
-                            }}
+                                id="loc-x"
+                                variant="outlined"
+                                label="Location X"
+                                type="number"
+                                defaultValue={binState.x}
+                                onClick={(e: MouseEvent<HTMLInputElement>) => {
+                                    const target = e.target as HTMLInputElement
+                                    binState.x = parseInt(target.value)
+                                    updateCallback(binState)
+                                }}
                                 style={{width: "80px"}}/>
-                            <TextField id="loc-y" variant="outlined" label="Location Y" type="number"
-                                       defaultValue={binState.y} onClick={(_e) => {
-                                // binState.y = parseInt(e.target.value)
-                                updateCallback(binState)
-                            }}
+                            <TextField id="loc-y"
+                                       variant="outlined"
+                                       label="Location Y"
+                                       type="number"
+                                       defaultValue={binState.y}
+                                       onClick={(e: MouseEvent<HTMLInputElement>) => {
+                                           const target = e.target as HTMLInputElement
+                                           binState.y = parseInt(target.value)
+                                           updateCallback(binState)
+                                       }}
                                        style={{width: "80px"}}/>
-                            <TextField id="width" variant="outlined" label="Width" type="number"
-                                       defaultValue={binState.width} onClick={(_e) => {
-                                // binState.width = parseInt(e.target.value)
-                                updateCallback(binState)
-                            }}
+                            <TextField id="width"
+                                       variant="outlined"
+                                       label="Width"
+                                       type="number"
+                                       defaultValue={binState.width}
+                                       onClick={(e: MouseEvent<HTMLInputElement>) => {
+                                           const target = e.target as HTMLInputElement
+                                           binState.width = parseInt(target.value)
+                                           updateCallback(binState)
+                                       }}
                                        style={{width: "80px"}}/>
-                            <TextField id="height" variant="outlined" label="Height" type="number"
-                                       defaultValue={binState.height} onClick={(_e) => {
-                                // binState.height = parseInt(e.target.value)
-                                updateCallback(binState)
-                            }} style={{width: "80px"}}/>
+                            <TextField id="height"
+                                       variant="outlined"
+                                       label="Height"
+                                       type="number"
+                                       defaultValue={binState.height}
+                                       onClick={(e: MouseEvent<HTMLInputElement>) => {
+                                           const target = e.target as HTMLInputElement
+                                           binState.height = parseInt(target.value)
+                                           updateCallback(binState)
+                                       }}
+                                       style={{width: "80px"}}/>
                         </div>
                     </Box>
                     <OutlinedBox label="Color Picker"
@@ -212,7 +232,10 @@ export function BinEdit({
                                 height: "4em"
                             }}
                             onClick={() => {
-                                closedCallback()
+                                net.getBin(binState).then(b => {
+                                    updateCallback(b)
+                                    closedCallback()
+                                })
                             }}
                         >Cancel</Button>
                     </ButtonGroup>

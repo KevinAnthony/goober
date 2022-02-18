@@ -17,6 +17,17 @@ export class WasherObj {
         return new WasherObj({});
     }
 
+    public JSON(): object {
+        return {
+            id: this._id,
+            content_id: this._contentID,
+            size: this._size,
+            type: this._type,
+            material: this._material
+        }
+    }
+
+
     private constructor(d: any) {
         this._id = d.id;
         this._contentID = d.content_id;

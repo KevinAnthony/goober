@@ -20,9 +20,7 @@ func NewServer(reqh http.RequestHandler, bin handler.Bin, ctr handler.Container)
 		mux: chi.NewRouter(),
 	}
 	server.mux.Use(cors.Handler(cors.Options{
-		// AllowedOrigins:   []string{"https://foo.com"}, // Use this to allow specific origin hosts
-		AllowedOrigins: []string{"https://*", "http://*"},
-		// AllowOriginFunc:  func(r *http.Request, origin string) bool { return true },
+		AllowedOrigins:   []string{"https://*", "http://*"},
 		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
 		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
 		ExposedHeaders:   []string{"Link"},
@@ -31,15 +29,15 @@ func NewServer(reqh http.RequestHandler, bin handler.Bin, ctr handler.Container)
 	}))
 
 	server.mux.Post("/bin", reqh.Handle(bin.Create))
-	server.mux.Get("/bin/:binID", reqh.Handle(bin.Get))
+	server.mux.Get("/bin/{binID}", reqh.Handle(bin.Get))
 	server.mux.Put("/bin/{binID}", reqh.Handle(bin.Update))
-	server.mux.Delete("/bin/:binID", reqh.Handle(bin.Delete))
+	server.mux.Delete("/bin/{binID}", reqh.Handle(bin.Delete))
 
 	server.mux.Get("/container/all", reqh.Handle(ctr.GetAll))
 	server.mux.Post("/container", reqh.Handle(ctr.Create))
-	server.mux.Get("/container/:containerID", reqh.Handle(ctr.GetSingle))
-	server.mux.Put("/container/:containerID", reqh.Handle(ctr.Update))
-	server.mux.Delete("/container/:containerID", reqh.Handle(ctr.Delete))
+	server.mux.Get("/container/{containerID}", reqh.Handle(ctr.GetSingle))
+	server.mux.Put("/container/{containerID}", reqh.Handle(ctr.Update))
+	server.mux.Delete("/container/{containerID}", reqh.Handle(ctr.Delete))
 
 	return server
 }

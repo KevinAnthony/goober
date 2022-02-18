@@ -17,6 +17,24 @@ export class BinObj {
         return new BinObj(d);
     }
 
+    public static Empty(): BinObj {
+        return new BinObj({});
+    }
+
+    public JSON(): object {
+        return {
+            id: this.id,
+            container_id: this._containerID,
+            width: this._width,
+            height: this._height,
+            column_start_x: this._x,
+            column_start_y: this._y,
+            color: this.color.JSON(),
+            unit: this._unit,
+            content: Array.from(this._content ? this._content : Array<ContentObj>(0), (d) => d.JSON())
+        }
+    }
+
     private constructor(d: any) {
         this._id = d.id;
         this._containerID = d.container_id;
@@ -26,10 +44,7 @@ export class BinObj {
         this._y = d.column_start_y;
         this._color = ColorObj.Parse(d.color);
         this._unit = d.unit;
-        this._content = new Array<ContentObj>()
-        for (let i in d.content) {
-            this._content.push(ContentObj.Parse(d.content[i]));
-        }
+        this._content = Array.from(d.content ? d.content : Array<object>(0), (d) => ContentObj.Parse(d))
     }
 
     get id(): string {
@@ -143,6 +158,7 @@ Finish:\t${splitAndUppercase(this.content[index].bolt?.material)}`
         }
     }
 
+
     private getWasherText(index: number) {
         switch (this.unit) {
             case "mm":
@@ -155,7 +171,6 @@ Finish:\t${splitAndUppercase(this.content[index].washer?.material)}`
                 return `${this.unit} is undefined for washer`
         }
     }
-
 
     private getScrewText(index: number) {
         switch (this.unit) {

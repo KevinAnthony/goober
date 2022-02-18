@@ -4,43 +4,70 @@ import {BinObj} from "../model/bin";
 export class BinNet extends netCode {
     createBin(bin: BinObj): Promise<BinObj> {
         const url = this.getURL()
-        return window.fetch(`${url}/bin`,
-            {
-                method: 'POST',
-                redirect: 'follow',
-                referrerPolicy: 'no-referrer',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(bin)
-            })
+        return window
+            .fetch(`${url}/bin`,
+                {
+                    method: 'POST',
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(bin)
+                })
             .then<BinObj>(r => {
                 return r.json();
+            })
+            .then<BinObj>(data => {
+                return BinObj.Parse(data)
+            })
+    }
+
+    getBin(bin: BinObj): Promise<BinObj> {
+        const url = this.getURL()
+        return window
+            .fetch(`${url}/bin/${bin.id}`,
+                {
+                    method: 'GET',
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                })
+            .then(r => {
+                if (!r.ok) {
+                    throw r
+                }
+                return r.json();
+            })
+            .then<BinObj>(data => {
+                return BinObj.Parse(data)
             })
     }
 
     putBin(bin: BinObj): Promise<BinObj> {
-        const json = JSON.stringify(bin)
+        const json = JSON.stringify(bin.JSON())
         const url = this.getURL()
-        return window.fetch(`${url}/bin/${bin.id}`,
-            {
-                method: 'PUT',
-                redirect: 'follow',
-                mode: 'cors',
-                referrerPolicy: 'no-referrer',
-                credentials: 'same-origin',
-                headers: {
-                    'Host': window.location.origin,
-                    'Origin': window.location.origin,
-                    'Content-Type': 'application/json',
-                    'Content-Length': json.length.toString()
-                },
-                body: json
-            }).then(r => {
-            if (!r.ok) {
-                throw r
-            }
-            return r.json();
-        })
+        return window
+            .fetch(`${url}/bin/${bin.id}`,
+                {
+                    method: 'PUT',
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    headers: {
+                        'Host': window.location.origin,
+                        'Origin': window.location.origin,
+                        'Content-Type': 'application/json',
+                        'Content-Length': json.length.toString()
+                    },
+                    body: json
+                })
+            .then(r => {
+                if (!r.ok) {
+                    throw r
+                }
+                return r.json();
+            })
+            .then<BinObj>(data => {
+                return BinObj.Parse(data)
+            })
     }
 }

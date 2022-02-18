@@ -1,6 +1,7 @@
 import {ColorObj} from "./color";
 import {BinObj} from "./bin";
 
+
 export class ContainerObj {
     private readonly _id: string;
     private _color: ColorObj;
@@ -18,18 +19,26 @@ export class ContainerObj {
         return new ContainerObj({})
     }
 
-    private constructor(d: any) {
+    public JSON(): object {
+        return {
+            id: this._id,
+            color: this._color.JSON(),
+            width: this._width,
+            height: this._height,
+            label: this._label,
+            unit: this._unit,
+            bins: Array.from(this._bin ? this._bin : Array<BinObj>(0), (d) => BinObj.Parse(d))
+        }
+    }
 
+    private constructor(d: any) {
         this._id = d.id;
         this._color = ColorObj.Parse(d.color);
         this._width = d.width;
         this._height = d.height;
         this._label = d.label;
         this._unit = d.unit;
-        this._bin = new Array<BinObj>()
-        for (let i in d.bins) {
-            this._bin.push(BinObj.Parse(d.bins[i]));
-        }
+        this._bin = Array.from(d.bins ? d.bins : Array<object>(0), (d) => BinObj.Parse(d))
     }
 
     get id() {

@@ -11,12 +11,24 @@ export class BoltObj {
         if (!d) {
             return BoltObj.Empty()
         }
-        
+
         return new BoltObj(d);
     }
 
     public static Empty(): BoltObj {
         return new BoltObj({})
+    }
+
+    JSON(): object {
+        return {
+            id: this._id,
+            content_id: this._contentID,
+            head: this._head,
+            length: this._length,
+            thread_size: this._threadSize,
+            thread_pitch: this._threadPitch,
+            material: this._material
+        }
     }
 
     private constructor(d: any) {

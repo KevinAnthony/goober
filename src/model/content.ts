@@ -22,6 +22,18 @@ export class ContentObj {
         return new ContentObj({})
     }
 
+    public JSON(): object {
+        return {
+            id: this._id,
+            bin_id: this._binID,
+            content_type: this._contentType,
+            bolt: this._bolt.contentID ? this._bolt.JSON() : undefined,
+            washer: this._washer.contentID ? this._washer.JSON() : undefined,
+            screw: this._screw.contentID ? this._screw.JSON() : undefined,
+        };
+    }
+
+
     private constructor(d: any) {
         this._id = d.id;
         this._binID = d.bin_id;
@@ -70,5 +82,4 @@ export class ContentObj {
     set screw(value: ScrewObj) {
         this._screw = value
     }
-
 }

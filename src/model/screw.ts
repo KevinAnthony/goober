@@ -16,8 +16,21 @@ export class ScrewObj {
         return new ScrewObj(d);
     }
 
-    static Empty(): ScrewObj {
+    public static Empty(): ScrewObj {
         return new ScrewObj({});
+    }
+
+    public JSON(): object {
+        return {
+            id: this._id,
+            content_id: this._contentID,
+            length: this._length,
+            size: this._size,
+            type: this._type,
+            head: this._head,
+            drive: this._drive,
+            material: this._material
+        }
     }
 
     private constructor(d: any) {

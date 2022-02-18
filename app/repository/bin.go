@@ -34,12 +34,13 @@ func (b bin) Create(ctx context.Context, bin model.Bin) (model.Bin, error) {
 			return errors.Wrap(err, "insert bin")
 		}
 
+		//todo own repos
 		for _, content := range bin.Content {
 			content.BinID = bin.ID
 			if _, err := tx.Model(&content).Context(ctx).Returning("*").Insert(); err != nil {
 				return errors.Wrap(err, "insert content")
 			}
-			//todo own repos
+
 			if content.Bolt != nil {
 				content.Bolt.ContentID = content.ID
 
@@ -89,9 +90,42 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 }
 
 func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
-	_, err := b.db.Model(&bin).WherePK().Context(ctx).Returning("*").UpdateNotZero(&bin)
+	if err := b.db.RunInTransaction(ctx, func(tx *pg.Tx) error {
+		_, err := tx.Model(&bin).WherePK().Context(ctx).Returning("*").UpdateNotZero()
+		if err != nil {
+			return err
+		}
+		//todo own repos
+		for _, content := range bin.Content {
+			if _, err := tx.Model(&content).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+				return errors.Wrap(err, "update content")
+			}
 
-	return bin, err
+			if content.Bolt != nil {
+				if _, err := tx.Model(content.Bolt).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+					return errors.Wrap(err, "update bolt")
+				}
+			}
+
+			if content.Screw != nil {
+				if _, err := tx.Model(content.Screw).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+					return errors.Wrap(err, "update screw")
+				}
+			}
+
+			if content.Washer != nil {
+				if _, err := tx.Model(content.Washer).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+					return errors.Wrap(err, "update washer")
+				}
+			}
+		}
+
+		return nil
+	}); err != nil {
+		return model.Bin{}, err
+	}
+
+	return bin, nil
 }
 
 func (b bin) Delete(ctx context.Context, bin model.Bin) error {
