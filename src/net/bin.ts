@@ -37,6 +37,9 @@ export class BinNet extends netCode {
                 },
                 body: json
             }).then(r => {
+            if (!r.ok) {
+                throw r
+            }
             return r.json();
         })
     }

@@ -7,6 +7,8 @@ interface outlineBoxProps{
     style: React.CSSProperties
 }
 
+const InputComponent = ({...other }) => <div {...other} />;
+
 export const OutlinedBox = ({children, label, style}: outlineBoxProps) => {
     return (
         <TextField
@@ -15,7 +17,11 @@ export const OutlinedBox = ({children, label, style}: outlineBoxProps) => {
             multiline
             InputLabelProps={{shrink: true}}
             style={style}
+            InputProps={{
+                inputComponent:InputComponent
+            }}
             inputProps={{children: children}}
-        />
+        >
+        </TextField>
     );
 };

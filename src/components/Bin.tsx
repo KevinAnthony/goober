@@ -33,13 +33,14 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
     }
 
     function handleRedraw(b: BinObj) {
+        console.log("redraw", b)
         setColor(b.color)
         setStartX((b.x + 1))
         setStartY((b.y + 1))
         setStopX((b.x + 1 + b.width))
         setStopY((b.y + 1 + b.height))
     }
-
+console.log(color)
     return <div
         className='grid-bin'
         style={{

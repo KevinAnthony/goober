@@ -56,13 +56,14 @@ export function BinEdit({
 
     const [selectedColor, setSelectedColor] = React.useState<string>(rgb2hex(bin.color));
     const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
-    const handleColorChange = (event: React.MouseEvent<HTMLElement>, newColor: string) => {
-        console.log(event)
+    function handleColorChange(newColor: string) {
+        console.log("color", newColor)
         setSelectedColor(newColor);
         binState.color = hex2rgb(newColor)
         setBin(binState)
         updateCallback(binState)
     };
+
     return (
         <div style={{
             position: 'absolute',
@@ -104,7 +105,6 @@ export function BinEdit({
                                 }
                                 setBin(binState)
                                 setContainer(getFieldsForContent(binState, 0, updateCallback))
-
                             }}
                         >
                             <ToggleButton value="bolt">Bolt</ToggleButton>
@@ -152,20 +152,18 @@ export function BinEdit({
                         <ToggleButtonGroup
                             value={selectedColor}
                             exclusive
-                            disabled
-                            onChange={handleColorChange}
                         >
                             <div style={{
                                 margin: "1em",
                                 display: "flex",
                                 gap: "10px"
                             }}>
-                                <ColorButton color={binRed} selected={selectedColor}/>
-                                <ColorButton color={binBlue} selected={selectedColor}/>
-                                <ColorButton color={binGreen} selected={selectedColor}/>
-                                <ColorButton color={binYellow} selected={selectedColor}/>
-                                <ColorButton color={binOrange} selected={selectedColor}/>
-                                <ColorButton color={binGrey} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binRed} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binBlue} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binGreen} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binYellow} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binOrange} selected={selectedColor}/>
+                                <ColorButton onChange={handleColorChange} color={binGrey} selected={selectedColor}/>
                             </div>
                         </ToggleButtonGroup>
                     </OutlinedBox>
@@ -196,8 +194,14 @@ export function BinEdit({
                                 height: "4em"
                             }}
                             onClick={() => {
-                                saveCallback(index, binState, true)
-                                closedCallback()
+                                net.putBin(binState).then(b => {
+                                    updateCallback(b)
+                                    saveCallback(index, binState, true)
+                                }).then(() => closedCallback()).
+                                catch((r) => {
+                                    console.error("failed to put", r)
+                                    closedCallback()
+                                })
                             }}
                         >Save</Button>
                         <Button
@@ -206,9 +210,7 @@ export function BinEdit({
                                 height: "4em"
                             }}
                             onClick={() => {
-                                net.putBin(binState).then(b => {
-                                    updateCallback(b)
-                                }).then(() => closedCallback())
+                                closedCallback()
                             }}
                         >Cancel</Button>
                     </ButtonGroup>
