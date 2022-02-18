@@ -22,7 +22,7 @@ const washerTypes = ["normal", "fender", "split_lock"]
 
 interface props {
     bin: BinObj,
-    index: number,
+    binIndex: number,
     updateCallback: (bin: BinObj) => void,
     closedCallback: () => void,
     saveCallback: (index: number, bin: BinObj, save: boolean) => void
@@ -30,7 +30,7 @@ interface props {
 }
 
 export function BinEdit({
-                            index,
+                            binIndex,
                             bin,
                             closedCallback,
                             updateCallback,
@@ -41,23 +41,26 @@ export function BinEdit({
     const [innerContainer, setContainer] = React.useState<JSX.Element>()
     const [binState, setBin] = React.useState<BinObj>(bin)
     const [content, setContent] = React.useState<ContentObj>(ContentObj.Empty())
+    const [contentIndex, _setContentIndex] = React.useState<number>(0)
 
     React.useEffect(() => {
-        if (index >= 0) {
+        if (binIndex >= 0) {
             setContainer(getFieldsForContent(binState, 0, updateCallback))
-            setContent(bin.content[index])
         }
 
         setBin(bin)
-    }, [bin, index, binState])
+    }, [bin, binIndex, binState])
+    React.useEffect(()=>{
+        setContent(bin.content[contentIndex])
+    }, [contentIndex])
 
     const [binRed, binBlue, binGreen, binYellow, binOrange, binGrey] =
         [red[500], indigo[500], green[500], amber[500], orange[500], blueGrey[500]]
 
     const [selectedColor, setSelectedColor] = React.useState<string>(rgb2hex(bin.color));
     const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
+
     function handleColorChange(newColor: string) {
-        console.log("color", newColor)
         setSelectedColor(newColor);
         binState.color = hex2rgb(newColor)
         setBin(binState)
@@ -72,7 +75,7 @@ export function BinEdit({
             <Dialog
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
-                open={index >= 0}
+                open={binIndex >= 0}
                 onClose={closedCallback}
             >
                 <DialogTitle>{title}</DialogTitle>
@@ -196,9 +199,8 @@ export function BinEdit({
                             onClick={() => {
                                 net.putBin(binState).then(b => {
                                     updateCallback(b)
-                                    saveCallback(index, binState, true)
-                                }).then(() => closedCallback()).
-                                catch((r) => {
+                                    saveCallback(binIndex, binState, true)
+                                }).then(() => closedCallback()).catch((r) => {
                                     console.error("failed to put", r)
                                     closedCallback()
                                 })

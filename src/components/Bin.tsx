@@ -33,14 +33,12 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
     }
 
     function handleRedraw(b: BinObj) {
-        console.log("redraw", b)
         setColor(b.color)
         setStartX((b.x + 1))
         setStartY((b.y + 1))
         setStopX((b.x + 1 + b.width))
         setStopY((b.y + 1 + b.height))
     }
-console.log(color)
     return <div
         className='grid-bin'
         style={{
@@ -75,7 +73,7 @@ console.log(color)
         </ButtonGroup>
         <div style={{whiteSpace: "pre"}}>{bin.getText(0)}</div>
         <div/>
-        <BinEdit index={editIndex}
+        <BinEdit binIndex={editIndex}
                  bin={bin}
                  closedCallback={handleBinEditClose}
                  updateCallback={handleRedraw}

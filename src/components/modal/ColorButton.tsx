@@ -19,7 +19,6 @@ export function ColorButton({color, selected, onChange}: props) {
         value={color}
         onChange={(e) => {
             const target = e.target as HTMLInputElement
-            console.log("onChange", target.value)
             onChange(target.value)
         }}>
         {
