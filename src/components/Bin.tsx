@@ -39,6 +39,11 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
         setStopX((b.x + 1 + b.width))
         setStopY((b.y + 1 + b.height))
     }
+
+    function handleDelete() {
+
+    }
+
     return <div
         className='grid-bin'
         style={{
@@ -68,7 +73,7 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
                     padding: "4px",
                     height: "3em",
                 }}
-                onClick={() => removeCallback(index)}
+                onClick={handleDelete}
             ><FontAwesomeIcon icon={faTrash}/></Button>
         </ButtonGroup>
         <div style={{whiteSpace: "pre"}}>{bin.getText(0)}</div>

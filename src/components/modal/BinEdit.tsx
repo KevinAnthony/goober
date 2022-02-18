@@ -9,16 +9,10 @@ import {BoltObj} from "../../model/bolt";
 import {WasherObj} from "../../model/washer";
 import {ScrewObj} from "../../model/screw";
 import {BinNet} from "../../net/bin";
-import {Dropdown} from "./Dropdown";
 import {ContentObj} from "../../model/content";
-
-// TODO these should come from the backend
-const finishes = ["stainless_steel", "black_oxide", "zinc", "yellow_zinc"]
-const boltHeads = ["cap", "hex", "round"]
-const screwHeads = ["round", "flat", "hex"]
-const screwDrive = ["external_hex", "internal_hex", "phillips", "t25"]
-const screwTypes = ["machine", "wood", "drywall", "self_tapping"]
-const washerTypes = ["normal", "fender", "split_lock"]
+import {WasherEdit} from "./subedit/WasherEdit";
+import {BoltEdit} from "./subedit/BoltEdit";
+import {ScrewEdit} from "./subedit/ScrewEdit";
 
 interface props {
     bin: BinObj,
@@ -251,177 +245,12 @@ function getFieldsForContent(bin: BinObj, index: number, updateCallback: (bin: B
             return <p>content_type undefined</p>
         }
         case "bolt":
-            return getFieldsForBolt(bin, index, updateCallback)
+            return <BoltEdit bin={bin} index={index} updateCallback={updateCallback}/>
         case "washer":
-            return getFieldsForWasher(bin, index, updateCallback)
+            return <WasherEdit bin={bin} index={index} updateCallback={updateCallback}/>
         case "screw":
-            return getFieldsForScrew(bin, index, updateCallback)
+            return <ScrewEdit bin={bin} index={index} updateCallback={updateCallback}/>
         default:
             return <p>{`${bin.content[index].contentType} is undefined`}</p>
     }
-}
-
-function getFieldsForBolt(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
-    return <div style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-    }}
-    >
-        <Box component="form">
-            <div style={{
-                margin: "1em",
-                display: "flex",
-                gap: "10px"
-            }}>
-                <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].bolt?.threadSize ?? ""} onChange={(_e) => {
-                    // bin.bolt.thread_size = e.target.value
-                    updateCallback(bin)
-                }}
-                           style={{width: "110px"}}/>
-                <TextField id="pitch" variant="outlined" label="Pitch"
-                           defaultValue={bin.content[index].bolt?.threadPitch ?? ""} onChange={(_e) => {
-                    // bin.bolt.thread_pitch = e.target.value
-                    updateCallback(bin)
-                }}
-                           style={{width: "110px"}}/>
-                <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].bolt?.length ?? ""} onChange={(_e) => {
-                    // bin.bolt.length = parseInt(e.target.value)
-                    updateCallback(bin)
-                }}
-                           style={{width: "110px"}}/>
-            </div>
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
-            >
-                <div>
-                    <Dropdown options={finishes} selected={bin.content[index].bolt?.material ?? ""}
-                              style={{width: "350px"}}
-                              onSelected={(index) => {
-                                  bin.content[index].bolt.material = finishes[index]
-                                  updateCallback(bin)
-                              }}/>
-                </div>
-                <div>
-                    <Dropdown options={boltHeads} selected={bin.content[index].bolt.head} style={{width: "350px"}}
-                              onSelected={((index) => {
-                                  bin.content[index].bolt.head = boltHeads[index]
-                                  updateCallback(bin)
-                              })}/>
-                </div>
-            </div>
-        </Box>
-    </div>
-}
-
-function getFieldsForWasher(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
-    return <div style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-    }}
-    >
-        <Box component="form">
-            <div style={{
-                margin: "1em",
-                display: "flex",
-                gap: "10px"
-            }}>
-                <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].washer?.size ?? ""} onChange={(_e) => {
-                    // bin.washer.size = e.target.value
-                    updateCallback(bin)
-                }}
-                           style={{width: "330"}}/>
-            </div>
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                flexDirection: "column",
-                alignItems: "center",
-            }}
-            >
-                <div>
-                    <Dropdown options={finishes} selected={bin.content[index].washer.material} style={{width: "350px"}}
-                              onSelected={((index) => {
-                                  bin.content[index].washer.material = finishes[index]
-                                  updateCallback(bin)
-                              })}/>
-                </div>
-                <div>
-                    <Dropdown options={washerTypes} selected={bin.content[index].washer.type} style={{width: "350px"}}
-                              onSelected={((index) => {
-                                  bin.content[index].washer.type = washerTypes[index]
-                                  updateCallback(bin)
-                              })}/>
-                </div>
-            </div>
-        </Box>
-    </div>
-}
-
-function getFieldsForScrew(bin: BinObj, index: number, updateCallback: (bin: BinObj) => void): JSX.Element {
-    return <div style={{
-        display: "flex",
-        justifyContent: "center",
-        flexDirection: "column",
-        alignItems: "center",
-    }}
-    >
-        <Box component="form">
-            <div style={{
-                margin: "1em",
-                display: "flex",
-                gap: "10px"
-            }}>
-                <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].screw?.size ?? ""} onChange={(_e) => {
-                    // bin.content[index].screw.size = e.target.value
-                    updateCallback(bin)
-                }}
-                           style={{width: "160px"}}/>
-                <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].screw?.length ?? ""} onChange={(_e) => {
-                    // bin.content[index].screw.length = e.target.value
-                    updateCallback(bin)
-                }}
-                           style={{width: "160px"}}/>
-            </div>
-            <div style={{
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-            }}
-            >
-                <Dropdown options={finishes} selected={bin.content[index].screw.material} style={{width: "350px"}}
-                          onSelected={((index) => {
-                              bin.content[index].screw.material = finishes[index]
-                              updateCallback(bin)
-                          })}/>
-                <Dropdown options={screwHeads} selected={bin.content[index].screw.head} style={{width: "350px"}}
-                          onSelected={((index) => {
-                              bin.content[index].screw.head = screwHeads[index]
-                              updateCallback(bin)
-                          })}/>
-                <Dropdown options={screwDrive} selected={bin.content[index].screw.drive} style={{width: "350px"}}
-                          onSelected={((index) => {
-                              bin.content[index].screw.drive = screwDrive[index]
-                              updateCallback(bin)
-                          })}/>
-                <Dropdown options={screwTypes} selected={bin.content[index].screw.type} style={{width: "350px"}}
-                          onSelected={((index) => {
-                              bin.content[index].screw.type = screwTypes[index]
-                              updateCallback(bin)
-                          })}/>
-            </div>
-        </Box>
-    </div>
 }
