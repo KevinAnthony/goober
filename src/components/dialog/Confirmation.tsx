@@ -1,32 +1,23 @@
 import React from "react";
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions} from "@mui/material";
+import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography} from "@mui/material";
 
 interface props {
     closedCallback: (accepted: boolean) => void
+    open: boolean
+    title: string
+    description: string
 }
 
-export function Confirmation({closedCallback}:props) {
-    const [open, setOpen] = React.useState(false);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
+export function Confirmation({closedCallback, open, title, description}:props) {
     const handleDecline = () => {
         closedCallback(false)
-        setOpen(false);
     };
 
     const handleAccept = () => {
         closedCallback(true)
-        setOpen(false);
     };
 
     return (
-        <div>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Open alert dialog
-            </Button>
             <Dialog
                 open={open}
                 onClose={handleDecline}
@@ -34,12 +25,11 @@ export function Confirmation({closedCallback}:props) {
                 aria-describedby="alert-dialog-description"
             >
                 <DialogTitle id="alert-dialog-title">
-                    {"Use Google's location service?"}
+                    <Typography>{title}</Typography>
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-description">
-                        Let Google help apps determine location. This means sending anonymous
-                        location data to Google, even when no apps are running.
+                        <Typography>{description}</Typography>
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
@@ -49,7 +39,5 @@ export function Confirmation({closedCallback}:props) {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
     );
-
 }

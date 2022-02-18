@@ -43,7 +43,8 @@ export class BinNet extends netCode {
             })
     }
 
-    putBin(bin: BinObj): Promise<BinObj> {
+    putBin(bin: BinObj): Promise<any> {
+        console.log(bin)
         const json = JSON.stringify(bin.JSON())
         const url = this.getURL()
         return window
@@ -64,10 +65,27 @@ export class BinNet extends netCode {
                 if (!r.ok) {
                     throw r
                 }
-                return r.json();
             })
-            .then<BinObj>(data => {
-                return BinObj.Parse(data)
+    }
+
+    deleteBin(bin: BinObj): Promise<BinObj> {
+        const url = this.getURL()
+        return window
+            .fetch(`${url}/bin/${bin.id}`,
+                {
+                    method: 'DELETE',
+                    redirect: 'follow',
+                    referrerPolicy: 'no-referrer',
+                    headers: {
+                        'Host': window.location.origin,
+                        'Origin': window.location.origin,
+                    },
+                })
+            .then(r => {
+                if (!r.ok) {
+                    throw r
+                }
+                return r.json();
             })
     }
 }

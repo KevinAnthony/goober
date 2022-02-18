@@ -85,5 +85,5 @@ func (b bin) Delete(ctx context.Context, r *http.Request) (interface{}, error) {
 		return nil, err
 	}
 
-	return nil, nil
+	return nil, b.binSvc.Delete(ctx, model.Bin{ID: req.ID})
 }

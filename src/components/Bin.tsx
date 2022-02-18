@@ -1,21 +1,24 @@
 import React from 'react';
 import Button from "@mui/material/Button";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
-import {faTrash, faCog} from "@fortawesome/free-solid-svg-icons";
+import {faCog, faTrash} from "@fortawesome/free-solid-svg-icons";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import {BinObj} from "../model/bin";
 import {ColorObj} from "../model/color";
 import {BinEdit} from "./modal/BinEdit";
+import {Confirmation} from "./dialog/Confirmation";
+import {BinNet} from "../net/bin";
 
 interface props {
     bin: BinObj,
     index: number,
     removeCallback: (index: number) => void,
-    updateCallback: (index: number, bin: BinObj, save:boolean) => void,
+    updateCallback: (index: number, bin: BinObj, save: boolean) => void,
 }
 
 // @ts-ignore
 export function Bin({removeCallback, updateCallback, bin, index}: props) {
+    const binNet = new BinNet()
 
     const [color, setColor] = React.useState<ColorObj>(bin.color)
     const [startX, setStartX] = React.useState<number>(bin.x + 1)
@@ -23,6 +26,7 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
     const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width)
     const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height)
     const [editIndex, setEditIndex] = React.useState<number>(-1);
+    const [deleteConfirmationOpen, setDeleteConfirmationOpen] = React.useState<boolean>(false)
 
     function handleBinEditClose() {
         setEditIndex(-1);
@@ -40,8 +44,14 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
         setStopY((b.y + 1 + b.height))
     }
 
-    function handleDelete() {
-
+    function handleDelete(accepted: boolean) {
+        if (accepted) {
+            console.log(bin)
+            binNet.deleteBin(bin).then(() => {
+                removeCallback(index)
+            })
+        }
+        setDeleteConfirmationOpen(false)
     }
 
     return <div
@@ -73,7 +83,7 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
                     padding: "4px",
                     height: "3em",
                 }}
-                onClick={handleDelete}
+                onClick={() => setDeleteConfirmationOpen(true)}
             ><FontAwesomeIcon icon={faTrash}/></Button>
         </ButtonGroup>
         <div style={{whiteSpace: "pre"}}>{bin.getText(0)}</div>
@@ -85,5 +95,9 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
                  saveCallback={updateCallback}
                  title={"Edit Bin"}
         />
+        <Confirmation closedCallback={handleDelete}
+                      open={deleteConfirmationOpen}
+                      title={"Delete Bin"}
+                      description={"if you delete this bin, it will be unrecoverable"}/>
     </div>
 }
