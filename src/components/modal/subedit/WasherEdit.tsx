@@ -18,11 +18,12 @@ export function WasherEdit({bin, index, updateCallback}: SubEditProps) {
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].washer?.size ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].washer.size = target.value
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].washer?.size ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].washer.size = target.value
+                               updateCallback(bin)
+                           }}
                            style={{width: "330"}}/>
             </div>
             <div>

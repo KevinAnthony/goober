@@ -4,7 +4,7 @@ import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import {ContainerObj} from "../model/container";
 
-interface props  {
+interface props {
     containers: Array<ContainerObj>,
     setOptionCallback: Dispatch<SetStateAction<ContainerObj>>,
 }

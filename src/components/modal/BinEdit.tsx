@@ -56,7 +56,7 @@ export function BinEdit({
         binState.color = hex2rgb(newColor)
         setBin(binState)
         updateCallback(binState)
-    };
+    }
 
     return (
         <div style={{

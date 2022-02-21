@@ -72,13 +72,15 @@ export function Container({container}: props) {
     const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
     const [newBinObject, setNewBinObject] = React.useState<JSX.Element>(<div/>);
 
+    const memoizedRemoveBin = React.useCallback((index: number) => {
+        removeBin(index)
+    }, [])
+    const memoizedSaveBin = React.useCallback((index: number, bin: BinObj, save: boolean) => {
+        saveBin(index, bin, save)
+    }, [])
+
     React.useEffect(() => {
         setRedrawBin(false)
-        function removeBin(index: number) {
-            container.bin.splice(index, 1)
-
-            setBins([...container.bin])
-        }
 
         if (newBinIndex < 0) {
             setNewBinObject(<div/>)
@@ -86,10 +88,10 @@ export function Container({container}: props) {
             setNewBinObject(<Bin
                 bin={newBin}
                 index={newBinIndex}
-                removeCallback={removeBin}
-                updateCallback={saveBin}/>)
+                removeCallback={memoizedRemoveBin}
+                updateCallback={memoizedSaveBin}/>)
         }
-    }, [newBinIndex, newBin, redrawBin])
+    }, [newBinIndex, newBin, redrawBin, memoizedRemoveBin, memoizedSaveBin])
 
     function createNewBin(): BinObj {
         const newContent = ContentObj.Empty()
@@ -122,7 +124,6 @@ export function Container({container}: props) {
             <BackgroundGrid key={`grid-${posX}-${posY}`} background={ColorObj.Parse({a: 0})} x={posX} y={posY}/>
         ))
     ));
-
 
     return <>
         <div
@@ -201,13 +202,13 @@ export function Container({container}: props) {
             </div>
         </div>
         <BinEdit
-                bin={newBin}
-                title={"New Bin"}
-                binIndex={newBinIndex}
-                closedCallback={handleNewBinClosed}
-                updateCallback={drawNewBin}
-                removeCallback={removeBin}
-                saveCallback={saveBin}/>
+            bin={newBin}
+            title={"New Bin"}
+            binIndex={newBinIndex}
+            closedCallback={handleNewBinClosed}
+            updateCallback={drawNewBin}
+            removeCallback={removeBin}
+            saveCallback={saveBin}/>
     </>
 }
 

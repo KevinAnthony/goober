@@ -9,9 +9,10 @@ import {Container} from "./components/Container";
 function App() {
     const [containers, setContainerList] = React.useState<Array<ContainerObj>>([]);
     const [container, setContainer] = React.useState<ContainerObj>(ContainerObj.Empty);
-    const netContainer = new ContainerNet()
 
     React.useEffect(() => {
+        const netContainer = new ContainerNet()
+
         netContainer.getContainerAll().then(containerList => {
             setContainerList(containerList)
             if (containerList.length > 0) {

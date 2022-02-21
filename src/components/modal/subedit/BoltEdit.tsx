@@ -16,46 +16,49 @@ export function BoltEdit({bin, index, updateCallback}: SubEditProps) {
             <div style={{
                 margin: "1em",
                 display: "flex",
-                justifyContent:"center",
+                justifyContent: "center",
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].bolt?.threadSize ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].bolt.threadSize = target.value
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].bolt?.threadSize ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].bolt.threadSize = target.value
+                               updateCallback(bin)
+                           }}
                            style={{width: "110px"}}/>
                 <TextField id="pitch" variant="outlined" label="Pitch"
-                           defaultValue={bin.content[index].bolt?.threadPitch ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].bolt.threadPitch = target.value
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].bolt?.threadPitch ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].bolt.threadPitch = target.value
+                               updateCallback(bin)
+                           }}
                            style={{width: "110px"}}/>
                 <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].bolt?.length ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].bolt.length = parseInt(target.value)
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].bolt?.length ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].bolt.length = parseInt(target.value)
+                               updateCallback(bin)
+                           }}
                            style={{width: "110px"}}/>
             </div>
             <div>
-                    <Dropdown options={finishes}
-                              selected={bin.content[index].bolt?.material ?? ""}
-                              className={"topDropdown"}
-                              onSelected={(i) => {
-                                  bin.content[index].bolt.material = finishes[i]
-                                  updateCallback(bin)
-                              }}/>
-                    <Dropdown options={boltHeads}
-                              selected={bin.content[index].bolt.head}
-                              className={"bottomDropdown"}
-                              onSelected={((i) => {
-                                  bin.content[index].bolt.head = boltHeads[i]
-                                  updateCallback(bin)
-                              })}/>
+                <Dropdown options={finishes}
+                          selected={bin.content[index].bolt?.material ?? ""}
+                          className={"topDropdown"}
+                          onSelected={(i) => {
+                              bin.content[index].bolt.material = finishes[i]
+                              updateCallback(bin)
+                          }}/>
+                <Dropdown options={boltHeads}
+                          selected={bin.content[index].bolt.head}
+                          className={"bottomDropdown"}
+                          onSelected={((i) => {
+                              bin.content[index].bolt.head = boltHeads[i]
+                              updateCallback(bin)
+                          })}/>
             </div>
         </Box>
     </div>

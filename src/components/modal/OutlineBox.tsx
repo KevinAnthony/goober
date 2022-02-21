@@ -1,13 +1,13 @@
 import React from "react";
 import {TextField} from "@mui/material";
 
-interface outlineBoxProps{
+interface outlineBoxProps {
     children: React.ReactNode
     label: string
     style: React.CSSProperties
 }
 
-const InputComponent = ({...other }) => <div {...other} />;
+const InputComponent = ({...other}) => <div {...other} />;
 
 export const OutlinedBox = ({children, label, style}: outlineBoxProps) => {
     return (
@@ -18,7 +18,7 @@ export const OutlinedBox = ({children, label, style}: outlineBoxProps) => {
             InputLabelProps={{shrink: true}}
             style={style}
             InputProps={{
-                inputComponent:InputComponent
+                inputComponent: InputComponent
             }}
             inputProps={{children: children}}
         >

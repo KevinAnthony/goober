@@ -37,7 +37,7 @@ export class ScrewObj extends DTO {
 
     private constructor(d: any) {
         super()
-        
+
         this._id = d.id;
         this._contentID = d.content_id;
         this._length = d.length;

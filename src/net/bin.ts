@@ -5,8 +5,6 @@ export class BinNet extends netCode {
     createBin(bin: BinObj): Promise<BinObj> {
         const json = JSON.stringify(bin.JSON())
         const url = this.getURL()
-        console.log("createBin: Bin:  ", bin)
-        console.log("createBin: JSON: ", json)
         return window
             .fetch(`${url}/bin`,
                 {

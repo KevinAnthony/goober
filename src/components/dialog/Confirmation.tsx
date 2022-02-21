@@ -1,5 +1,5 @@
 import React from "react";
-import {Button, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Typography} from "@mui/material";
+import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography} from "@mui/material";
 
 interface props {
     closedCallback: (accepted: boolean) => void
@@ -8,7 +8,7 @@ interface props {
     description: string
 }
 
-export function Confirmation({closedCallback, open, title, description}:props) {
+export function Confirmation({closedCallback, open, title, description}: props) {
     const handleDecline = () => {
         closedCallback(false)
     };
@@ -18,26 +18,26 @@ export function Confirmation({closedCallback, open, title, description}:props) {
     };
 
     return (
-            <Dialog
-                open={open}
-                onClose={handleDecline}
-                aria-labelledby="alert-dialog-title"
-                aria-describedby="alert-dialog-description"
-            >
-                <DialogTitle id="alert-dialog-title">
-                    <Typography>{title}</Typography>
-                </DialogTitle>
-                <DialogContent>
-                    <DialogContentText id="alert-dialog-description">
-                        <Typography>{description}</Typography>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={handleDecline}>Cancel</Button>
-                    <Button onClick={handleAccept} autoFocus>
-                        OK
-                    </Button>
-                </DialogActions>
-            </Dialog>
+        <Dialog
+            open={open}
+            onClose={handleDecline}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+        >
+            <DialogTitle id="alert-dialog-title">
+                <Typography>{title}</Typography>
+            </DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                    <Typography>{description}</Typography>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleDecline}>Cancel</Button>
+                <Button onClick={handleAccept} autoFocus>
+                    OK
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }

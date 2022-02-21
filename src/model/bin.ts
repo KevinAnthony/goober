@@ -38,7 +38,7 @@ export class BinObj extends DTO {
 
     private constructor(d: any) {
         super()
-        
+
         this._id = d.id;
         this._containerID = d.container_id;
         this._width = d.width;

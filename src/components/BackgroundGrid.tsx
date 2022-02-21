@@ -1,7 +1,7 @@
 import React from 'react';
 import {ColorObj} from "../model/color";
 
-interface props  {
+interface props {
     x: number,
     y: number,
     background: ColorObj,

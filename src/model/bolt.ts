@@ -22,7 +22,6 @@ export class BoltObj extends DTO {
     }
 
     JSON(): object {
-        console.log("bolt: ", this)
         return {
             id: this._id,
             content_id: this._contentID,
@@ -36,7 +35,7 @@ export class BoltObj extends DTO {
 
     private constructor(d: any) {
         super()
-        
+
         this._id = d.id;
         this._contentID = d.content_id;
         this._head = d.head;

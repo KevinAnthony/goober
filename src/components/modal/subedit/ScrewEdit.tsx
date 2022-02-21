@@ -18,18 +18,20 @@ export function ScrewEdit({bin, index, updateCallback}: SubEditProps) {
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].screw?.size ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].screw.size = target.value
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].screw?.size ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].screw.size = target.value
+                               updateCallback(bin)
+                           }}
                            style={{width: "160px"}}/>
                 <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].screw?.length ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                    const target = e.target as HTMLInputElement
-                    bin.content[index].screw.length = parseInt(target.value)
-                    updateCallback(bin)
-                }}
+                           defaultValue={bin.content[index].screw?.length ?? ""}
+                           onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                               const target = e.target as HTMLInputElement
+                               bin.content[index].screw.length = parseInt(target.value)
+                               updateCallback(bin)
+                           }}
                            style={{width: "160px"}}/>
             </div>
             <div>
