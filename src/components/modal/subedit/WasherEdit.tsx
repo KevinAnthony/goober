@@ -1,6 +1,6 @@
 import {Box, TextField} from "@mui/material";
 import {Dropdown} from "../Dropdown";
-import React from "react";
+import React, {ChangeEvent} from "react";
 import {finishes, SubEditProps, washerTypes} from "../SubEditProps";
 
 export function WasherEdit({bin, index, updateCallback}: SubEditProps) {
@@ -18,8 +18,9 @@ export function WasherEdit({bin, index, updateCallback}: SubEditProps) {
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].washer?.size ?? ""} onChange={(_e) => {
-                    // bin.washer.size = e.target.value
+                           defaultValue={bin.content[index].washer?.size ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].washer.size = target.value
                     updateCallback(bin)
                 }}
                            style={{width: "330"}}/>

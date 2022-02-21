@@ -1,8 +1,9 @@
 import {ColorObj} from "./color";
 import {ContentObj} from "./content";
 import {decToFraction, splitAndUppercase} from "../util/formatting";
+import {DTO} from "./dto";
 
-export class BinObj {
+export class BinObj extends DTO {
     private readonly _id: string;
     private _containerID: string;
     private _width: number;
@@ -36,6 +37,8 @@ export class BinObj {
     }
 
     private constructor(d: any) {
+        super()
+        
         this._id = d.id;
         this._containerID = d.container_id;
         this._width = d.width;

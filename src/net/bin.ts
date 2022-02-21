@@ -3,7 +3,10 @@ import {BinObj} from "../model/bin";
 
 export class BinNet extends netCode {
     createBin(bin: BinObj): Promise<BinObj> {
+        const json = JSON.stringify(bin.JSON())
         const url = this.getURL()
+        console.log("createBin: Bin:  ", bin)
+        console.log("createBin: JSON: ", json)
         return window
             .fetch(`${url}/bin`,
                 {
@@ -11,9 +14,12 @@ export class BinNet extends netCode {
                     redirect: 'follow',
                     referrerPolicy: 'no-referrer',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Host': window.location.origin,
+                        'Origin': window.location.origin,
+                        'Content-Type': 'application/json',
+                        'Content-Length': json.length.toString()
                     },
-                    body: JSON.stringify(bin)
+                    body: json
                 })
             .then<BinObj>(r => {
                 return r.json();
@@ -44,7 +50,6 @@ export class BinNet extends netCode {
     }
 
     putBin(bin: BinObj): Promise<any> {
-        console.log(bin)
         const json = JSON.stringify(bin.JSON())
         const url = this.getURL()
         return window
@@ -65,6 +70,11 @@ export class BinNet extends netCode {
                 if (!r.ok) {
                     throw r
                 }
+
+                return r.json()
+            })
+            .then<BinObj>(data => {
+                return BinObj.Parse(data)
             })
     }
 
@@ -85,6 +95,7 @@ export class BinNet extends netCode {
                 if (!r.ok) {
                     throw r
                 }
+
                 return r.json();
             })
     }

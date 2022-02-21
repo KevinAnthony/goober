@@ -1,7 +1,7 @@
 import {finishes, screwDrive, screwHeads, screwTypes, SubEditProps} from "../SubEditProps";
 import {Box, TextField} from "@mui/material";
 import {Dropdown} from "../Dropdown";
-import React from "react";
+import React, {ChangeEvent} from "react";
 
 export function ScrewEdit({bin, index, updateCallback}: SubEditProps) {
     return <div style={{
@@ -18,14 +18,16 @@ export function ScrewEdit({bin, index, updateCallback}: SubEditProps) {
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].screw?.size ?? ""} onChange={(_e) => {
-                    // bin.content[index].screw.size = e.target.value
+                           defaultValue={bin.content[index].screw?.size ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].screw.size = target.value
                     updateCallback(bin)
                 }}
                            style={{width: "160px"}}/>
                 <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].screw?.length ?? ""} onChange={(_e) => {
-                    // bin.content[index].screw.length = e.target.value
+                           defaultValue={bin.content[index].screw?.length ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].screw.length = parseInt(target.value)
                     updateCallback(bin)
                 }}
                            style={{width: "160px"}}/>

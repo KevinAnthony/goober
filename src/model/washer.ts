@@ -1,6 +1,8 @@
-export class WasherObj {
+import {DTO} from "./dto";
+
+export class WasherObj extends DTO {
     public readonly _id: string;
-    public readonly _contentID: string;
+    public _contentID: string;
     public _size: string;
     public _type: string;
     public _material: string;
@@ -29,6 +31,8 @@ export class WasherObj {
 
 
     private constructor(d: any) {
+        super()
+
         this._id = d.id;
         this._contentID = d.content_id;
         this._size = d.size;
@@ -42,6 +46,10 @@ export class WasherObj {
 
     get contentID(): string {
         return this._contentID
+    }
+
+    set contentID(value: string) {
+        this._contentID = value
     }
 
     get size(): string {

@@ -1,8 +1,10 @@
 import {ScrewObj} from "./screw";
 import {WasherObj} from "./washer";
 import {BoltObj} from "./bolt";
+import {DTO} from "./dto";
 
-export class ContentObj {
+
+export class ContentObj extends DTO {
     private readonly _id: string;
     private readonly _binID: string;
     private _contentType: string;
@@ -27,14 +29,16 @@ export class ContentObj {
             id: this._id,
             bin_id: this._binID,
             content_type: this._contentType,
-            bolt: this._bolt.contentID ? this._bolt.JSON() : undefined,
-            washer: this._washer.contentID ? this._washer.JSON() : undefined,
-            screw: this._screw.contentID ? this._screw.JSON() : undefined,
+            bolt: this._bolt.jsonOrUndefined(),
+            washer: this._washer.jsonOrUndefined(),
+            screw: this._screw.jsonOrUndefined(),
         };
     }
 
 
     private constructor(d: any) {
+        super()
+
         this._id = d.id;
         this._binID = d.bin_id;
         this._contentType = d.content_type;

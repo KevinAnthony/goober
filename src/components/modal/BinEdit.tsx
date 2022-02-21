@@ -9,7 +9,6 @@ import {BoltObj} from "../../model/bolt";
 import {WasherObj} from "../../model/washer";
 import {ScrewObj} from "../../model/screw";
 import {BinNet} from "../../net/bin";
-import {ContentObj} from "../../model/content";
 import {WasherEdit} from "./subedit/WasherEdit";
 import {BoltEdit} from "./subedit/BoltEdit";
 import {ScrewEdit} from "./subedit/ScrewEdit";
@@ -20,6 +19,7 @@ interface props {
     updateCallback: (bin: BinObj) => void,
     closedCallback: () => void,
     saveCallback: (index: number, bin: BinObj, save: boolean) => void
+    removeCallback: (index: number) => void,
     title: string
 }
 
@@ -29,13 +29,13 @@ export function BinEdit({
                             closedCallback,
                             updateCallback,
                             saveCallback,
-                            title
+                            title,
+                            removeCallback
                         }: props) {
     const net = new BinNet()
     const [innerContainer, setContainer] = React.useState<JSX.Element>()
     const [binState, setBin] = React.useState<BinObj>(bin)
-    const [content, setContent] = React.useState<ContentObj>(ContentObj.Empty())
-    const [contentIndex, _setContentIndex] = React.useState<number>(0)
+    const [contentIndex] = React.useState<number>(0)
 
     React.useEffect(() => {
         if (binIndex >= 0) {
@@ -43,10 +43,7 @@ export function BinEdit({
         }
 
         setBin(bin)
-    }, [bin, binIndex, binState])
-    React.useEffect(() => {
-        setContent(bin.content[contentIndex])
-    }, [contentIndex])
+    }, [bin, binIndex, binState, updateCallback])
 
     const [binRed, binBlue, binGreen, binYellow, binOrange, binGrey] =
         [red[500], indigo[500], green[500], amber[500], orange[500], blueGrey[500]]
@@ -83,23 +80,14 @@ export function BinEdit({
                     <div>
                         <ToggleButtonGroup
                             color="primary"
-                            value={content.contentType}
+                            value={binState.content[contentIndex].contentType}
                             exclusive
                             onChange={(_event: React.MouseEvent<HTMLElement>, newType: string) => {
-                                content.contentType = newType
-                                switch (newType) {
-                                    case "bolt":
-                                        content.bolt = BoltObj.Empty()
-                                        break
-                                    case "screw":
-                                        content.screw = ScrewObj.Empty()
-                                        break
-                                    case "washer":
-                                        content.washer = WasherObj.Empty()
-                                        break
-                                    default:
-                                        console.log("unknown type", newType)
-                                }
+                                binState.content[contentIndex].contentType = newType
+                                binState.content[contentIndex].bolt = BoltObj.Empty()
+                                binState.content[contentIndex].screw = ScrewObj.Empty()
+                                binState.content[contentIndex].washer = WasherObj.Empty()
+
                                 setBin(binState)
                                 setContainer(getFieldsForContent(binState, 0, updateCallback))
                             }}
@@ -211,13 +199,9 @@ export function BinEdit({
                                 height: "4em"
                             }}
                             onClick={() => {
-                                net.putBin(binState).then(b => {
-                                    updateCallback(b)
-                                    saveCallback(binIndex, binState, true)
-                                }).then(() => closedCallback()).catch((r) => {
-                                    console.error("failed to put", r)
-                                    closedCallback()
-                                })
+                                updateCallback(binState)
+                                saveCallback(binIndex, binState, true)
+                                closedCallback()
                             }}
                         >Save</Button>
                         <Button
@@ -226,6 +210,12 @@ export function BinEdit({
                                 height: "4em"
                             }}
                             onClick={() => {
+                                if (!binState.id) {
+                                    removeCallback(binIndex)
+                                    closedCallback()
+
+                                    return
+                                }
                                 net.getBin(binState).then(b => {
                                     updateCallback(b)
                                     closedCallback()

@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '@mui/material/Button';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faPlus, faSave} from '@fortawesome/free-solid-svg-icons';
+import {faCog, faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Typography} from "@mui/material";
 import {ContainerObj} from "../model/container";
 import {BackgroundGrid} from "./BackgroundGrid";
@@ -10,8 +10,14 @@ import {ColorObj} from "../model/color";
 import {BinObj} from "../model/bin";
 import {BinNet} from "../net/bin";
 import {Bin} from "./Bin";
+import {BinEdit} from "./modal/BinEdit";
+import {ContentObj} from "../model/content";
+import {BoltObj} from "../model/bolt";
+import {hex2rgb} from "../util/formatting";
+import {red} from "@mui/material/colors";
+import {isEmpty} from "../util/utils";
 
-interface props  {
+interface props {
     container: ContainerObj,
 }
 
@@ -30,46 +36,90 @@ export function Container({container}: props) {
         setBins([...container.bin])
     }
 
-    function updateBin(index: number, bin: BinObj, save: boolean) {
+    function drawNewBin(bin: BinObj) {
+        setNewBin(bin)
+        setNewBinIndex(newBinIndex)
+        setRedrawBin(true)
+
+        return
+    }
+
+    function saveBin(index: number, bin: BinObj, save: boolean) {
         if (!save) {
             container.bin.splice(index, 1, bin)
             setBins([...container.bin])
 
             return
         }
-        if (index >= container.bin.length) {
+
+        if (isEmpty(bin.id)) {
             bin.containerID = container.id
 
-            binNet.createBin(bin).then((b:BinObj) => {
-                b.containerID = container.id
+            binNet.createBin(bin).then((b: BinObj) => {
                 container.bin.push(b)
                 setBins([...container.bin])
             })
         } else {
-            binNet.putBin(bin).then((b:BinObj) => {
+            binNet.putBin(bin).then((b: BinObj) => {
                 container.bin.splice(index, 1, b)
                 setBins([...container.bin])
             })
         }
     }
 
-    // const [editIndex, setEditIndex] = React.useState(-1);
-    const [_, setEditIndex] = React.useState(-1);
+    const [newBinIndex, setNewBinIndex] = React.useState<number>(-1);
+    const [newBin, setNewBin] = React.useState<BinObj>(createNewBin());
+    const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
+    const [newBinObject, setNewBinObject] = React.useState<JSX.Element>(<div/>);
 
     React.useEffect(() => {
-        setEditIndex(-1);
-    }, [])
+        setRedrawBin(false)
+        function removeBin(index: number) {
+            container.bin.splice(index, 1)
 
-    // function handleBinEditClose() {
-    //     setEditIndex(-1);
-    // }
+            setBins([...container.bin])
+        }
 
-    function handleBinEditOpen() {
-        setEditIndex(container.bin.length + 1);
+        if (newBinIndex < 0) {
+            setNewBinObject(<div/>)
+        } else {
+            setNewBinObject(<Bin
+                bin={newBin}
+                index={newBinIndex}
+                removeCallback={removeBin}
+                updateCallback={saveBin}/>)
+        }
+    }, [newBinIndex, newBin, redrawBin])
+
+    function createNewBin(): BinObj {
+        const newContent = ContentObj.Empty()
+        newContent.contentType = "bolt"
+        newContent.bolt = BoltObj.Empty()
+
+        const newBin = BinObj.Empty()
+        newBin.content.push(newContent)
+        newBin.width = 5
+        newBin.height = 5
+        newBin.x = 0
+        newBin.y = 0
+        newBin.color = hex2rgb(red[500])
+
+        return newBin
     }
+
+    function handleNewBinClosed() {
+        setNewBinIndex(-1);
+        setNewBin(createNewBin())
+    }
+
+    function handleNewBinOpen() {
+        setNewBinIndex(container.bin.length + 1);
+    }
+
+
     let gridGrid = Array(container.width).fill(null).map((_, posX) => (
         Array(container.height).fill(null).map((_, posY) => (
-            <BackgroundGrid key={`grid-${posX}-${posY}`} background={ColorObj.Parse({a:0})} x={posX} y={posY}/>
+            <BackgroundGrid key={`grid-${posX}-${posY}`} background={ColorObj.Parse({a: 0})} x={posX} y={posY}/>
         ))
     ));
 
@@ -101,7 +151,7 @@ export function Container({container}: props) {
 
                     <ButtonGroup variant="contained" aria-label="outlined contained button group">
                         <Button
-                            onClick={handleBinEditOpen}
+                            onClick={handleNewBinOpen}
                             style={{
                                 padding: "4px",
                                 width: "4em",
@@ -115,7 +165,15 @@ export function Container({container}: props) {
                                 height: "4em",
                             }}
                             onClick={() => {
-                            }}><FontAwesomeIcon icon={faSave}/></Button>
+                            }}><FontAwesomeIcon icon={faCog}/></Button>
+                        <Button
+                            style={{
+                                padding: "4px",
+                                width: "4em",
+                                height: "4em",
+                            }}
+                            onClick={() => {
+                            }}><FontAwesomeIcon icon={faTrash}/></Button>
                     </ButtonGroup>
                 </div>
             </div>
@@ -130,18 +188,26 @@ export function Container({container}: props) {
             >
                 {gridGrid}
                 {
-                    bins.map((bin:BinObj, index:number) => (
+                    bins.map((bin: BinObj, index: number) => (
                         <Bin
                             removeCallback={removeBin}
-                            updateCallback={updateBin}
+                            updateCallback={saveBin}
                             key={`bin-${bin.id}`}
                             index={index}
                             bin={bin}/>
                     ))
                 }
+                {newBinObject}
             </div>
         </div>
-        {/*<BinNew index={editIndex} closedCallback={handleBinEditClose} updateCallback={updateBin}/>*/}
+        <BinEdit
+                bin={newBin}
+                title={"New Bin"}
+                binIndex={newBinIndex}
+                closedCallback={handleNewBinClosed}
+                updateCallback={drawNewBin}
+                removeCallback={removeBin}
+                saveCallback={saveBin}/>
     </>
 }
 

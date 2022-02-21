@@ -1,6 +1,8 @@
-export class BoltObj {
+import {DTO} from "./dto";
+
+export class BoltObj extends DTO {
     private readonly _id: string;
-    private readonly _contentID: string;
+    private _contentID: string;
     private _head: string;
     private _length: number;
     private _threadSize: string;
@@ -20,6 +22,7 @@ export class BoltObj {
     }
 
     JSON(): object {
+        console.log("bolt: ", this)
         return {
             id: this._id,
             content_id: this._contentID,
@@ -32,6 +35,8 @@ export class BoltObj {
     }
 
     private constructor(d: any) {
+        super()
+        
         this._id = d.id;
         this._contentID = d.content_id;
         this._head = d.head;
@@ -48,6 +53,10 @@ export class BoltObj {
 
     get contentID() {
         return this._contentID
+    }
+
+    set contentID(value: string) {
+        this._contentID = value
     }
 
     get length(): number {

@@ -1,6 +1,8 @@
-export class ScrewObj {
+import {DTO} from "./dto";
+
+export class ScrewObj extends DTO {
     private readonly _id: string;
-    private readonly _contentID: string;
+    private _contentID: string;
     private _length: number;
     private _size: string;
     private _type: string;
@@ -34,6 +36,8 @@ export class ScrewObj {
     }
 
     private constructor(d: any) {
+        super()
+        
         this._id = d.id;
         this._contentID = d.content_id;
         this._length = d.length;
@@ -51,6 +55,10 @@ export class ScrewObj {
 
     get contentID(): string {
         return this._contentID
+    }
+
+    set contentID(value: string) {
+        this._contentID = value
     }
 
     get length(): number {

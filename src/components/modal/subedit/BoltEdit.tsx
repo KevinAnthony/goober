@@ -1,7 +1,7 @@
 import {boltHeads, finishes, SubEditProps} from "../SubEditProps";
 import {Box, TextField} from "@mui/material";
 import {Dropdown} from "../Dropdown";
-import React from "react";
+import React, {ChangeEvent} from "react";
 import "./subEditStyle.css"
 
 export function BoltEdit({bin, index, updateCallback}: SubEditProps) {
@@ -20,20 +20,23 @@ export function BoltEdit({bin, index, updateCallback}: SubEditProps) {
                 gap: "10px"
             }}>
                 <TextField id="size" variant="outlined" label="Size"
-                           defaultValue={bin.content[index].bolt?.threadSize ?? ""} onChange={(_e) => {
-                    // bin.bolt.thread_size = e.target.value
+                           defaultValue={bin.content[index].bolt?.threadSize ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].bolt.threadSize = target.value
                     updateCallback(bin)
                 }}
                            style={{width: "110px"}}/>
                 <TextField id="pitch" variant="outlined" label="Pitch"
-                           defaultValue={bin.content[index].bolt?.threadPitch ?? ""} onChange={(_e) => {
-                    // bin.bolt.thread_pitch = e.target.value
+                           defaultValue={bin.content[index].bolt?.threadPitch ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].bolt.threadPitch = target.value
                     updateCallback(bin)
                 }}
                            style={{width: "110px"}}/>
                 <TextField id="length" variant="outlined" label="length"
-                           defaultValue={bin.content[index].bolt?.length ?? ""} onChange={(_e) => {
-                    // bin.bolt.length = parseInt(e.target.value)
+                           defaultValue={bin.content[index].bolt?.length ?? ""} onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                    const target = e.target as HTMLInputElement
+                    bin.content[index].bolt.length = parseInt(target.value)
                     updateCallback(bin)
                 }}
                            style={{width: "110px"}}/>

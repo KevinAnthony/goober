@@ -46,7 +46,6 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
 
     function handleDelete(accepted: boolean) {
         if (accepted) {
-            console.log(bin)
             binNet.deleteBin(bin).then(() => {
                 removeCallback(index)
             })
@@ -93,6 +92,7 @@ export function Bin({removeCallback, updateCallback, bin, index}: props) {
                  closedCallback={handleBinEditClose}
                  updateCallback={handleRedraw}
                  saveCallback={updateCallback}
+                 removeCallback={removeCallback}
                  title={"Edit Bin"}
         />
         <Confirmation closedCallback={handleDelete}
