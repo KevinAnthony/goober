@@ -1,15 +1,15 @@
 export abstract class DTO {
-    jsonOrUndefined() {
-        if (JSON.stringify(this) === '{}') {
-            return undefined
-        }
-
-        return this.JSON()
+  jsonOrUndefined() {
+    if (JSON.stringify(this) === "{}") {
+      return undefined;
     }
 
-    isEmpty(): boolean {
-        return JSON.stringify(this) === '{}'
-    }
+    return this.JSON();
+  }
 
-    abstract JSON(): object
+  isEmpty(): boolean {
+    return JSON.stringify(this) === "{}";
+  }
+
+  abstract JSON(): object;
 }
