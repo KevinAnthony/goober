@@ -74,10 +74,11 @@ export function Container({container}: props) {
 
     const memoizedRemoveBin = React.useCallback((index: number) => {
         removeBin(index)
-    }, [])
+    }, [removeBin])
+
     const memoizedSaveBin = React.useCallback((index: number, bin: BinObj, save: boolean) => {
         saveBin(index, bin, save)
-    }, [])
+    }, [saveBin])
 
     React.useEffect(() => {
         setRedrawBin(false)
