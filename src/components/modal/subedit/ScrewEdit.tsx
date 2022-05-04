@@ -42,7 +42,7 @@ export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
           <TextField
             id="length"
             variant="outlined"
-            label="length"
+            label="Length"
             defaultValue={bin.content[index].screw?.length ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const target = e.target as HTMLInputElement;

@@ -12,12 +12,18 @@ import { BinNet } from "../net/bin";
 interface props {
   bin: BinObj;
   index: number;
+  highlight: boolean;
   removeCallback: (index: number) => void;
   updateCallback: (index: number, bin: BinObj, save: boolean) => void;
 }
 
-// @ts-ignore
-export function Bin({ removeCallback, updateCallback, bin, index }: props) {
+export function Bin({
+  removeCallback,
+  updateCallback,
+  bin,
+  index,
+  highlight,
+}: props) {
   const binNet = new BinNet();
 
   const [color, setColor] = React.useState<ColorObj>(bin.color);
@@ -28,6 +34,13 @@ export function Bin({ removeCallback, updateCallback, bin, index }: props) {
   const [editIndex, setEditIndex] = React.useState<number>(-1);
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
     React.useState<boolean>(false);
+  const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
+    () => highlight
+  );
+
+  if (isHighlighted) {
+    setTimeout(() => setIsHighlighted(false), 2000);
+  }
 
   function handleBinEditClose() {
     setEditIndex(-1);
@@ -66,6 +79,7 @@ export function Bin({ removeCallback, updateCallback, bin, index }: props) {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        border: isHighlighted ? "0.4rem solid #0cc" : "",
       }}
     >
       <ButtonGroup

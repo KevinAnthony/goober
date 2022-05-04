@@ -1,6 +1,8 @@
 package model
 
 import (
+	"fmt"
+	"github.com/blevesearch/bleve/v2/mapping"
 	"time"
 )
 
@@ -35,4 +37,12 @@ type Content struct {
 	Bolt      *Bolt       `json:"bolt,omitempty" pg:"rel:belongs-to"`
 	Washer    *Washer     `json:"washer,omitempty" pg:"rel:belongs-to"`
 	Screw     *Screw      `json:"screw,omitempty" pg:"rel:belongs-to"`
+}
+
+type IContent interface {
+	fmt.Stringer
+	// BleveType is the private BleveClassifier
+	BleveType() string
+
+	CreateMapping(fieldMapping *mapping.FieldMapping) (string, *mapping.DocumentMapping)
 }

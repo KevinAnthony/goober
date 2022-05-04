@@ -198,4 +198,62 @@ Finish:\t${splitAndUppercase(this.content[index].screw?.material)}`;
         return `${this.unit} is undefined for screw`;
     }
   }
+
+  getSearchText(index: number): string {
+    switch (this.content[index].contentType) {
+      case "bolt":
+        return this.getBoltSearchText(index);
+      case "washer":
+        return this.getWasherSearchText(index);
+      case "screw":
+        return this.getScrewSearchText(index);
+      default:
+        return `${this.content[index].contentType} is undefined - getText`;
+    }
+  }
+
+  private getBoltSearchText(index: number): string {
+    switch (this.unit) {
+      case "mm":
+      case "in":
+        return `${this.content[index].bolt?.threadSize} - ${
+          this.content[index].bolt?.threadPitch
+        } X ${this.content[index].bolt?.length}${
+          this.unit
+        } -- ${splitAndUppercase(
+          this.content[index].bolt?.material
+        )} -- ${splitAndUppercase(this.content[index].bolt?.head)}`;
+      default:
+        return `${this.unit} is undefined for bolt`;
+    }
+  }
+
+  private getWasherSearchText(index: number) {
+    switch (this.unit) {
+      case "mm":
+        return `${this.content[index].washer?.size} -- ${splitAndUppercase(
+          this.content[index].washer?.material
+        )} -- ${splitAndUppercase(this.content[index].washer?.type)}`;
+      default:
+        return `${this.unit} is undefined for washer`;
+    }
+  }
+
+  private getScrewSearchText(index: number) {
+    console.log("bolt", this.content[index].screw);
+    switch (this.unit) {
+      case "in":
+        return `${this.content[index].screw?.size} X ${decToFraction(
+          this.content[index].screw?.length
+        )}${this.unit} -- ${splitAndUppercase(
+          this.content[index].screw?.material
+        )} -- ${splitAndUppercase(
+          this.content[index].screw?.type
+        )} /-- ${splitAndUppercase(
+          this.content[index].screw?.head
+        )}/${splitAndUppercase(this.content[index].screw?.drive)}`;
+      default:
+        return `${this.unit} is undefined for screw`;
+    }
+  }
 }

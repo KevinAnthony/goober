@@ -5,11 +5,14 @@ import { SideMenu } from "./components/SideMenu";
 import { ContainerNet } from "./net/container";
 import { ContainerObj } from "./model/container";
 import { Container } from "./components/Container";
+import { BinObj } from "./model/bin";
 
 function App() {
   const [containers, setContainerList] = React.useState<Array<ContainerObj>>(
     []
   );
+  const [highlightID, setHighlightID] = React.useState<string>("");
+
   const [container, setContainer] = React.useState<ContainerObj>(
     ContainerObj.Empty
   );
@@ -24,6 +27,12 @@ function App() {
       }
     });
   }, []);
+
+  function setContainerFromBin(bin: BinObj) {
+    setHighlightID(bin.id);
+    const found = containers.find((c) => c.id === bin.containerID);
+    setContainer(found ?? container);
+  }
 
   return (
     <div
@@ -51,7 +60,11 @@ function App() {
             justifyContent: "center",
           }}
         >
-          <Container container={container} />
+          <Container
+            container={container}
+            binToHighlightID={highlightID}
+            setContainerByBinCallback={setContainerFromBin}
+          />
         </div>
       </div>
     </div>

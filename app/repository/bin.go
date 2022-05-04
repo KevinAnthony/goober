@@ -10,6 +10,7 @@ import (
 type Bin interface {
 	Create(ctx context.Context, bin model.Bin) (model.Bin, error)
 	Get(ctx context.Context, bin model.Bin) (model.Bin, error)
+	GetByID(ctx context.Context, ids ...string) ([]model.Bin, error)
 	Update(ctx context.Context, bin model.Bin) (model.Bin, error)
 	Delete(ctx context.Context, bin model.Bin) error
 }
@@ -87,6 +88,26 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 		Select(&bin)
 
 	return bin, err
+}
+
+func (b bin) GetByID(ctx context.Context, ids ...string) ([]model.Bin, error) {
+	bins := make([]model.Bin, 0, len(ids))
+	for _, id := range ids {
+		bins = append(bins, model.Bin{ID: id})
+	}
+
+	err := b.db.
+		Model(&bins).
+		WherePK().
+		Context(ctx).
+		Returning("*").
+		Relation("Content").
+		Relation("Content.Bolt").
+		Relation("Content.Washer").
+		Relation("Content.Screw").
+		Select(&bins)
+
+	return bins, err
 }
 
 func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
