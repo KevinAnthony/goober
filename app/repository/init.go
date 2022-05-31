@@ -6,7 +6,6 @@ import (
 
 	"github.com/kevinanthony/goober/app/config"
 
-	_ "github.com/go-pg/pg/v10"
 	"github.com/go-pg/pg/v10"
 )
 
