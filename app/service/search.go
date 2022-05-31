@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"fmt"
+
 	_ "github.com/blevesearch/bleve/v2/mapping"
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/repository"

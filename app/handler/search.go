@@ -3,11 +3,11 @@ package handler
 import (
 	"context"
 	"fmt"
-	"github.com/kevinanthony/goober/app/service"
-	rh "github.com/kevinanthony/gorps/http"
 	"net/http"
 
 	_ "github.com/blevesearch/bleve/v2/mapping"
+	"github.com/kevinanthony/goober/app/service"
+	rh "github.com/kevinanthony/gorps/http"
 )
 
 type Search interface {

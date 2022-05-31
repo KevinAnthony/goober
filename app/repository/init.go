@@ -3,8 +3,9 @@ package repository
 import (
 	"context"
 	"fmt"
-	"github.com/go-pg/pg/v10"
+
 	_ "github.com/go-pg/pg/v10"
+	"github.com/go-pg/pg/v10"
 	"github.com/kevinanthony/goober/app/config"
 )
 
