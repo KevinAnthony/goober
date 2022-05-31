@@ -41,7 +41,7 @@ jobs:
         node_js
 
       node_js:
-        - "stable"
+        - 17
 
       cache:
         directories:

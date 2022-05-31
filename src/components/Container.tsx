@@ -2,7 +2,7 @@ import React from "react";
 import Button from "@mui/material/Button";
 import ButtonGroup from "@mui/material/ButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faTrash, faSearch } from "@fortawesome/free-solid-svg-icons";
 import { Typography } from "@mui/material";
 import { ContainerObj } from "../model/container";
 import { BackgroundGrid } from "./BackgroundGrid";
@@ -16,14 +16,20 @@ import { BoltObj } from "../model/bolt";
 import { hex2rgb } from "../util/formatting";
 import { red } from "@mui/material/colors";
 import { isEmpty } from "../util/utils";
+import { SearchBox } from "./modal/Search";
 
 interface props {
   container: ContainerObj;
+  setContainerByBinCallback: (bin: BinObj) => void;
+  binToHighlightID: string;
 }
 
-export function Container({ container }: props) {
+export function Container({
+  container,
+  setContainerByBinCallback,
+  binToHighlightID,
+}: props) {
   const [bins, setBins] = React.useState(() => container.bin);
-
   const binNet = new BinNet();
 
   React.useEffect(() => {
@@ -42,6 +48,10 @@ export function Container({ container }: props) {
     setRedrawBin(true);
 
     return;
+  }
+
+  function closeSearch() {
+    setPopupObject(<div />);
   }
 
   function saveBin(index: number, bin: BinObj, save: boolean) {
@@ -70,16 +80,17 @@ export function Container({ container }: props) {
   const [newBinIndex, setNewBinIndex] = React.useState<number>(-1);
   const [newBin, setNewBin] = React.useState<BinObj>(createNewBin());
   const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
-  const [newBinObject, setNewBinObject] = React.useState<JSX.Element>(<div />);
+  const [newPopupObject, setPopupObject] = React.useState<JSX.Element>(<div />);
 
   React.useEffect(() => {
     setRedrawBin(false);
 
     if (newBinIndex < 0) {
-      setNewBinObject(<div />);
+      setPopupObject(<div />);
     } else {
-      setNewBinObject(
+      setPopupObject(
         <Bin
+          highlight={false}
           bin={newBin}
           index={newBinIndex}
           removeCallback={removeBin}
@@ -113,6 +124,15 @@ export function Container({ container }: props) {
 
   function handleNewBinOpen() {
     setNewBinIndex(container.bin.length + 1);
+  }
+
+  function handleSearchOpen() {
+    setPopupObject(
+      <SearchBox
+        closedCallback={closeSearch}
+        foundCallback={setContainerByBinCallback}
+      />
+    );
   }
 
   let gridGrid = Array(container.width)
@@ -179,14 +199,14 @@ export function Container({ container }: props) {
                 <FontAwesomeIcon icon={faPlus} />
               </Button>
               <Button
+                onClick={handleSearchOpen}
                 style={{
                   padding: "4px",
                   width: "4em",
                   height: "4em",
                 }}
-                onClick={() => {}}
               >
-                <FontAwesomeIcon icon={faCog} />
+                <FontAwesomeIcon icon={faSearch} />
               </Button>
               <Button
                 style={{
@@ -213,6 +233,7 @@ export function Container({ container }: props) {
           {gridGrid}
           {bins.map((bin: BinObj, index: number) => (
             <Bin
+              highlight={binToHighlightID === bin.id}
               removeCallback={removeBin}
               updateCallback={saveBin}
               key={`bin-${bin.id}`}
@@ -220,7 +241,7 @@ export function Container({ container }: props) {
               bin={bin}
             />
           ))}
-          {newBinObject}
+          {newPopupObject}
         </div>
       </div>
       <BinEdit

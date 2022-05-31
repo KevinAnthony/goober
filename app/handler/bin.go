@@ -3,9 +3,9 @@ package handler
 import (
 	"context"
 	"fmt"
-	"github.com/kevinanthony/goober/app/model"
 	"net/http"
 
+	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/service"
 	rh "github.com/kevinanthony/gorps/http"
 )

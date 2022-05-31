@@ -3,6 +3,7 @@ module github.com/kevinanthony/goober
 go 1.16
 
 require (
+	github.com/blevesearch/bleve/v2 v2.3.1
 	github.com/caarlos0/env/v6 v6.9.1
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.0

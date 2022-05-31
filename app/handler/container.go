@@ -2,11 +2,11 @@ package handler
 
 import (
 	"context"
-	"github.com/kevinanthony/goober/app/model"
-	rh "github.com/kevinanthony/gorps/http"
 	"net/http"
 
+	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/service"
+	rh "github.com/kevinanthony/gorps/http"
 )
 
 type Container interface {
