@@ -5,9 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	_ "github.com/blevesearch/bleve/v2/mapping"
 	"github.com/kevinanthony/goober/app/service"
 	rh "github.com/kevinanthony/gorps/http"
+
+	_ "github.com/blevesearch/bleve/v2/mapping"
 )
 
 type Search interface {

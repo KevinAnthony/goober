@@ -4,13 +4,14 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/kevinanthony/goober/app/model"
+	"github.com/kevinanthony/goober/app/repository"
+
 	"github.com/blevesearch/bleve/v2"
 	"github.com/blevesearch/bleve/v2/analysis/analyzer/keyword"
 	"github.com/blevesearch/bleve/v2/analysis/lang/en"
 	"github.com/blevesearch/bleve/v2/mapping"
 	"github.com/blevesearch/bleve/v2/search/query"
-	"github.com/kevinanthony/goober/app/model"
-	"github.com/kevinanthony/goober/app/repository"
 )
 
 const indexPath = "content-search.bleve"

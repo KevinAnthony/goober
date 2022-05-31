@@ -3,11 +3,12 @@ package server
 import (
 	native "net/http"
 
-	"github.com/go-chi/chi"
-	"github.com/go-chi/cors"
 	"github.com/kevinanthony/goober/app/handler"
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/gorps/http"
+
+	"github.com/go-chi/chi"
+	"github.com/go-chi/cors"
 )
 
 type HTTPServer struct {

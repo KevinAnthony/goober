@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	_ "github.com/go-pg/pg/v10"
-	"github.com/go-pg/pg/v10"
 	"github.com/kevinanthony/goober/app/config"
+
+	"github.com/go-pg/pg/v10"
+	_ "github.com/go-pg/pg/v10"
 )
 
 func GetDBConnection(cfg config.Postgres) *pg.DB {
