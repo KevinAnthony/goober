@@ -20,10 +20,9 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
   const [query, setQuery] = React.useState("");
 
   const [results, setResults] = React.useState(() => Array<BinObj>());
-  const [resultList, _] = React.useState<JSX.Element>(<List />);
+  const [resultList] = React.useState<JSX.Element>(<List />);
 
   React.useEffect(() => {
-    {
       results.map((bin: BinObj, _: number) => (
         <Button
           variant="outlined"
@@ -34,7 +33,6 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
           {bin.getText(0)}
         </Button>
       ));
-    }
   }, [results]);
 
   React.useEffect(() => {
@@ -46,7 +44,7 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
       500
     );
     return () => clearTimeout(timeOutId);
-  }, [query]);
+  }, [query, searchNet]);
 
   const [open, setOpen] = React.useState(true);
 
