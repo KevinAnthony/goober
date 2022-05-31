@@ -16,7 +16,7 @@ interface searchProps {
 }
 
 export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
-  const searchNet = new SearchNet();
+  const [searchNet] =  React.useState(new SearchNet());
   const [query, setQuery] = React.useState("");
 
   const [results, setResults] = React.useState(() => Array<BinObj>());
@@ -38,7 +38,7 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
   React.useEffect(() => {
     const timeOutId = setTimeout(
       () =>
-        searchNet.searchText(query).then(function (b) {
+        searchNet.searchText(query).then(function (b:BinObj[]) {
           setResults(b);
         }),
       500
