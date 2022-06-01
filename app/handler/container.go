@@ -34,7 +34,6 @@ func NewContainer(reqHdlr rh.RequestHandler, bsvc service.Container) Container {
 
 func (c container) Create(ctx context.Context, r *http.Request) (interface{}, error) {
 	var req struct {
-		ID   string          `path:"binID" validators:"required"`
 		Body model.Container `body:"request"`
 	}
 
@@ -54,11 +53,25 @@ func (c container) GetSingle(ctx context.Context, r *http.Request) (interface{},
 	panic("implement me")
 }
 func (c container) Update(ctx context.Context, r *http.Request) (interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+	var req struct {
+		Body model.Container `body:"request"`
+	}
+
+	if err := c.rh.MarshalAndVerify(r, &req); err != nil {
+		return nil, err
+	}
+
+	return c.containerSvc.Update(ctx, req.Body)
 }
 
 func (c container) Delete(ctx context.Context, r *http.Request) (interface{}, error) {
-	//TODO implement me
-	panic("implement me")
+	var req struct {
+		ID string `path:"containerID" validators:"required"`
+	}
+
+	if err := c.rh.MarshalAndVerify(r, &req); err != nil {
+		return nil, err
+	}
+
+	return nil, c.containerSvc.Delete(ctx, req.ID)
 }

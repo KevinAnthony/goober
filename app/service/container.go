@@ -12,7 +12,7 @@ type Container interface {
 	GetAll(ctx context.Context) ([]model.Container, error)
 	GetSingle(ctx context.Context, container model.Container) (model.Container, error)
 	Update(ctx context.Context, container model.Container) (model.Container, error)
-	Delete(ctx context.Context, container model.Container) error
+	Delete(ctx context.Context, id string) error
 }
 
 type container struct {
@@ -45,6 +45,6 @@ func (c container) Update(ctx context.Context, container model.Container) (model
 	return c.containerRepo.Update(ctx, container)
 }
 
-func (c container) Delete(ctx context.Context, container model.Container) error {
-	return c.containerRepo.Delete(ctx, container)
+func (c container) Delete(ctx context.Context, id string) error {
+	return c.containerRepo.Delete(ctx, id)
 }
