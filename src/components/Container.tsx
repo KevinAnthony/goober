@@ -18,20 +18,39 @@ import {red} from "@mui/material/colors";
 import {isEmpty} from "../util/utils";
 import {SearchBox} from "./modal/Search";
 import {ContainerEdit} from "./modal/ContainerEdit";
+import {ContainerNet} from "../net/container";
+import {Confirmation} from "./dialog/Confirmation";
 
 interface props {
+    removeContainer: (container:ContainerObj) => void;
+    setPopup: React.Dispatch<React.SetStateAction<JSX.Element>>
     container: ContainerObj;
     setContainerByBinCallback: (bin: BinObj) => void;
     binToHighlightID: string;
 }
 
 export function Container({
+                              removeContainer,
+                              setPopup,
                               container,
                               setContainerByBinCallback,
                               binToHighlightID,
                           }: props) {
     const [bins, setBins] = React.useState(() => container.bin);
     const binNet = new BinNet();
+    const containerNet = new ContainerNet();
+
+    const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
+        React.useState<boolean>(false);
+
+    function handleDelete(accepted: boolean) {
+        if (accepted) {
+            containerNet.deleteContainer(container).then(() => {
+                removeContainer(container);
+            });
+        }
+        setDeleteConfirmationOpen(false);
+    }
 
     React.useEffect(() => {
         setBins(container.bin);
@@ -52,7 +71,7 @@ export function Container({
     }
 
     function closePopup() {
-        setPopupObject(<div/>);
+        setPopup(<div/>);
     }
 
     function saveBin(index: number, bin: BinObj, save: boolean) {
@@ -81,15 +100,15 @@ export function Container({
     const [newBinIndex, setNewBinIndex] = React.useState<number>(-1);
     const [newBin, setNewBin] = React.useState<BinObj>(createNewBin());
     const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
-    const [newPopupObject, setPopupObject] = React.useState<JSX.Element>(<div/>);
+
 
     React.useEffect(() => {
         setRedrawBin(false);
 
         if (newBinIndex < 0) {
-            setPopupObject(<div/>);
+            setPopup(<div/>);
         } else {
-            setPopupObject(
+            setPopup(
                 <Bin
                     highlight={false}
                     bin={newBin}
@@ -128,13 +147,11 @@ export function Container({
     }
 
     function handleEditContainerOpen() {
-        setPopupObject(
-            <ContainerEdit closedCallback={closePopup} container={container}/>
-        )
+        setPopup(<ContainerEdit closedCallback={closePopup} container={container}/>)
     }
 
     function handleSearchOpen() {
-        setPopupObject(
+        setPopup(
             <SearchBox
                 closedCallback={closePopup}
                 foundCallback={setContainerByBinCallback}
@@ -231,8 +248,7 @@ export function Container({
                                     width: "4em",
                                     height: "4em",
                                 }}
-                                onClick={() => {
-                                }}
+                                onClick={() => setDeleteConfirmationOpen(true)}
                             >
                                 <FontAwesomeIcon icon={faTrash}/>
                             </Button>
@@ -259,7 +275,6 @@ export function Container({
                             bin={bin}
                         />
                     ))}
-                    {newPopupObject}
                 </div>
             </div>
             <BinEdit
@@ -270,6 +285,12 @@ export function Container({
                 updateCallback={drawNewBin}
                 removeCallback={removeBin}
                 saveCallback={saveBin}
+            />
+            <Confirmation
+                closedCallback={handleDelete}
+                open={deleteConfirmationOpen}
+                title={"Delete Container"}
+                description={"if you delete this container, it will be unrecoverable"}
             />
         </>
     );

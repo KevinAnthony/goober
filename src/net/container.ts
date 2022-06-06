@@ -22,6 +22,34 @@ export class ContainerNet extends netCode {
             });
     }
 
+    createContainer(container: ContainerObj): Promise<any> {
+        const json = JSON.stringify(container.JSON());
+
+        return window
+            .fetch(`${this.getURL()}/container`, {
+                method: "POST",
+                redirect: "follow",
+                referrerPolicy: "no-referrer",
+                headers: {
+                    Host: window.location.origin,
+                    Origin: window.location.origin,
+                    "Content-Type": "application/json",
+                    "Content-Length": json.length.toString(),
+                },
+                body: json,
+            })
+            .then((r) => {
+                if (!r.ok) {
+                    throw r;
+                }
+
+                return r.json();
+            })
+            .then<ContainerObj>((data) => {
+                return ContainerObj.Parse(data);
+            });
+    }
+
     putContainer(container: ContainerObj): Promise<any> {
         const json = JSON.stringify(container.JSON());
 
