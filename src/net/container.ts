@@ -24,13 +24,9 @@ export class ContainerNet extends netCode {
 
     putContainer(container: ContainerObj): Promise<any> {
         const json = JSON.stringify(container.JSON());
-        const url = this.getURL();
 
-        console.log(json)
-        console.log(`${url}/container/${container.id}`)
-        console.log("here")
         return window
-            .fetch(`${url}/container/${container.id}`, {
+            .fetch(`${this.getURL()}/container/${container.id}`, {
                 method: "PUT",
                 redirect: "follow",
                 referrerPolicy: "no-referrer",
@@ -55,9 +51,8 @@ export class ContainerNet extends netCode {
     }
 
     deleteContainer(container: ContainerObj): Promise<ContainerObj> {
-        const url = this.getURL();
         return window
-            .fetch(`${url}/container/${container.id}`, {
+            .fetch(`${this.getURL()}/container/${container.id}`, {
                 method: "DELETE",
                 redirect: "follow",
                 referrerPolicy: "no-referrer",
