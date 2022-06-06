@@ -12,6 +12,7 @@ export function BackgroundGrid({ x, y, background }: props) {
   y += 1;
   const stopX = x + 1;
   const stopY = y + 1;
+  
   return (
     <div
       className="grid-grid"

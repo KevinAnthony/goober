@@ -1,27 +1,19 @@
 import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { pink } from '@mui/material/colors';
+import { TypographyOptions } from "@mui/material/styles/createTypography";
 
-declare module '@mui/material/styles' {
-    interface Theme {
-        status: {
-            danger: string;
-        };
-    }
-    // allow configuration using `createTheme`
-    interface ThemeOptions {
-        status?: {
-            danger?: string;
-        };
-    }
+interface ExtendedTypographyOptions extends TypographyOptions {
+    bin_content: React.CSSProperties;
 }
-
-const theme = createTheme({
+const gooberTheme = createTheme({
     typography: {
         allVariants: {
-            color: pink[500]
+            color:"whitesmoke"
         },
-    },
+        bin_content: {
+            whiteSpace:"pre",
+        }
+    } as ExtendedTypographyOptions,
 });
 
 interface themeWrapperProps {
@@ -30,7 +22,7 @@ interface themeWrapperProps {
 
 export default function ThemeWrapper({ children }: themeWrapperProps) {
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={gooberTheme}>
             {children}
         </ThemeProvider>
     );

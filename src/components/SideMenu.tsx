@@ -4,6 +4,7 @@ import ButtonGroup from "@mui/material/ButtonGroup";
 import Box from "@mui/material/Box";
 import {ContainerObj} from "../model/container";
 import {ContainerNew} from "./modal/ContainerNew";
+import {Typography} from "@mui/material";
 
 interface props {
     setPopup: React.Dispatch<React.SetStateAction<JSX.Element>>
@@ -12,7 +13,7 @@ interface props {
 }
 
 export function SideMenu({setPopup, containers, setOptionCallback}: props) {
-    function closePopup(container:ContainerObj) {
+    function closePopup(container: ContainerObj) {
         if (container.id.length > 0) {
             containers.push(container)
         }
@@ -43,7 +44,7 @@ export function SideMenu({setPopup, containers, setOptionCallback}: props) {
                         setPopup(<ContainerNew closedCallback={closePopup}/>)
                     }}
                 >
-                    New
+                    <Typography>New</Typography>
                 </Button>
                 {containers.map((container: ContainerObj) => (
                     <Button
@@ -56,7 +57,7 @@ export function SideMenu({setPopup, containers, setOptionCallback}: props) {
                             setOptionCallback(container);
                         }}
                     >
-                        {container.label}
+                        <Typography>{container.label}</Typography>
                     </Button>
                 ))}
             </ButtonGroup>
