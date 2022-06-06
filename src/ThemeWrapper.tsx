@@ -2,6 +2,12 @@ import * as React from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { TypographyOptions } from "@mui/material/styles/createTypography";
 
+declare module "@mui/material/Typography" {
+    interface TypographyPropsVariantOverrides {
+        bin_content: true;
+    }
+}
+
 interface ExtendedTypographyOptions extends TypographyOptions {
     bin_content: React.CSSProperties;
 }
