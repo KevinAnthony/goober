@@ -22,6 +22,7 @@ import {ContainerNet} from "../net/container";
 import {Confirmation} from "./dialog/Confirmation";
 
 interface props {
+    removeContainer: (container:ContainerObj) => void;
     setPopup: React.Dispatch<React.SetStateAction<JSX.Element>>
     container: ContainerObj;
     setContainerByBinCallback: (bin: BinObj) => void;
@@ -29,6 +30,7 @@ interface props {
 }
 
 export function Container({
+                              removeContainer,
                               setPopup,
                               container,
                               setContainerByBinCallback,
@@ -44,7 +46,7 @@ export function Container({
     function handleDelete(accepted: boolean) {
         if (accepted) {
             containerNet.deleteContainer(container).then(() => {
-                // removeCallback(index);
+                removeContainer(container);
             });
         }
         setDeleteConfirmationOpen(false);

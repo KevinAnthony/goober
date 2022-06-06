@@ -8,26 +8,27 @@ import {Container} from "./components/Container";
 import {BinObj} from "./model/bin";
 
 function App() {
-    const [containers, setContainerList] = React.useState<Array<ContainerObj>>(
-        []
-    );
+    const [containers, setContainerList] = React.useState<Array<ContainerObj>>([]);
     const [highlightID, setHighlightID] = React.useState<string>("");
-
-    const [container, setContainer] = React.useState<ContainerObj>(
-        ContainerObj.Empty
-    );
+    const [container, setContainer] = React.useState<ContainerObj>(ContainerObj.Empty);
     const [newPopupObject, setPopupObject] = React.useState<JSX.Element>(<div/>);
 
     React.useEffect(() => {
         const netContainer = new ContainerNet();
 
-        netContainer.getContainerAll().then((containerList) => {
+        netContainer.getContainerAll().then((containerList:ContainerObj[]) => {
             setContainerList(containerList);
             if (containerList.length > 0) {
                 setContainer(containerList[0]);
             }
         });
     }, []);
+
+    function removeContainer(container:ContainerObj) {
+        const newContainer = containers.filter(c => c.id !== container.id);
+        setContainerList(newContainer);
+        setContainer(newContainer[0]);
+    }
 
     function setContainerFromBin(bin: BinObj) {
         setHighlightID(bin.id);
@@ -63,6 +64,7 @@ function App() {
                     }}
                 >
                     <Container
+                        removeContainer={removeContainer}
                         setPopup={setPopupObject}
                         container={container}
                         binToHighlightID={highlightID}
