@@ -22,7 +22,7 @@ import {ContainerNet} from "../net/container";
 import {Confirmation} from "./dialog/Confirmation";
 
 interface props {
-    removeContainer: (container:ContainerObj) => void;
+    removeContainer: (container: ContainerObj) => void;
     setPopup: React.Dispatch<React.SetStateAction<JSX.Element>>
     container: ContainerObj;
     setContainerByBinCallback: (bin: BinObj) => void;
@@ -220,7 +220,9 @@ export function Container({
                                     height: "4em",
                                 }}
                             >
-                                <FontAwesomeIcon icon={faPlus}/>
+                                <Typography>
+                                    <FontAwesomeIcon icon={faPlus}/>
+                                </Typography>
                             </Button>
                             <Button
                                 onClick={handleEditContainerOpen}
@@ -230,7 +232,9 @@ export function Container({
                                     height: "4em",
                                 }}
                             >
-                                <FontAwesomeIcon icon={faCog}/>
+                                <Typography>
+                                    <FontAwesomeIcon icon={faCog}/>
+                                </Typography>
                             </Button>
                             <Button
                                 onClick={handleSearchOpen}
@@ -240,7 +244,9 @@ export function Container({
                                     height: "4em",
                                 }}
                             >
-                                <FontAwesomeIcon icon={faSearch}/>
+                                <Typography>
+                                    <FontAwesomeIcon icon={faSearch}/>
+                                </Typography>
                             </Button>
                             <Button
                                 style={{
@@ -250,7 +256,9 @@ export function Container({
                                 }}
                                 onClick={() => setDeleteConfirmationOpen(true)}
                             >
-                                <FontAwesomeIcon icon={faTrash}/>
+                                <Typography>
+                                    <FontAwesomeIcon icon={faTrash}/>
+                                </Typography>
                             </Button>
                         </ButtonGroup>
                     </div>
