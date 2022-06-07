@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "@mui/material";
+import {TextField} from "@mui/material";
 
 interface outlineBoxProps {
   children: React.ReactNode;
@@ -9,7 +9,7 @@ interface outlineBoxProps {
 
 const InputComponent = ({ ...other }) => <div {...other} />;
 
-export const OutlinedBox = ({ children, label, style }: outlineBoxProps) => {
+export const OutlinedBox = ({children, label, style}: outlineBoxProps) => {
   return (
     <TextField
       variant="outlined"

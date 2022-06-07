@@ -62,7 +62,7 @@ export function ContainerNew({closedCallback}: props) {
                                 height: "4em",
                             }}
                             onClick={() => {
-                                net.createContainer(container).then((container: ContainerObj)=>{
+                                net.createContainer(container).then((container: ContainerObj) => {
                                     closedCallback(container);
                                 })
                             }}

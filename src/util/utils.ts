@@ -1,3 +1,3 @@
 export function isEmpty(str: string): boolean {
-  return str === undefined || str === "";
+    return str === undefined || str === "";
 }

@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, {MouseEvent} from "react";
 import {
   Box,
   Button,
@@ -9,25 +9,18 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import {
-  amber,
-  blueGrey,
-  green,
-  indigo,
-  orange,
-  red,
-} from "@mui/material/colors";
-import { hex2rgb, rgb2hex } from "../../util/formatting";
-import { BinObj } from "../../model/bin";
-import { OutlinedBox } from "./OutlineBox";
-import { ColorButton } from "./ColorButton";
-import { BoltObj } from "../../model/bolt";
-import { WasherObj } from "../../model/washer";
-import { ScrewObj } from "../../model/screw";
-import { BinNet } from "../../net/bin";
-import { WasherEdit } from "./subedit/WasherEdit";
-import { BoltEdit } from "./subedit/BoltEdit";
-import { ScrewEdit } from "./subedit/ScrewEdit";
+import {amber, blueGrey, green, indigo, orange, red,} from "@mui/material/colors";
+import {hex2rgb, rgb2hex} from "../../util/formatting";
+import {BinObj} from "../../model/bin";
+import {OutlinedBox} from "./OutlineBox";
+import {ColorButton} from "./ColorButton";
+import {BoltObj} from "../../model/bolt";
+import {WasherObj} from "../../model/washer";
+import {ScrewObj} from "../../model/screw";
+import {BinNet} from "../../net/bin";
+import {WasherEdit} from "./subedit/WasherEdit";
+import {BoltEdit} from "./subedit/BoltEdit";
+import {ScrewEdit} from "./subedit/ScrewEdit";
 
 interface props {
   bin: BinObj;
