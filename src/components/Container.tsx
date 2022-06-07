@@ -12,7 +12,6 @@ import {BinNet} from "../net/bin";
 import {Bin} from "./Bin";
 import {BinEdit} from "./modal/BinEdit";
 import {ContentObj} from "../model/content";
-import {BoltObj} from "../model/bolt";
 import {hex2rgb} from "../util/formatting";
 import {red} from "@mui/material/colors";
 import {isEmpty} from "../util/utils";
@@ -123,16 +122,17 @@ export function Container({
 
     function createNewBin(): BinObj {
         const newContent = ContentObj.Empty();
-        newContent.contentType = "bolt";
-        newContent.bolt = BoltObj.Empty();
+        newContent.contentType = "empty";
 
         const newBin = BinObj.Empty();
         newBin.content.push(newContent);
+        //TODO lets try and figure out where this goes in reality
         newBin.width = 5;
         newBin.height = 5;
         newBin.x = 0;
         newBin.y = 0;
         newBin.color = hex2rgb(red[500]);
+        newBin.unit = "cm";
 
         return newBin;
     }

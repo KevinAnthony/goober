@@ -14,8 +14,6 @@ export function ContainerEdit({
                                   container
                               }: props) {
     const net = new ContainerNet();
-    console.log(net)
-    console.log(container)
     return (
         <div
             style={{
@@ -59,7 +57,7 @@ export function ContainerEdit({
                                 height: "4em",
                             }}
                             onClick={() => {
-                                net.putContainer(container).then(()=>{
+                                net.putContainer(container).then(() => {
                                     closedCallback();
                                 })
                             }}

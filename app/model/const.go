@@ -18,6 +18,8 @@ const (
 	UnitAN         UnitType = "an"
 )
 const (
+	ContentEmpty  ContentType = "empty"
+	ContentSimple ContentType = "simple"
 	ContentBolt   ContentType = "bolt"
 	ContentScrew  ContentType = "screw"
 	ContentWasher ContentType = "washer"

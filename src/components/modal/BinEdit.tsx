@@ -122,6 +122,7 @@ export function BinEdit({
                 setContainer(getFieldsForContent(binState, 0, updateCallback));
               }}
             >
+              <ToggleButton value="empty">Empty</ToggleButton>
               <ToggleButton value="bolt">Bolt</ToggleButton>
               <ToggleButton value="screw">Screw</ToggleButton>
               <ToggleButton value="washer">Washer</ToggleButton>
@@ -306,18 +307,14 @@ function getFieldsForContent(
     case undefined: {
       return <p>content_type undefined</p>;
     }
+    case "empty":
+      return (<div/>);
     case "bolt":
-      return (
-        <BoltEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<BoltEdit bin={bin} index={index} updateCallback={updateCallback} />);
     case "washer":
-      return (
-        <WasherEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<WasherEdit bin={bin} index={index} updateCallback={updateCallback} />);
     case "screw":
-      return (
-        <ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />);
     default:
       return <p>{`${bin.content[index].contentType} is undefined`}</p>;
   }
