@@ -50,6 +50,7 @@ func (c container) GetAll(ctx context.Context) ([]model.Container, error) {
 		Relation("Bins.Content.Bolt").
 		Relation("Bins.Content.Washer").
 		Relation("Bins.Content.Screw").
+		Relation("Bins.Content.Simple").
 		Where("deleted_at is null").Context(ctx).Returning("*").Select()
 
 	return container, err

@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React, {MouseEvent} from "react";
 import {
   Box,
   Button,
@@ -9,25 +9,18 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import {
-  amber,
-  blueGrey,
-  green,
-  indigo,
-  orange,
-  red,
-} from "@mui/material/colors";
-import { hex2rgb, rgb2hex } from "../../util/formatting";
-import { BinObj } from "../../model/bin";
-import { OutlinedBox } from "./OutlineBox";
-import { ColorButton } from "./ColorButton";
-import { BoltObj } from "../../model/bolt";
-import { WasherObj } from "../../model/washer";
-import { ScrewObj } from "../../model/screw";
-import { BinNet } from "../../net/bin";
-import { WasherEdit } from "./subedit/WasherEdit";
-import { BoltEdit } from "./subedit/BoltEdit";
-import { ScrewEdit } from "./subedit/ScrewEdit";
+import {amber, blueGrey, green, indigo, orange, red,} from "@mui/material/colors";
+import {hex2rgb, rgb2hex} from "../../util/formatting";
+import {BinObj} from "../../model/bin";
+import {OutlinedBox} from "./OutlineBox";
+import {ColorButton} from "./ColorButton";
+import {BoltObj} from "../../model/bolt";
+import {WasherObj} from "../../model/washer";
+import {ScrewObj} from "../../model/screw";
+import {BinNet} from "../../net/bin";
+import {WasherEdit} from "./subedit/WasherEdit";
+import {BoltEdit} from "./subedit/BoltEdit";
+import {ScrewEdit} from "./subedit/ScrewEdit";
 
 interface props {
   bin: BinObj;
@@ -122,6 +115,7 @@ export function BinEdit({
                 setContainer(getFieldsForContent(binState, 0, updateCallback));
               }}
             >
+              <ToggleButton value="empty">Empty</ToggleButton>
               <ToggleButton value="bolt">Bolt</ToggleButton>
               <ToggleButton value="screw">Screw</ToggleButton>
               <ToggleButton value="washer">Washer</ToggleButton>
@@ -306,18 +300,14 @@ function getFieldsForContent(
     case undefined: {
       return <p>content_type undefined</p>;
     }
+    case "empty":
+      return (<div/>);
     case "bolt":
-      return (
-        <BoltEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<BoltEdit bin={bin} index={index} updateCallback={updateCallback} />);
     case "washer":
-      return (
-        <WasherEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<WasherEdit bin={bin} index={index} updateCallback={updateCallback} />);
     case "screw":
-      return (
-        <ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return (<ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />);
     default:
       return <p>{`${bin.content[index].contentType} is undefined`}</p>;
   }
