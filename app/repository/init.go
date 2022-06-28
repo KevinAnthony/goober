@@ -37,7 +37,9 @@ type hook struct{}
 
 func (h hook) BeforeQuery(ctx context.Context, event *pg.QueryEvent) (context.Context, error) {
 	query, _ := event.FormattedQuery()
+	
 	fmt.Println(string(query))
+
 	return ctx, nil
 }
 

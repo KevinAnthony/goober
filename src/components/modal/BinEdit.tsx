@@ -1,4 +1,4 @@
-import React, {MouseEvent} from "react";
+import React, { MouseEvent } from "react";
 import {
   Box,
   Button,
@@ -9,18 +9,27 @@ import {
   ToggleButton,
   ToggleButtonGroup,
 } from "@mui/material";
-import {amber, blueGrey, green, indigo, orange, red,} from "@mui/material/colors";
-import {hex2rgb, rgb2hex} from "../../util/formatting";
-import {BinObj} from "../../model/bin";
-import {OutlinedBox} from "./OutlineBox";
-import {ColorButton} from "./ColorButton";
-import {BoltObj} from "../../model/bolt";
-import {WasherObj} from "../../model/washer";
-import {ScrewObj} from "../../model/screw";
-import {BinNet} from "../../net/bin";
-import {WasherEdit} from "./subedit/WasherEdit";
-import {BoltEdit} from "./subedit/BoltEdit";
-import {ScrewEdit} from "./subedit/ScrewEdit";
+import {
+  amber,
+  blueGrey,
+  green,
+  indigo,
+  orange,
+  red,
+} from "@mui/material/colors";
+import { hex2rgb, rgb2hex } from "../../util/formatting";
+import { BinObj } from "../../model/bin";
+import { OutlinedBox } from "./OutlineBox";
+import { ColorButton } from "./ColorButton";
+import { BoltObj } from "../../model/bolt";
+import { WasherObj } from "../../model/washer";
+import { ScrewObj } from "../../model/screw";
+import { SimpleObj } from "../../model/simple";
+import { BinNet } from "../../net/bin";
+import { WasherEdit } from "./subedit/WasherEdit";
+import { BoltEdit } from "./subedit/BoltEdit";
+import { ScrewEdit } from "./subedit/ScrewEdit";
+import { SimpleEdit } from "./subedit/SimpleEdit";
 
 interface props {
   bin: BinObj;
@@ -110,6 +119,7 @@ export function BinEdit({
                 binState.content[contentIndex].bolt = BoltObj.Empty();
                 binState.content[contentIndex].screw = ScrewObj.Empty();
                 binState.content[contentIndex].washer = WasherObj.Empty();
+                binState.content[contentIndex].simple = SimpleObj.Empty();
 
                 setBin(binState);
                 setContainer(getFieldsForContent(binState, 0, updateCallback));
@@ -119,6 +129,7 @@ export function BinEdit({
               <ToggleButton value="bolt">Bolt</ToggleButton>
               <ToggleButton value="screw">Screw</ToggleButton>
               <ToggleButton value="washer">Washer</ToggleButton>
+              <ToggleButton value="simple">Simple</ToggleButton>
             </ToggleButtonGroup>
           </div>
           <Box component="form">
@@ -301,13 +312,23 @@ function getFieldsForContent(
       return <p>content_type undefined</p>;
     }
     case "empty":
-      return (<div/>);
+      return <div />;
     case "bolt":
-      return (<BoltEdit bin={bin} index={index} updateCallback={updateCallback} />);
+      return (
+        <BoltEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
     case "washer":
-      return (<WasherEdit bin={bin} index={index} updateCallback={updateCallback} />);
+      return (
+        <WasherEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
     case "screw":
-      return (<ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />);
+      return (
+        <ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
+    case "simple":
+      return (
+        <SimpleEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
     default:
       return <p>{`${bin.content[index].contentType} is undefined`}</p>;
   }

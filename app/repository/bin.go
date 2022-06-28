@@ -67,6 +67,14 @@ func (b bin) Create(ctx context.Context, bin model.Bin) (model.Bin, error) {
 					return errors.Wrap(err, "insert washer")
 				}
 			}
+
+			if content.Simple != nil {
+				content.Simple.ContentID = content.ID
+
+				if _, err := tx.Model(content.Simple).Context(ctx).Returning("*").Insert(); err != nil {
+					return errors.Wrap(err, "insert simple")
+				}
+			}
 		}
 
 		return nil
@@ -87,6 +95,7 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 		Relation("Content.Bolt").
 		Relation("Content.Washer").
 		Relation("Content.Screw").
+		Relation("Content.Simple").
 		Select(&bin)
 
 	return bin, err
@@ -107,6 +116,7 @@ func (b bin) GetByID(ctx context.Context, ids ...string) ([]model.Bin, error) {
 		Relation("Content.Bolt").
 		Relation("Content.Washer").
 		Relation("Content.Screw").
+		Relation("Content.Simple").
 		Select(&bins)
 
 	return bins, err
@@ -125,20 +135,42 @@ func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
 			}
 
 			if content.Bolt != nil {
-				if _, err := tx.Model(content.Bolt).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+				if len(content.Bolt.ContentID) == 0 {
+					content.Bolt.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Bolt), content.Bolt.ID); err != nil {
 					return errors.Wrap(err, "update bolt")
 				}
 			}
 
 			if content.Screw != nil {
-				if _, err := tx.Model(content.Screw).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+				if len(content.Screw.ContentID) == 0 {
+					content.Screw.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Screw), content.Screw.ID); err != nil {
 					return errors.Wrap(err, "update screw")
 				}
 			}
 
 			if content.Washer != nil {
-				if _, err := tx.Model(content.Washer).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+				if len(content.Washer.ContentID) == 0 {
+					content.Washer.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Washer), content.Washer.ID); err != nil {
 					return errors.Wrap(err, "update washer")
+				}
+			}
+
+			if content.Simple != nil {
+				if len(content.Simple.ContentID) == 0 {
+					content.Simple.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Simple), content.Simple.ID); err != nil {
+					return errors.Wrap(err, "update simple")
 				}
 			}
 		}
@@ -153,6 +185,19 @@ func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
 
 func (b bin) Delete(ctx context.Context, bin model.Bin) error {
 	_, err := b.db.Model(&bin).WherePK().Context(ctx).Returning("*").Delete(&bin)
+
+	return err
+}
+
+func doSubQuery(ctx context.Context, q *pg.Query, id string) error {
+	q = q.WherePK().Context(ctx).Returning("*")
+	if len(id) == 0 {
+		_, err := q.Insert()
+
+		return err
+	}
+
+	_, err := q.Insert()
 
 	return err
 }

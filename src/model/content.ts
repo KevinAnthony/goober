@@ -1,87 +1,99 @@
-import {ScrewObj} from "./screw";
-import {WasherObj} from "./washer";
-import {BoltObj} from "./bolt";
-import {DTO} from "./dto";
+import { ScrewObj } from "./screw";
+import { WasherObj } from "./washer";
+import { BoltObj } from "./bolt";
+import { DTO } from "./dto";
+import { SimpleObj } from "./simple";
 
 export class ContentObj extends DTO {
-    private readonly _id: string;
-    private readonly _binID: string;
-    private _contentType: string;
-    private _bolt: BoltObj;
-    private _washer: WasherObj;
-    private _screw: ScrewObj;
+  private readonly _id: string;
+  private readonly _binID: string;
+  private _contentType: string;
+  private _bolt: BoltObj;
+  private _washer: WasherObj;
+  private _screw: ScrewObj;
+  private _simple: SimpleObj;
 
-    public static Parse(d: any): ContentObj {
-        if (!d) {
-            return ContentObj.Empty();
-        }
-
-        return new ContentObj(d);
+  public static Parse(d: any): ContentObj {
+    if (!d) {
+      return ContentObj.Empty();
     }
 
-    public static Empty(): ContentObj {
-        return new ContentObj({});
-    }
+    return new ContentObj(d);
+  }
 
-    public JSON(): object {
-        return {
-            id: this._id,
-            bin_id: this._binID,
-            content_type: this._contentType,
-            bolt: this._bolt.jsonOrUndefined(),
-            washer: this._washer.jsonOrUndefined(),
-            screw: this._screw.jsonOrUndefined(),
-        };
-    }
+  public static Empty(): ContentObj {
+    return new ContentObj({});
+  }
 
-    private constructor(d: any) {
-        super();
+  public JSON(): object {
+    return {
+      id: this._id,
+      bin_id: this._binID,
+      content_type: this._contentType,
+      bolt: this._bolt.jsonOrUndefined(),
+      washer: this._washer.jsonOrUndefined(),
+      screw: this._screw.jsonOrUndefined(),
+      simple: this._simple.jsonOrUndefined(),
+    };
+  }
 
-        this._id = d.id;
-        this._binID = d.bin_id;
-        this._contentType = d.content_type;
-        this._bolt = BoltObj.Parse(d.bolt);
-        this._washer = WasherObj.Parse(d.washer);
-        this._screw = ScrewObj.Parse(d.screw);
-    }
+  private constructor(d: any) {
+    super();
 
-    get id(): string {
-        return this._id;
-    }
+    this._id = d.id;
+    this._binID = d.bin_id;
+    this._contentType = d.content_type;
+    this._bolt = BoltObj.Parse(d.bolt);
+    this._washer = WasherObj.Parse(d.washer);
+    this._screw = ScrewObj.Parse(d.screw);
+    this._simple = SimpleObj.Parse(d.simple);
+  }
 
-    get binID(): string {
-        return this._binID;
-    }
+  get id(): string {
+    return this._id;
+  }
 
-    get contentType(): string {
-        return this._contentType;
-    }
+  get binID(): string {
+    return this._binID;
+  }
 
-    set contentType(value: string) {
-        this._contentType = value;
-    }
+  get contentType(): string {
+    return this._contentType;
+  }
 
-    get bolt(): BoltObj {
-        return this._bolt;
-    }
+  set contentType(value: string) {
+    this._contentType = value;
+  }
 
-    set bolt(value: BoltObj) {
-        this._bolt = value;
-    }
+  get bolt(): BoltObj {
+    return this._bolt;
+  }
 
-    get washer(): WasherObj {
-        return this._washer;
-    }
+  set bolt(value: BoltObj) {
+    this._bolt = value;
+  }
 
-    set washer(value: WasherObj) {
-        this._washer = value;
-    }
+  get washer(): WasherObj {
+    return this._washer;
+  }
 
-    get screw(): ScrewObj {
-        return this._screw;
-    }
+  set washer(value: WasherObj) {
+    this._washer = value;
+  }
 
-    set screw(value: ScrewObj) {
-        this._screw = value;
-    }
+  get screw(): ScrewObj {
+    return this._screw;
+  }
+
+  set screw(value: ScrewObj) {
+    this._screw = value;
+  }
+
+  get simple(): SimpleObj {
+    return this._simple;
+  }
+
+  set simple(value: SimpleObj) {
+    this._simple = value;
+  }
 }

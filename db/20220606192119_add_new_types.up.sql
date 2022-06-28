@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS simple
         FOREIGN KEY(content_id)
             REFERENCES content(id)
             ON UPDATE CASCADE ON DELETE CASCADE,
-    string text NOT NULL,
+    description text NOT NULL,
     created_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
     deleted_at TIMESTAMP WITH TIME ZONE

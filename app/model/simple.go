@@ -11,18 +11,18 @@ var _ IContent = (*Simple)(nil)
 
 type Simple struct {
 	//nolint:structcheck,unused
-	tableName struct{} `pg:"goober.Simple,alias:Simple"`
+	tableName struct{} `pg:"goober.simple,alias:Simple"`
 
-	ID        string     `json:"id" pg:"id,pk,type:uuid"`
-	ContentID string     `json:"content_id" pg:"content_id,fk,type:uuid"`
-	CreatedAt time.Time  `json:"created_at" pg:"created_at"`
-	UpdatedAt time.Time  `json:"updated_at" pg:"updated_at"`
-	DeletedAt *time.Time `json:"deleted_at" pg:"deleted_at,soft_delete"`
-	Text      string     `json:"text" pg:"text"`
+	ID          string     `json:"id" pg:"id,pk,type:uuid"`
+	ContentID   string     `json:"content_id" pg:"content_id,fk,type:uuid"`
+	CreatedAt   time.Time  `json:"created_at" pg:"created_at"`
+	UpdatedAt   time.Time  `json:"updated_at" pg:"updated_at"`
+	DeletedAt   *time.Time `json:"deleted_at" pg:"deleted_at,soft_delete"`
+	Description string     `json:"description" pg:"description"`
 }
 
 func (s Simple) String() string {
-	return s.Text
+	return s.Description
 }
 
 func (s Simple) BleveType() string {
