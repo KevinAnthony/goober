@@ -30,6 +30,7 @@ import { WasherEdit } from "./subedit/WasherEdit";
 import { BoltEdit } from "./subedit/BoltEdit";
 import { ScrewEdit } from "./subedit/ScrewEdit";
 import { SimpleEdit } from "./subedit/SimpleEdit";
+import { parseNumber } from "../../util/utils";
 
 interface props {
   bin: BinObj;
@@ -148,7 +149,7 @@ export function BinEdit({
                 defaultValue={binState.x}
                 onClick={(e: MouseEvent<HTMLInputElement>) => {
                   const target = e.target as HTMLInputElement;
-                  binState.x = parseInt(target.value);
+                  binState.x = parseNumber(target.value);
                   updateCallback(binState);
                 }}
                 style={{ width: "80px" }}
@@ -161,7 +162,7 @@ export function BinEdit({
                 defaultValue={binState.y}
                 onClick={(e: MouseEvent<HTMLInputElement>) => {
                   const target = e.target as HTMLInputElement;
-                  binState.y = parseInt(target.value);
+                  binState.y = parseNumber(target.value);
                   updateCallback(binState);
                 }}
                 style={{ width: "80px" }}
@@ -174,7 +175,7 @@ export function BinEdit({
                 defaultValue={binState.width}
                 onClick={(e: MouseEvent<HTMLInputElement>) => {
                   const target = e.target as HTMLInputElement;
-                  binState.width = parseInt(target.value);
+                  binState.width = parseNumber(target.value);
                   updateCallback(binState);
                 }}
                 style={{ width: "80px" }}
@@ -187,7 +188,7 @@ export function BinEdit({
                 defaultValue={binState.height}
                 onClick={(e: MouseEvent<HTMLInputElement>) => {
                   const target = e.target as HTMLInputElement;
-                  binState.height = parseInt(target.value);
+                  binState.height = parseNumber(target.value);
                   updateCallback(binState);
                 }}
                 style={{ width: "80px" }}
