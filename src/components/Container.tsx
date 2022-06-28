@@ -94,7 +94,6 @@ export function Container({
         setBins([...container.bin]);
       });
     } else {
-      console.dir(bin);
       binNet.putBin(bin).then((b: BinObj) => {
         container.bin.splice(index, 1, b);
         setBins([...container.bin]);

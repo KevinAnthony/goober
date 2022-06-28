@@ -74,9 +74,7 @@ func (b bin) Update(ctx context.Context, r *http.Request) (interface{}, error) {
 		return nil, err
 	}
 
-	bin, err := b.binSvc.Update(ctx, req.Body)
-
-	return bin, err
+	return b.binSvc.Update(ctx, req.Body)
 }
 
 func (b bin) Delete(ctx context.Context, r *http.Request) (interface{}, error) {
