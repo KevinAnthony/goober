@@ -65,8 +65,6 @@ export class BinNet extends netCode {
         if (!r.ok) {
           throw r;
         }
-        console.log("here");
-
         return r.json();
       })
       .then<BinObj>((data) => {

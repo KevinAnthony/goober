@@ -197,7 +197,7 @@ func doSubQuery(ctx context.Context, q *pg.Query, id string) error {
 		return err
 	}
 
-	_, err := q.Insert()
+	_, err := q.UpdateNotZero()
 
 	return err
 }
