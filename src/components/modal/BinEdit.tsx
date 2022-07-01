@@ -1,4 +1,4 @@
-import React, { MouseEvent } from "react";
+import React from "react";
 import {
   Box,
   Button,
@@ -147,7 +147,7 @@ export function BinEdit({
                 label="Location X"
                 type="number"
                 defaultValue={binState.x}
-                onClick={(e: MouseEvent<HTMLInputElement>) => {
+                onChange={(e) => {
                   const target = e.target as HTMLInputElement;
                   binState.x = parseNumber(target.value);
                   updateCallback(binState);
@@ -160,7 +160,7 @@ export function BinEdit({
                 label="Location Y"
                 type="number"
                 defaultValue={binState.y}
-                onClick={(e: MouseEvent<HTMLInputElement>) => {
+                onChange={(e) => {
                   const target = e.target as HTMLInputElement;
                   binState.y = parseNumber(target.value);
                   updateCallback(binState);
@@ -173,7 +173,7 @@ export function BinEdit({
                 label="Width"
                 type="number"
                 defaultValue={binState.width}
-                onClick={(e: MouseEvent<HTMLInputElement>) => {
+                onChange={(e) => {
                   const target = e.target as HTMLInputElement;
                   binState.width = parseNumber(target.value);
                   updateCallback(binState);
@@ -186,7 +186,7 @@ export function BinEdit({
                 label="Height"
                 type="number"
                 defaultValue={binState.height}
-                onClick={(e: MouseEvent<HTMLInputElement>) => {
+                onChange={(e) => {
                   const target = e.target as HTMLInputElement;
                   binState.height = parseNumber(target.value);
                   updateCallback(binState);
