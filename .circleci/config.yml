@@ -88,6 +88,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - setup_remote_docker
       - run:
           name: login
           command: echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
@@ -130,6 +131,7 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - setup_remote_docker
       - run:
           name: login
           command: echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
