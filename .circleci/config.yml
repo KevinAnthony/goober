@@ -5,12 +5,13 @@ jobs:
       - image: cimg/go:1.17.7
     environment:
       GO111MODULE: "on"
+      GOFLAGS: -mod=vendor
     steps:
       - checkout
       - run:
-          name: Get dependencies
-          command: |
-            go get -t -v ./...
+          name: get deps
+          command: go get -t -v ./...
+
       - persist_to_workspace:
           root: .
           paths:
@@ -162,6 +163,8 @@ workflows:
           filters:
             tags:
               only: /^(release)-.*/
+          branches:
+            ignore: /.*/
   node:
     jobs:
       - setup-node
@@ -174,4 +177,6 @@ workflows:
           filters:
             tags:
               only: /^(release)-.*/
+          branches:
+            ignore: /.*/
 
