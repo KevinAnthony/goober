@@ -29,6 +29,7 @@ const (
 	BoltHeadCap   BoltHeadType = "cap"
 	BoltHeadRound BoltHeadType = "round"
 	BoltHeadFlat  BoltHeadType = "flat"
+	BoltHeadTNut  BoltHeadType = "tnut"
 )
 const (
 	MaterialFinishStainless  MaterialFinish = "stainless_steel"
