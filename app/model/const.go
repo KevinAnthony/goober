@@ -57,5 +57,6 @@ const (
 	ScrewHeadDriveExtHex   ScrewHeadDrive = "external_hex"
 	ScrewHeadDriveIntHex   ScrewHeadDrive = "internal_hex"
 	ScrewHeadDrivePhillips ScrewHeadDrive = "phillips"
+	ScrewHeadDriveSlotted  ScrewHeadDrive = "slotted"
 	ScrewHeadDriveT25      ScrewHeadDrive = "t25"
 )
