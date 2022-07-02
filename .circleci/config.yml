@@ -1,0 +1,177 @@
+version: 2
+jobs:
+  setup-go:
+    docker:
+      - image: cimg/go:1.17.7
+    environment:
+      GO111MODULE: "on"
+    steps:
+      - checkout
+      - run:
+          name: Get dependencies
+          command: |
+            go get -t -v ./...
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  lint-go:
+    docker:
+      - image: cimg/go:1.17.7
+    environment:
+      GOFLAGS: -mod=vendor
+      LINT_VER: v1.44.0
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Install golangci-lint
+          command: curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" | sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
+      - run:
+          name: Run lint
+          command: golangci-lint --timeout 5m run
+  test-go:
+    docker:
+      - image: cimg/go:1.17.7
+        environment:
+          MAX_UNIT_TEST_CONCURRENCY: 128
+          GOFLAGS: -mod=vendor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: create directory
+          command:
+            mkdir test
+      - run:
+          name: run test race
+          command: go test -v -race ./...
+      - run:
+          name: run test
+          command: go test -covermode=count -coverprofile=test/coverage.txt ./...
+      - persist_to_workspace:
+          root: .
+          paths:
+            - test
+  upload-coverage-go:
+    docker:
+      - image: cimg/go:1.17.7
+        environment:
+          MAX_UNIT_TEST_CONCURRENCY: 128
+          GOFLAGS: -mod=vendor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: upload
+          command: bash <(curl -s https://codecov.io/bash)
+  build-go:
+    docker:
+      - image: cimg/go:1.17.7
+        environment:
+          CGO_ENABLED: 0
+          GOFLAGS: -mod=vendor
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: build
+          command: go build -o=./build/go/goober ./app
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  deploy-go:
+    docker:
+      - image: cimg/go:1.17.7
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: login
+          command: echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: build image
+          command: docker build -f Dockerfile_App -t kevinaanthony/goober-app:latest -t kevinaanthony/goober-app:$CIRCLE_BUILD_NUM .
+      - run:
+          name: push image
+          command: docker push kevinaanthony/goober-app --all-tags
+  setup-node:
+    docker:
+      - image: cimg/node:17.9
+    steps:
+      - checkout
+      - run:
+          name: Get dependencies
+          command: |
+            npm install
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+            - node_modules
+  build-node:
+    docker:
+      - image: cimg/node:17.9
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: build
+          command: npm run build
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+  deploy-node:
+    docker:
+      - image: cimg/node:17.9
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: login
+          command: echo "$DOCKER_TOKEN" | docker login -u "$DOCKER_USERNAME" --password-stdin
+      - run:
+          name: build image
+          command: docker build -f Dockerfile_Web -t kevinaanthony/goober-web:latest -t kevinaanthony/goober-web:$CIRCLE_BUILD_NUM .
+      - run:
+          name: push image
+          command: docker push kevinaanthony/goober-web --all-tags
+workflows:
+  version: 2
+  go:
+    jobs:
+      - setup-go
+      - lint-go:
+          requires:
+            - setup-go
+      - test-go:
+          requires:
+            - setup-go
+      - upload-coverage-go:
+          requires:
+            - test-go
+      - build-go:
+          requires:
+            - lint-go
+            - test-go
+      - deploy-go:
+          requires:
+            - build-go
+          filters:
+            tags:
+              only: /^(release)-.*/
+  node:
+    jobs:
+      - setup-node
+      - build-node:
+          requires:
+            - setup-node
+      - deploy-node:
+          requires:
+            - build-node
+          filters:
+            tags:
+              only: /^(release)-.*/
+
