@@ -10,7 +10,7 @@ jobs:
       - checkout
       - run:
           name: get deps
-          command: go get -t -v ./...
+          command: go mod vendor
 
       - persist_to_workspace:
           root: .
@@ -26,10 +26,10 @@ jobs:
       - attach_workspace:
           at: .
       - run:
-          name: Install golangci-lint
+          name: install golangci-lint
           command: curl -sfL "https://raw.githubusercontent.com/golangci/golangci-lint/${LINT_VER}/install.sh" | sh -s -- -b "$(go env GOPATH)/bin" "${LINT_VER}"
       - run:
-          name: Run lint
+          name: lint
           command: golangci-lint --timeout 5m run
   test-go:
     docker:
@@ -103,7 +103,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: Get dependencies
+          name: install node_modules
           command: |
             npm install
       - persist_to_workspace:
