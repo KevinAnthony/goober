@@ -1,9 +1,10 @@
 package model
 
 import (
+	"time"
+
 	"github.com/blevesearch/bleve/v2"
 	"github.com/blevesearch/bleve/v2/mapping"
-	"time"
 )
 
 var _ IContent = (*Nail)(nil)
