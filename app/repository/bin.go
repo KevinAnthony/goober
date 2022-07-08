@@ -68,6 +68,14 @@ func (b bin) Create(ctx context.Context, bin model.Bin) (model.Bin, error) {
 				}
 			}
 
+			if content.Nail != nil {
+				content.Nail.ContentID = content.ID
+
+				if _, err := tx.Model(content.Nail).Context(ctx).Returning("*").Insert(); err != nil {
+					return errors.Wrap(err, "insert nail")
+				}
+			}
+
 			if content.Simple != nil {
 				content.Simple.ContentID = content.ID
 
@@ -95,6 +103,7 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 		Relation("Content.Bolt").
 		Relation("Content.Washer").
 		Relation("Content.Screw").
+		Relation("Content.Nail").
 		Relation("Content.Simple").
 		Select(&bin)
 
@@ -116,6 +125,7 @@ func (b bin) GetByID(ctx context.Context, ids ...string) ([]model.Bin, error) {
 		Relation("Content.Bolt").
 		Relation("Content.Washer").
 		Relation("Content.Screw").
+		Relation("Content.Nail").
 		Relation("Content.Simple").
 		Select(&bins)
 
@@ -161,6 +171,16 @@ func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
 
 				if err := doSubQuery(ctx, tx.Model(content.Washer), content.Washer.ID); err != nil {
 					return errors.Wrap(err, "update washer")
+				}
+			}
+
+			if content.Nail != nil {
+				if len(content.Nail.ContentID) == 0 {
+					content.Nail.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Nail), content.Nail.ID); err != nil {
+					return errors.Wrap(err, "update nail")
 				}
 			}
 

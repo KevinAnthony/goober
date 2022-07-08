@@ -1,6 +1,5 @@
 import { ColorObj } from "./color";
 import { ContentObj } from "./content";
-import { decToFraction, splitAndUppercase } from "../util/formatting";
 import { DTO } from "./dto";
 
 export class BinObj extends DTO {
@@ -37,6 +36,14 @@ export class BinObj extends DTO {
         (d) => d.JSON()
       ),
     };
+  }
+
+  public Text(index: number): string {
+    return this._content[index].Text(this.unit);
+  }
+
+  public SearchText(index: number): string {
+    return this._content[index].SearchText(this.unit);
   }
 
   private constructor(d: any) {
@@ -137,132 +144,5 @@ export class BinObj extends DTO {
 
   set content(value: ContentObj[]) {
     this._content = value;
-  }
-
-  getText(index: number): string {
-    switch (this.content[index].contentType) {
-      case "bolt":
-        return this.getBoltText(index);
-      case "washer":
-        return this.getWasherText(index);
-      case "screw":
-        return this.getScrewText(index);
-      case "simple":
-        return this.getSimpleText(index);
-      case "empty":
-        return "";
-      default:
-        return `${this.content[index].contentType} is undefined - getText`;
-    }
-  }
-
-  private getBoltText(index: number): string {
-    switch (this.unit) {
-      case "mm":
-      case "in":
-        return `Bolt
-----------------
-Size:\t${this.content[index].bolt?.threadSize} - ${
-          this.content[index].bolt?.threadPitch
-        } X ${this.content[index].bolt?.length}${this.unit}
-Head:\t${splitAndUppercase(this.content[index].bolt?.head)}
-Finish:\t${splitAndUppercase(this.content[index].bolt?.material)}`;
-      default:
-        return `${this.unit} is undefined for bolt`;
-    }
-  }
-
-  private getWasherText(index: number) {
-    switch (this.unit) {
-      case "mm":
-        return `Washer
-----------------
-Size:\t${this.content[index].washer?.size}
-Head:\t${splitAndUppercase(this.content[index].washer?.type)}
-Finish:\t${splitAndUppercase(this.content[index].washer?.material)}`;
-      default:
-        return `${this.unit} is undefined for washer`;
-    }
-  }
-
-  private getScrewText(index: number) {
-    switch (this.unit) {
-      case "in":
-        return `Screw
-----------------
-Size:\t${this.content[index].screw?.size} X ${decToFraction(
-          this.content[index].screw?.length
-        )}${this.unit}
-Type:\t${splitAndUppercase(this.content[index].screw?.type)}
-Head:\t${splitAndUppercase(
-          this.content[index].screw?.head
-        )} - ${splitAndUppercase(this.content[index].screw?.drive)}
-Finish:\t${splitAndUppercase(this.content[index].screw?.material)}`;
-      default:
-        return `${this.unit} is undefined for screw`;
-    }
-  }
-
-  private getSimpleText(index: number) {
-    return `Simple
-----------------
-Description\t${splitAndUppercase(this.content[index].simple?.description)}`;
-  }
-
-  getSearchText(index: number): string {
-    switch (this.content[index].contentType) {
-      case "bolt":
-        return this.getBoltSearchText(index);
-      case "washer":
-        return this.getWasherSearchText(index);
-      case "screw":
-        return this.getScrewSearchText(index);
-      default:
-        return `${this.content[index].contentType} is undefined - getText`;
-    }
-  }
-
-  private getBoltSearchText(index: number): string {
-    switch (this.unit) {
-      case "mm":
-      case "in":
-        return `${this.content[index].bolt?.threadSize} - ${
-          this.content[index].bolt?.threadPitch
-        } X ${this.content[index].bolt?.length}${
-          this.unit
-        } -- ${splitAndUppercase(
-          this.content[index].bolt?.material
-        )} -- ${splitAndUppercase(this.content[index].bolt?.head)}`;
-      default:
-        return `${this.unit} is undefined for bolt`;
-    }
-  }
-
-  private getWasherSearchText(index: number) {
-    switch (this.unit) {
-      case "mm":
-        return `${this.content[index].washer?.size} -- ${splitAndUppercase(
-          this.content[index].washer?.material
-        )} -- ${splitAndUppercase(this.content[index].washer?.type)}`;
-      default:
-        return `${this.unit} is undefined for washer`;
-    }
-  }
-
-  private getScrewSearchText(index: number) {
-    switch (this.unit) {
-      case "in":
-        return `${this.content[index].screw?.size} X ${decToFraction(
-          this.content[index].screw?.length
-        )}${this.unit} -- ${splitAndUppercase(
-          this.content[index].screw?.material
-        )} -- ${splitAndUppercase(
-          this.content[index].screw?.type
-        )} /-- ${splitAndUppercase(
-          this.content[index].screw?.head
-        )}/${splitAndUppercase(this.content[index].screw?.drive)}`;
-      default:
-        return `${this.unit} is undefined for screw`;
-    }
   }
 }

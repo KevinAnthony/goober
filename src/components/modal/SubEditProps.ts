@@ -3,8 +3,10 @@ import { BinObj } from "../../model/bin";
 export const finishes = [
   "stainless_steel",
   "black_oxide",
+  "black_phosphate",
   "zinc",
   "yellow_zinc",
+  "bright",
 ];
 export const boltHeads = ["cap", "hex", "round"];
 export var screwHeads = ["round", "flat", "hex", "oval"];

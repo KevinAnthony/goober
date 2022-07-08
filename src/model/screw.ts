@@ -1,4 +1,5 @@
 import { DTO } from "./dto";
+import { decToFraction, splitAndUppercase } from "../util/formatting";
 
 export class ScrewObj extends DTO {
   private readonly _id: string;
@@ -33,6 +34,35 @@ export class ScrewObj extends DTO {
       drive: this._drive,
       material: this._material,
     };
+  }
+
+  public Text(unit: string): string {
+    switch (unit) {
+      case "in":
+        return `Screw
+----------------
+Size:\t${this?._size} X ${decToFraction(this?._length)}${unit}
+Type:\t${splitAndUppercase(this?._type)}
+Head:\t${splitAndUppercase(this?._head)} - ${splitAndUppercase(this?._drive)}
+Finish:\t${splitAndUppercase(this?._material)}`;
+      default:
+        return `${unit} is undefined for screw`;
+    }
+  }
+
+  public SearchText(unit: string): string {
+    switch (unit) {
+      case "in":
+        return `${this?._size} X ${decToFraction(
+          this?._length
+        )}${unit} -- ${splitAndUppercase(
+          this?._material
+        )} -- ${splitAndUppercase(this?._type)} /-- ${splitAndUppercase(
+          this?._head
+        )}/${splitAndUppercase(this?._drive)}`;
+      default:
+        return `${unit} is undefined for screw`;
+    }
   }
 
   private constructor(d: any) {
