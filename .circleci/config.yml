@@ -142,7 +142,6 @@ jobs:
           name: push image
           command: docker push kevinaanthony/goober-web --all-tags
 workflows:
-  version: 2
   go:
     jobs:
       - setup-go
