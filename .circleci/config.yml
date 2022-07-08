@@ -176,9 +176,9 @@ workflows:
       - deploy-node:
           requires:
             - build-node
-#          filters:
-#            tags:
-#              only: /^(release)-.*/
-#            branches:
-#              ignore: /.*/
+          filters:
+            tags:
+              only: /^release-.*/
+            branches:
+              ignore: /.*/
 
