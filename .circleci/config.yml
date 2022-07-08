@@ -162,11 +162,11 @@ workflows:
       - deploy-go:
           requires:
             - build-go
-          filters:
-            tags:
-              only: /^(release)-.*/
-            branches:
-              ignore: /.*/
+#          filters:
+#            tags:
+#              only: /^(release)-.*/
+#            branches:
+#              ignore: /.*/
   node:
     jobs:
       - setup-node
@@ -174,11 +174,11 @@ workflows:
           requires:
             - setup-node
       - deploy-node:
-          requires:
-            - build-node
-          filters:
-            tags:
-              only: /^(release)-.*/
-            branches:
-              ignore: /.*/
+#          requires:
+#            - build-node
+#          filters:
+#            tags:
+#              only: /^(release)-.*/
+#            branches:
+#              ignore: /.*/
 
