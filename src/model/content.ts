@@ -3,6 +3,7 @@ import { WasherObj } from "./washer";
 import { BoltObj } from "./bolt";
 import { DTO } from "./dto";
 import { SimpleObj } from "./simple";
+import { NailObj } from "./nail";
 
 export class ContentObj extends DTO {
   private readonly _id: string;
@@ -11,6 +12,7 @@ export class ContentObj extends DTO {
   private _bolt: BoltObj;
   private _washer: WasherObj;
   private _screw: ScrewObj;
+  private _nail: NailObj;
   private _simple: SimpleObj;
 
   public static Parse(d: any): ContentObj {
@@ -34,7 +36,44 @@ export class ContentObj extends DTO {
       washer: this._washer.jsonOrUndefined(),
       screw: this._screw.jsonOrUndefined(),
       simple: this._simple.jsonOrUndefined(),
+      nail: this._nail.jsonOrUndefined(),
     };
+  }
+
+  public Text(unit: string): string {
+    switch (this._contentType) {
+      case "bolt":
+        return this._bolt.Text(unit);
+      case "washer":
+        return this._washer.Text(unit);
+      case "screw":
+        return this._screw.Text(unit);
+      case "nail":
+        return this._nail.Text(unit);
+      case "simple":
+        return this._simple.Text(unit);
+      case "empty":
+        return "";
+      default:
+        return `${this._contentType} is undefined - getText`;
+    }
+  }
+
+  public SearchText(unit: string): string {
+    switch (this._contentType) {
+      case "bolt":
+        return this._bolt.SearchText(unit);
+      case "washer":
+        return this._washer.SearchText(unit);
+      case "screw":
+        return this._screw.SearchText(unit);
+      case "nail":
+        return this._nail.SearchText(unit);
+      case "simple":
+        return this._simple.SearchText(unit);
+      default:
+        return `${this._contentType} is undefined - getText`;
+    }
   }
 
   private constructor(d: any) {
@@ -47,6 +86,7 @@ export class ContentObj extends DTO {
     this._washer = WasherObj.Parse(d.washer);
     this._screw = ScrewObj.Parse(d.screw);
     this._simple = SimpleObj.Parse(d.simple);
+    this._nail = NailObj.Parse(d.nail);
   }
 
   get id(): string {
@@ -87,6 +127,14 @@ export class ContentObj extends DTO {
 
   set screw(value: ScrewObj) {
     this._screw = value;
+  }
+
+  get nail(): NailObj {
+    return this._nail;
+  }
+
+  set nail(value: NailObj) {
+    this._nail = value;
   }
 
   get simple(): SimpleObj {

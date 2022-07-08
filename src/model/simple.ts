@@ -1,4 +1,5 @@
 import { DTO } from "./dto";
+import { splitAndUppercase } from "../util/formatting";
 
 export class SimpleObj extends DTO {
   private readonly _id: string;
@@ -23,6 +24,16 @@ export class SimpleObj extends DTO {
       content_id: this._contentID,
       description: this._description,
     };
+  }
+
+  public Text(_: string): string {
+    return `Simple
+----------------
+${splitAndUppercase(this?._description)}`;
+  }
+
+  public SearchText(_: string): string {
+    return splitAndUppercase(this?._description);
   }
 
   private constructor(d: any) {

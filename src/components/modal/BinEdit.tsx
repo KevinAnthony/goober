@@ -31,6 +31,8 @@ import { BoltEdit } from "./subedit/BoltEdit";
 import { ScrewEdit } from "./subedit/ScrewEdit";
 import { SimpleEdit } from "./subedit/SimpleEdit";
 import { parseNumber } from "../../util/utils";
+import { NailObj } from "../../model/nail";
+import { NailEdit } from "./subedit/NailEdit";
 
 interface props {
   bin: BinObj;
@@ -85,6 +87,21 @@ export function BinEdit({
     updateCallback(binState);
   }
 
+  function onToggleButtonChange(
+    _event: React.MouseEvent<HTMLElement>,
+    newType: string
+  ) {
+    binState.content[contentIndex].contentType = newType;
+    binState.content[contentIndex].bolt = BoltObj.Empty();
+    binState.content[contentIndex].screw = ScrewObj.Empty();
+    binState.content[contentIndex].washer = WasherObj.Empty();
+    binState.content[contentIndex].nail = NailObj.Empty();
+    binState.content[contentIndex].simple = SimpleObj.Empty();
+
+    setBin(binState);
+    setContainer(getFieldsForContent(binState, 0, updateCallback));
+  }
+
   return (
     <div
       style={{
@@ -112,24 +129,13 @@ export function BinEdit({
               color="primary"
               value={binState.content[contentIndex].contentType}
               exclusive
-              onChange={(
-                _event: React.MouseEvent<HTMLElement>,
-                newType: string
-              ) => {
-                binState.content[contentIndex].contentType = newType;
-                binState.content[contentIndex].bolt = BoltObj.Empty();
-                binState.content[contentIndex].screw = ScrewObj.Empty();
-                binState.content[contentIndex].washer = WasherObj.Empty();
-                binState.content[contentIndex].simple = SimpleObj.Empty();
-
-                setBin(binState);
-                setContainer(getFieldsForContent(binState, 0, updateCallback));
-              }}
+              onChange={onToggleButtonChange}
             >
               <ToggleButton value="empty">Empty</ToggleButton>
               <ToggleButton value="bolt">Bolt</ToggleButton>
               <ToggleButton value="screw">Screw</ToggleButton>
               <ToggleButton value="washer">Washer</ToggleButton>
+              <ToggleButton value="nail">Nail</ToggleButton>
               <ToggleButton value="simple">Simple</ToggleButton>
             </ToggleButtonGroup>
           </div>
@@ -329,6 +335,10 @@ function getFieldsForContent(
     case "simple":
       return (
         <SimpleEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
+    case "nail":
+      return (
+        <NailEdit bin={bin} index={index} updateCallback={updateCallback} />
       );
     default:
       return <p>{`${bin.content[index].contentType} is undefined`}</p>;
