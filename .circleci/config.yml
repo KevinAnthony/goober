@@ -174,8 +174,8 @@ workflows:
           requires:
             - setup-node
       - deploy-node:
-#          requires:
-#            - build-node
+          requires:
+            - build-node
 #          filters:
 #            tags:
 #              only: /^(release)-.*/
