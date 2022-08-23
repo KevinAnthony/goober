@@ -4,7 +4,7 @@ go 1.17
 
 require (
 	github.com/blevesearch/bleve/v2 v2.3.3
-	github.com/caarlos0/env/v6 v6.9.3
+	github.com/caarlos0/env/v6 v6.10.0
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.1
 	github.com/go-pg/pg/v10 v10.10.6
