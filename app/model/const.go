@@ -5,6 +5,7 @@ type (
 	ContentType    string
 	BoltHeadType   string
 	MaterialFinish string
+	NutType        string
 	WasherType     string
 	ScrewType      string
 	ScrewHeadType  string
@@ -61,4 +62,14 @@ const (
 	ScrewHeadDrivePhillips ScrewHeadDrive = "phillips"
 	ScrewHeadDriveSlotted  ScrewHeadDrive = "slotted"
 	ScrewHeadDriveT25      ScrewHeadDrive = "t25"
+)
+
+const (
+	NutTypeHex       NutType = "hex"
+	NutTypeFlange    NutType = "flange"
+	NutTypeCap       NutType = "cap"
+	NutTypeNyLock    NutType = "nylock"
+	NutTypeWing      NutType = "wing"
+	NutTypeTee       NutType = "tee"
+	NutTypeSpecialty NutType = "specialty"
 )

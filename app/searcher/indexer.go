@@ -111,6 +111,9 @@ func createMapping() mapping.IndexMapping {
 	indexMapping.AddDocumentMapping(model.Bolt{}.CreateMapping(englishTextFieldMapping))
 	indexMapping.AddDocumentMapping(model.Washer{}.CreateMapping(englishTextFieldMapping))
 	indexMapping.AddDocumentMapping(model.Screw{}.CreateMapping(englishTextFieldMapping))
+	indexMapping.AddDocumentMapping(model.Nail{}.CreateMapping(englishTextFieldMapping))
+	indexMapping.AddDocumentMapping(model.Nut{}.CreateMapping(englishTextFieldMapping))
+	indexMapping.AddDocumentMapping(model.Simple{}.CreateMapping(englishTextFieldMapping))
 
 	indexMapping.DefaultAnalyzer = "en"
 
