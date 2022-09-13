@@ -52,6 +52,14 @@ func (b bin) Create(ctx context.Context, bin model.Bin) (model.Bin, error) {
 				}
 			}
 
+			if content.Nut != nil {
+				content.Nut.ContentID = content.ID
+
+				if _, err := tx.Model(content.Nut).Context(ctx).Returning("*").Insert(); err != nil {
+					return errors.Wrap(err, "insert bolt")
+				}
+			}
+
 			if content.Screw != nil {
 				content.Screw.ContentID = content.ID
 
@@ -181,6 +189,16 @@ func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
 
 				if err := doSubQuery(ctx, tx.Model(content.Nail), content.Nail.ID); err != nil {
 					return errors.Wrap(err, "update nail")
+				}
+			}
+
+			if content.Nut != nil {
+				if len(content.Nut.ContentID) == 0 {
+					content.Nut.ContentID = content.ID
+				}
+
+				if err := doSubQuery(ctx, tx.Model(content.Nut), content.Nut.ID); err != nil {
+					return errors.Wrap(err, "update nut")
 				}
 			}
 

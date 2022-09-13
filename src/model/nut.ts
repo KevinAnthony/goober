@@ -27,8 +27,8 @@ export class NutObj extends DTO {
       id: this._id,
       content_id: this._contentID,
       material: this._material,
-      threadSize: this._threadSize,
-      threadPitch: this._threadPitch,
+      thread_size: this._threadSize,
+      thread_pitch: this._threadPitch,
       type: this._type,
       description: this._description,
     };

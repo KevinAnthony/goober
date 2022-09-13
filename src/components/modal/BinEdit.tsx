@@ -33,6 +33,7 @@ import { SimpleEdit } from "./subedit/SimpleEdit";
 import { parseNumber } from "../../util/utils";
 import { NailObj } from "../../model/nail";
 import { NailEdit } from "./subedit/NailEdit";
+import { NutEdit } from "./subedit/NutEdit";
 
 interface props {
   bin: BinObj;
@@ -91,6 +92,8 @@ export function BinEdit({
     _event: React.MouseEvent<HTMLElement>,
     newType: string
   ) {
+    console.log("bin content:", contentIndex, binState.content);
+
     binState.content[contentIndex].contentType = newType;
     binState.content[contentIndex].bolt = BoltObj.Empty();
     binState.content[contentIndex].screw = ScrewObj.Empty();
@@ -133,6 +136,7 @@ export function BinEdit({
             >
               <ToggleButton value="empty">Empty</ToggleButton>
               <ToggleButton value="bolt">Bolt</ToggleButton>
+              <ToggleButton value="nut">Nut</ToggleButton>
               <ToggleButton value="screw">Screw</ToggleButton>
               <ToggleButton value="washer">Washer</ToggleButton>
               <ToggleButton value="nail">Nail</ToggleButton>
@@ -323,6 +327,10 @@ function getFieldsForContent(
     case "bolt":
       return (
         <BoltEdit bin={bin} index={index} updateCallback={updateCallback} />
+      );
+    case "nut":
+      return (
+        <NutEdit bin={bin} index={index} updateCallback={updateCallback} />
       );
     case "washer":
       return (

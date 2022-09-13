@@ -1,9 +1,10 @@
+import { DTO } from "./dto";
 import { ScrewObj } from "./screw";
 import { WasherObj } from "./washer";
 import { BoltObj } from "./bolt";
-import { DTO } from "./dto";
 import { SimpleObj } from "./simple";
 import { NailObj } from "./nail";
+import { NutObj } from "./nut";
 
 export class ContentObj extends DTO {
   private readonly _id: string;
@@ -29,6 +30,7 @@ export class ContentObj extends DTO {
   }
 
   public JSON(): object {
+    console.log("content json", this);
     return {
       id: this._id,
       bin_id: this._binID,
@@ -93,7 +95,7 @@ export class ContentObj extends DTO {
     this._screw = ScrewObj.Parse(d.screw);
     this._simple = SimpleObj.Parse(d.simple);
     this._nail = NailObj.Parse(d.nail);
-    this._nut = NailObj.Parse(d.nut);
+    this._nut = NutObj.Parse(d.nut);
   }
 
   get id(): string {
