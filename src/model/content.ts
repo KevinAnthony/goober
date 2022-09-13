@@ -13,6 +13,7 @@ export class ContentObj extends DTO {
   private _washer: WasherObj;
   private _screw: ScrewObj;
   private _nail: NailObj;
+  private _nut: NutObj;
   private _simple: SimpleObj;
 
   public static Parse(d: any): ContentObj {
@@ -37,6 +38,7 @@ export class ContentObj extends DTO {
       screw: this._screw.jsonOrUndefined(),
       simple: this._simple.jsonOrUndefined(),
       nail: this._nail.jsonOrUndefined(),
+      nut: this._nut.jsonOrUndefined(),
     };
   }
 
@@ -52,6 +54,8 @@ export class ContentObj extends DTO {
         return this._nail.Text(unit);
       case "simple":
         return this._simple.Text(unit);
+      case "nut":
+        return this._nut.Text(unit);
       case "empty":
         return "";
       default:
@@ -71,6 +75,8 @@ export class ContentObj extends DTO {
         return this._nail.SearchText(unit);
       case "simple":
         return this._simple.SearchText(unit);
+      case "nut":
+        return this._nut.SearchText(unit);
       default:
         return `${this._contentType} is undefined - getText`;
     }
@@ -87,6 +93,7 @@ export class ContentObj extends DTO {
     this._screw = ScrewObj.Parse(d.screw);
     this._simple = SimpleObj.Parse(d.simple);
     this._nail = NailObj.Parse(d.nail);
+    this._nut = NailObj.Parse(d.nut);
   }
 
   get id(): string {
@@ -143,5 +150,13 @@ export class ContentObj extends DTO {
 
   set simple(value: SimpleObj) {
     this._simple = value;
+  }
+
+  get nut(): NutObj {
+    return this._nut;
+  }
+
+  set nut(value: NutObj) {
+    this._nut = value;
   }
 }

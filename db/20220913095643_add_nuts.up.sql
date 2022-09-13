@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS nut
         FOREIGN KEY(content_id)
             REFERENCES content(id)
             ON UPDATE CASCADE ON DELETE CASCADE,
-    description TEXT NOT NULL,
+    description TEXT NULL,
     thread_size TEXT NOT NULL,
     thread_pitch TEXT NOT NULL,
     type nut_t NOT NULL,
