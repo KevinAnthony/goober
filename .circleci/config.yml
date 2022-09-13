@@ -164,8 +164,8 @@ workflows:
           filters:
             tags:
               only: /^(release)-.*/
-          branches:
-            ignore: /.*/
+            branches:
+              ignore: /.*/
   node:
     jobs:
       - setup-node
@@ -178,6 +178,6 @@ workflows:
           filters:
             tags:
               only: /^release-.*/
-          branches:
-            ignore: /.*/
+            branches:
+              ignore: /.*/
 
