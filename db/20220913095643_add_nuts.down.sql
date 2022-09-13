@@ -1,0 +1,11 @@
+BEGIN
+;
+
+DROP TABLE IF EXISTS nut
+;
+
+DROP TYPE IF EXISTS nut_t
+;
+
+COMMIT
+;
