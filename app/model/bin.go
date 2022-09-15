@@ -39,6 +39,7 @@ type Content struct {
 	Washer    *Washer     `json:"washer,omitempty" pg:"rel:belongs-to"`
 	Screw     *Screw      `json:"screw,omitempty" pg:"rel:belongs-to"`
 	Nail      *Nail       `json:"nail,omitempty" pg:"rel:belongs-to"`
+	Nut       *Nut        `json:"nut,omitempty" pg:"rel:belongs-to"`
 	Simple    *Simple     `json:"simple,omitempty" pg:"rel:belongs-to"`
 }
 
