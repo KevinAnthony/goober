@@ -163,7 +163,7 @@ workflows:
             - build-go
           filters:
             tags:
-              only: /^main.*/
+              only: /^release.*/
             branches:
               ignore: /.*/
   node:
@@ -177,7 +177,6 @@ workflows:
             - build-node
           filters:
             tags:
-              only: /^main.*/
+              only: /^release.*/
             branches:
               ignore: /.*/
-
