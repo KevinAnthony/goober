@@ -169,14 +169,18 @@ workflows:
   node:
     jobs:
       - setup-node:
-          branches:
-            only: /.*/
+          filters:
+            branches:
+              only: /.*/
       - build-node:
           requires:
             - setup-node
-          branches:
-            only: /.*/
+          filters:
+            branches:
+              only: /.*/
       - deploy-node:
+          requires:
+            - build-node
           filters:
             tags:
               only: /^release.*/
