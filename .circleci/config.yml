@@ -168,10 +168,14 @@ workflows:
 #              ignore: /.*/
   node:
     jobs:
-      - setup-node
+      - setup-node:
+          branches:
+            only: /.*/
       - build-node:
           requires:
             - setup-node
+          branches:
+            only: /.*/
       - deploy-node:
           filters:
             tags:
