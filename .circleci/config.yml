@@ -142,36 +142,71 @@ jobs:
           name: push image
           command: docker push kevinaanthony/goober-web --all-tags
 workflows:
-#  go:
-#    jobs:
-#      - setup-go
-#      - lint-go:
-#          requires:
-#            - setup-go
-#      - test-go:
-#          requires:
-#            - setup-go
-#      - upload-coverage-go:
-#          requires:
-#            - test-go
-#      - build-go:
-#          requires:
-#            - lint-go
-#            - test-go
-#      - deploy-go:
-#          requires:
-#            - build-go
-#          filters:
-#            tags:
-#              only: /^release.*/
-#            branches:
-#              ignore: /.*/
+  go:
+    jobs:
+      - setup-go:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
+      - lint-go:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
+          requires:
+            - setup-go
+      - test-go:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
+          requires:
+            - setup-go
+      - upload-coverage-go:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
+          requires:
+            - test-go
+      - build-go:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
+          requires:
+            - lint-go
+            - test-go
+      - deploy-go:
+          requires:
+            - build-go
+          filters:
+            tags:
+              only: /^release.*/
+            branches:
+              ignore: /.*/
   node:
     jobs:
-      - setup-node
+      - setup-node:
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
       - build-node:
           requires:
             - setup-node
+          filters:
+            branches:
+              only: /.*/
+            tags:
+              only: /^release.*/
       - deploy-node:
           requires:
             - build-node
