@@ -172,12 +172,16 @@ workflows:
           filters:
             branches:
               only: /.*/
+            tags:
+              only: /^release.*/
       - build-node:
           requires:
             - setup-node
           filters:
             branches:
               only: /.*/
+            tags:
+              only: /^release.*/
       - deploy-node:
           requires:
             - build-node
