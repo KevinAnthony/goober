@@ -113,20 +113,18 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 		Relation("Content.Screw").
 		Relation("Content.Nail").
 		Relation("Content.Simple").
+		Relation("Content.Nut").
 		Select(&bin)
 
 	return bin, err
 }
 
 func (b bin) GetByID(ctx context.Context, ids ...string) ([]model.Bin, error) {
-	bins := make([]model.Bin, 0, len(ids))
-	for _, id := range ids {
-		bins = append(bins, model.Bin{ID: id})
-	}
+	var bins []model.Bin
 
 	err := b.db.
 		Model(&bins).
-		WherePK().
+		Where("id in (?)", pg.In(ids)).
 		Context(ctx).
 		Returning("*").
 		Relation("Content").
@@ -135,7 +133,8 @@ func (b bin) GetByID(ctx context.Context, ids ...string) ([]model.Bin, error) {
 		Relation("Content.Screw").
 		Relation("Content.Nail").
 		Relation("Content.Simple").
-		Select(&bins)
+		Relation("Content.Nut").
+		Select()
 
 	return bins, err
 }

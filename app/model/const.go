@@ -25,6 +25,7 @@ const (
 	ContentScrew  ContentType = "screw"
 	ContentWasher ContentType = "washer"
 	ContentNail   ContentType = "nail"
+	ContentNut    ContentType = "nut"
 )
 const (
 	BoltHeadHex   BoltHeadType = "hex"
