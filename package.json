@@ -15,7 +15,7 @@
     "@testing-library/react": "^12.1.5",
     "@testing-library/user-event": "^13.5.0",
     "@types/jest": "^27.5.2",
-    "@types/react": "^17.0.50",
+    "@types/react": "^17.0.51",
     "@types/react-dom": "^17.0.17",
     "material-ui-popup-state": "^2.0.1",
     "mathjs": "^10.6.4",
