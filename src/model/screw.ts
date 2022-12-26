@@ -40,6 +40,7 @@ export class ScrewObj extends DTO {
 
   public Text(unit: string): string {
     switch (unit) {
+      case "mm":
       case "in":
         return `Screw
 ----------------
@@ -54,6 +55,7 @@ Finish:\t${splitAndUppercase(this?._material)}`;
 
   public SearchText(unit: string): string {
     switch (unit) {
+      case "mm":
       case "in":
         return `${this?._size} X ${decToFraction(
           this?._length

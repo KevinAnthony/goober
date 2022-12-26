@@ -34,6 +34,7 @@ export class WasherObj extends DTO {
 
   public Text(unit: string): string {
     switch (unit) {
+      case "in":
       case "mm":
         return `Washer
 ----------------
