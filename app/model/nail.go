@@ -33,12 +33,13 @@ func (s Nail) BleveType() string {
 }
 
 func (s Nail) CreateMapping(fieldMapping *mapping.FieldMapping) (string, *mapping.DocumentMapping) {
-	boltMapping := bleve.NewDocumentMapping()
+	nailMapping := bleve.NewDocumentMapping()
 
-	boltMapping.AddFieldMappingsAt("length", fieldMapping)
-	boltMapping.AddFieldMappingsAt("gauge", fieldMapping)
-	boltMapping.AddFieldMappingsAt("description", fieldMapping)
-	boltMapping.AddFieldMappingsAt("material", fieldMapping)
+	nailMapping.AddFieldMappingsAt("length", fieldMapping)
+	nailMapping.AddFieldMappingsAt("gauge", fieldMapping)
+	nailMapping.AddFieldMappingsAt("description", fieldMapping)
+	nailMapping.AddFieldMappingsAt("material", fieldMapping)
+	nailMapping.AddFieldMappingsAt("description", fieldMapping)
 
-	return "nail", boltMapping
+	return "nail", nailMapping
 }
