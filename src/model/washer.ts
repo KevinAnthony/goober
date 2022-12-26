@@ -7,6 +7,7 @@ export class WasherObj extends DTO {
   public _size: string;
   public _type: string;
   public _material: string;
+  private _description: string;
 
   public static Parse(d: any): WasherObj {
     if (!d) {
@@ -27,6 +28,7 @@ export class WasherObj extends DTO {
       size: this._size,
       type: this._type,
       material: this._material,
+      description: this._description,
     };
   }
 
@@ -62,6 +64,7 @@ Finish:\t${splitAndUppercase(this?._material)}`;
     this._size = d.size;
     this._type = d.type;
     this._material = d.material;
+    this._description = d.description;
   }
 
   get id(): string {
@@ -74,6 +77,14 @@ Finish:\t${splitAndUppercase(this?._material)}`;
 
   set contentID(value: string) {
     this._contentID = value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+
+  set description(value: string) {
+    this._description = value;
   }
 
   get size(): string {

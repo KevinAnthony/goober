@@ -9,6 +9,7 @@ export class BoltObj extends DTO {
   private _threadSize: string;
   private _threadPitch: string;
   private _material: string;
+  private _description: string;
 
   public static Parse(d: string): BoltObj {
     if (!d) {
@@ -31,6 +32,7 @@ export class BoltObj extends DTO {
       thread_size: this._threadSize,
       thread_pitch: this._threadPitch,
       material: this._material,
+      description: this._description,
     };
   }
 
@@ -72,6 +74,7 @@ Finish:\t${splitAndUppercase(this?.material)}`;
     this._threadSize = d.thread_size;
     this._threadPitch = d.thread_pitch;
     this._material = d.material;
+    this._description = d.description;
   }
 
   //getters
@@ -85,6 +88,14 @@ Finish:\t${splitAndUppercase(this?.material)}`;
 
   set contentID(value: string) {
     this._contentID = value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+
+  set description(value: string) {
+    this._description = value;
   }
 
   get length(): number {
