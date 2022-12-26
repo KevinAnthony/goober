@@ -8,7 +8,7 @@ export const finishes = [
   "yellow_zinc",
   "bright",
 ];
-export const boltHeads = ["cap", "hex", "round"];
+export const boltHeads = ["cap", "hex", "round", "flat", "flange", "carriage"];
 export const screwHeads = ["round", "flat", "hex", "oval"];
 export const screwDrive = [
   "external_hex",
@@ -25,6 +25,7 @@ export const nutTypes = [
   "wing",
   "tee",
   "specialty",
+  "coupling",
 ];
 export const screwTypes = ["machine", "wood", "drywall", "self_tapping"];
 export const washerTypes = ["normal", "fender", "split_lock"];

@@ -4,7 +4,6 @@ import { ContainerObj } from "./model/container";
 import { Container } from "./components/Container";
 import { BinObj } from "./model/bin";
 import { SideMenu } from "./components/SideMenu";
-// import { Toaster } from "react-hot-toast";
 
 export default function MainWindow() {
   const [containers, setContainerList] = React.useState<Array<ContainerObj>>(
