@@ -28,11 +28,13 @@ const (
 	ContentNut    ContentType = "nut"
 )
 const (
-	BoltHeadHex   BoltHeadType = "hex"
-	BoltHeadCap   BoltHeadType = "cap"
-	BoltHeadRound BoltHeadType = "round"
-	BoltHeadFlat  BoltHeadType = "flat"
-	BoltHeadTNut  BoltHeadType = "tnut"
+	BoltHeadHex      BoltHeadType = "hex"
+	BoltHeadCap      BoltHeadType = "cap"
+	BoltHeadRound    BoltHeadType = "round"
+	BoltHeadFlat     BoltHeadType = "flat"
+	BoltHeadTNut     BoltHeadType = "tnut"
+	BoltHeadFlange   BoltHeadType = "flange"
+	BoltHeadCarriage BoltHeadType = "carriage"
 )
 const (
 	MaterialFinishStainless  MaterialFinish = "stainless_steel"
@@ -73,4 +75,5 @@ const (
 	NutTypeWing      NutType = "wing"
 	NutTypeTee       NutType = "tee"
 	NutTypeSpecialty NutType = "specialty"
+	NutTypeCoupling  NutType = "coupling"
 )

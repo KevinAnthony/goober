@@ -34,13 +34,13 @@ func (s Nut) BleveType() string {
 }
 
 func (s Nut) CreateMapping(fieldMapping *mapping.FieldMapping) (string, *mapping.DocumentMapping) {
-	boltMapping := bleve.NewDocumentMapping()
+	nutMapping := bleve.NewDocumentMapping()
 
-	boltMapping.AddFieldMappingsAt("type", fieldMapping)
-	boltMapping.AddFieldMappingsAt("material", fieldMapping)
-	boltMapping.AddFieldMappingsAt("thread_size", fieldMapping)
-	boltMapping.AddFieldMappingsAt("thread_pitch", fieldMapping)
-	boltMapping.AddFieldMappingsAt("description", fieldMapping)
+	nutMapping.AddFieldMappingsAt("type", fieldMapping)
+	nutMapping.AddFieldMappingsAt("material", fieldMapping)
+	nutMapping.AddFieldMappingsAt("thread_size", fieldMapping)
+	nutMapping.AddFieldMappingsAt("thread_pitch", fieldMapping)
+	nutMapping.AddFieldMappingsAt("description", fieldMapping)
 
-	return "nut", boltMapping
+	return "nut", nutMapping
 }

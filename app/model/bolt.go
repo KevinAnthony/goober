@@ -23,6 +23,7 @@ type Bolt struct {
 	ThreadSize  string         `json:"thread_size" pg:"thread_size"`
 	ThreadPitch string         `json:"thread_pitch" pg:"thread_pitch"`
 	Material    MaterialFinish `json:"material" pg:"material,type:goober.material_finish_t"`
+	Description string         `json:"description" pg:"description"`
 }
 
 func (b Bolt) String() string {
@@ -41,6 +42,7 @@ func (b Bolt) CreateMapping(fieldMapping *mapping.FieldMapping) (string, *mappin
 	boltMapping.AddFieldMappingsAt("thread_size", fieldMapping)
 	boltMapping.AddFieldMappingsAt("thread_pitch", fieldMapping)
 	boltMapping.AddFieldMappingsAt("material", fieldMapping)
+	boltMapping.AddFieldMappingsAt("description", fieldMapping)
 
 	return "bolt", boltMapping
 }

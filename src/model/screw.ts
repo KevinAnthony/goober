@@ -10,6 +10,7 @@ export class ScrewObj extends DTO {
   private _head: string;
   private _drive: string;
   private _material: string;
+  private _description: string;
 
   public static Parse(d: any): ScrewObj {
     if (!d) {
@@ -33,11 +34,13 @@ export class ScrewObj extends DTO {
       head: this._head,
       drive: this._drive,
       material: this._material,
+      description: this._description,
     };
   }
 
   public Text(unit: string): string {
     switch (unit) {
+      case "mm":
       case "in":
         return `Screw
 ----------------
@@ -52,6 +55,7 @@ Finish:\t${splitAndUppercase(this?._material)}`;
 
   public SearchText(unit: string): string {
     switch (unit) {
+      case "mm":
       case "in":
         return `${this?._size} X ${decToFraction(
           this?._length
@@ -109,6 +113,14 @@ Finish:\t${splitAndUppercase(this?._material)}`;
 
   set size(value: string) {
     this._size = value;
+  }
+
+  get description(): string {
+    return this._description;
+  }
+
+  set description(value: string) {
+    this._description = value;
   }
 
   get type(): string {
