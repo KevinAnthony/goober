@@ -1,5 +1,7 @@
-import {DTO} from "./dto";
-import {splitAndUppercase} from "../util/formatting";
+import { DTO } from "./dto";
+import { decToFraction, splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class NailObj extends DTO {
   private readonly _id: string;
@@ -32,15 +34,53 @@ export class NailObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
-    return `Nail
-----------------
-Size:\t${this?._gauge}  X ${this?._length}${unit}
-Finish:\t${splitAndUppercase(this?._material)}`;
+  public Text(unit: string): JSX.Element {
+    switch (unit) {
+      case "cm":
+      case "in":
+        return (
+          <table className={styles.content_table}>
+            <thead>
+              <tr className={styles.content_tr}>
+                <th className={styles.content_th} colSpan={2}>
+                  Nail
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Size</td>
+                <td className={styles.content_td}>{this?._gauge}</td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Length</td>
+                <td className={styles.content_td}>
+                  {decToFraction(this?._length)}
+                  {unit}
+                </td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Finish</td>
+                <td className={styles.content_td}>
+                  {splitAndUppercase(this?.material)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      default:
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for nail
+          </div>
+        );
+    }
   }
 
   public SearchText(unit: string): string {
-    return `${this?._gauge}  X ${this?._length}${unit} -- ${splitAndUppercase(this?._material)}`;
+    return `${this?._gauge}  X ${this?._length}${unit} -- ${splitAndUppercase(
+      this?._material
+    )}`;
   }
 
   private constructor(d: any) {

@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class BoltObj extends DTO {
   private readonly _id: string;
@@ -36,23 +38,61 @@ export class BoltObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
+  public Text(unit: string): JSX.Element {
     switch (unit) {
       case "mm":
+      case "cm":
       case "in":
-        return `Bolt
-----------------
-Size:\t${this?.threadSize} - ${this?.threadPitch} X ${this?.length}${unit}
-Head:\t${splitAndUppercase(this?.head)}
-Finish:\t${splitAndUppercase(this?.material)}`;
+        return (
+          <table className={styles.content_table}>
+            <thead>
+              <tr className={styles.content_tr}>
+                <th className={styles.content_th} colSpan={2}>
+                  Bolt
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Size</td>
+                <td className={styles.content_td}>
+                  {this?.threadSize} - {this?.threadPitch}
+                </td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Length</td>
+                <td className={styles.content_td}>
+                  {this?.length}
+                  {unit}
+                </td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Head</td>
+                <td className={styles.content_td}>
+                  {splitAndUppercase(this?.head)}
+                </td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Finish</td>
+                <td className={styles.content_td}>
+                  {splitAndUppercase(this?.material)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
       default:
-        return `${unit} is undefined for bolt`;
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for bolt
+          </div>
+        );
     }
   }
 
   public SearchText(unit: string): string {
     switch (unit) {
-      case "mm":
+      case "cm":
       case "in":
         return `${this?.threadSize} - ${this?.threadPitch} X ${
           this?.length

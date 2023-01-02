@@ -53,31 +53,13 @@ export default function MainWindow() {
         />
         {newPopupObject}
       </div>
-      <div
-        style={{
-          gridColumnStart: 2,
-          width: `${container.width}${container.unit}`,
-          fontSize: "32pt",
-          fontFamily: "FontAwesome, sans-serif",
-          color: "white",
-          padding: "10px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-          }}
-        >
-          <Container
-            removeContainer={removeContainer}
-            setPopup={setPopupObject}
-            container={container}
-            binToHighlightID={highlightID}
-            setContainerByBinCallback={setContainerFromBin}
-          />
-        </div>
-      </div>
+      <Container
+        removeContainer={removeContainer}
+        setPopup={setPopupObject}
+        container={container}
+        binToHighlightID={highlightID}
+        setContainerByBinCallback={setContainerFromBin}
+      />
     </div>
   );
 }

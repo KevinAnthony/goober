@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class WasherObj extends DTO {
   public readonly _id: string;
@@ -32,23 +34,52 @@ export class WasherObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
+  public Text(unit: string): JSX.Element {
     switch (unit) {
-      case "in":
       case "mm":
-        return `Washer
-----------------
-Size:\t${this?._size}
-Head:\t${splitAndUppercase(this?._type)}
-Finish:\t${splitAndUppercase(this?._material)}`;
+      case "cm":
+      case "in":
+        return (
+          <table className={styles.content_table}>
+            <thead>
+              <tr className={styles.content_tr}>
+                <th className={styles.content_th} colSpan={2}>
+                  Washer
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Size</td>
+                <td className={styles.content_td}>{this?._size}</td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Head</td>
+                <td className={styles.content_td}>
+                  {splitAndUppercase(this?._type)}
+                </td>
+              </tr>
+              <tr className={styles.content_tr}>
+                <td className={styles.content_td}>Finish</td>
+                <td className={styles.content_td}>
+                  {splitAndUppercase(this?.material)}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        );
       default:
-        return `${unit} is undefined for washer`;
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for washer
+          </div>
+        );
     }
   }
 
   public SearchText(unit: string): string {
     switch (unit) {
-      case "mm":
+      case "cm":
         return `${this?._size} -- ${splitAndUppercase(
           this?._material
         )} -- ${splitAndUppercase(this?._type)}`;

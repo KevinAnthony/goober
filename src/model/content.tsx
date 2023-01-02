@@ -5,6 +5,8 @@ import { BoltObj } from "./bolt";
 import { SimpleObj } from "./simple";
 import { NailObj } from "./nail";
 import { NutObj } from "./nut";
+import React from "react";
+import styles from "./content.module.css";
 
 export class ContentObj extends DTO {
   private readonly _id: string;
@@ -44,7 +46,7 @@ export class ContentObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
+  public Text(unit: string): JSX.Element {
     switch (this._contentType) {
       case "bolt":
         return this._bolt.Text(unit);
@@ -59,9 +61,13 @@ export class ContentObj extends DTO {
       case "nut":
         return this._nut.Text(unit);
       case "empty":
-        return "";
+        return <div />;
       default:
-        return `${this._contentType} is undefined - getText`;
+        return (
+          <div className={styles.content_error}>
+            `${this._contentType} is undefined - getText`;
+          </div>
+        );
     }
   }
 

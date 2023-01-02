@@ -1,0 +1,17 @@
+.content_table {
+}
+
+.content_th{
+    border-bottom: solid 0.25em var(--highlight-pink);
+}
+
+.content_td{
+}
+
+.content_tr {
+}
+
+.content_error{
+    font-weight:bold;
+    color: var(--highlight-pink);
+}
