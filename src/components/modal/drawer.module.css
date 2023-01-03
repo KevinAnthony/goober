@@ -1,0 +1,83 @@
+.drawer_title{
+    font-size: 2em;
+    font-family: Helvetica, sans-serif;
+    color: var(--font-color);
+}
+
+.button_div {
+    display: flex;
+    justify-content: right;
+    width: 12em;
+}
+
+.confirmation_button {
+    background:var(--dark-color);
+    border-color: var(--font-color);
+    border-width: 2px;
+    border-style: solid;
+    color: var(--font-color);
+    padding: .5em;
+    width: 50%;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.confirmation_button:first-child{
+    border-radius: 1em 0 0 1em
+}
+
+.confirmation_button:last-child{
+    border-radius: 0 1em 1em 0;
+    border-width: 2px 2px 2px 0;
+}
+
+.drawer_inner{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.content_button {
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
+}
+
+.content_button input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.content_button label {
+    background:var(--dark-color);
+    border-color: var(--font-color);
+    border-width: 2px;
+    border-style: solid;
+    color: var(--font-color);
+    padding: .75em 1em;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: bold;
+    width: 54px;
+}
+
+.content_button input:checked + label {
+    background-color: var(--background-color);
+    color: var(--highlight-pink);
+}
+
+.content_button label:first-of-type {
+    border-radius: 1em 0 0 1em;
+}
+
+.content_button label:last-of-type {
+    border-radius: 0 1em 1em 0;
+}

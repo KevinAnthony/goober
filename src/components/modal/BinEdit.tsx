@@ -4,7 +4,6 @@ import {
   Button,
   ButtonGroup,
   Dialog,
-  DialogTitle,
   TextField,
   ToggleButton,
   ToggleButtonGroup,
@@ -17,6 +16,7 @@ import {
   orange,
   red,
 } from "@mui/material/colors";
+import { Drawer } from "antd";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
 import { BinObj } from "../../model/bin";
 import { OutlinedBox } from "./OutlineBox";
@@ -34,6 +34,8 @@ import { parseNumber } from "../../util/utils";
 import { NailObj } from "../../model/nail";
 import { NailEdit } from "./subedit/NailEdit";
 import { NutEdit } from "./subedit/NutEdit";
+import styles from "./drawer.module.css";
+import "./drawer.css";
 
 interface props {
   bin: BinObj;
@@ -88,13 +90,8 @@ export function BinEdit({
     updateCallback(binState);
   }
 
-  function onToggleButtonChange(
-    _event: React.MouseEvent<HTMLElement>,
-    newType: string
-  ) {
-    console.log("bin content:", contentIndex, binState.content);
-
-    binState.content[contentIndex].contentType = newType;
+  function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
+    binState.content[contentIndex].contentType = event.target.value;
     binState.content[contentIndex].bolt = BoltObj.Empty();
     binState.content[contentIndex].screw = ScrewObj.Empty();
     binState.content[contentIndex].washer = WasherObj.Empty();
@@ -112,13 +109,97 @@ export function BinEdit({
         backgroundColor: "rgb(77,77,77,1)",
       }}
     >
+      <Drawer
+        title={<div className={styles.drawer_title}>{title}</div>}
+        placement="right"
+        size="large"
+        closable={false}
+        open={binIndex >= 0}
+        extra={
+          <div className={styles.button_div}>
+            <button
+              className={styles.confirmation_button}
+              onClick={closedCallback}
+            >
+              Save
+            </button>
+            <button
+              className={styles.confirmation_button}
+              onClick={closedCallback}
+            >
+              Cancel
+            </button>
+          </div>
+        }
+      >
+        <div className={styles.drawer_inner}>
+          <div onChange={onContentChanged} className={styles.content_button}>
+            <input
+              type="radio"
+              value="empty"
+              name="content_type"
+              id="empty"
+              checked={"empty" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="empty">Empty</label>
+            <input
+              type="radio"
+              value="bolt"
+              name="content_type"
+              id="bolt"
+              checked={"bolt" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="bolt">Bolt</label>
+            <input
+              type="radio"
+              value="nut"
+              name="content_type"
+              id="nut"
+              checked={"nut" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="nut">Nut</label>
+            <input
+              type="radio"
+              value="screw"
+              name="content_type"
+              id="screw"
+              checked={"screw" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="screw">Screw</label>
+            <input
+              type="radio"
+              value="washer"
+              name="content_type"
+              id="washer"
+              checked={"washer" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="washer">Washer</label>
+            <input
+              type="radio"
+              value="nail"
+              name="content_type"
+              id="nail"
+              checked={"nail" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="nail">Nail</label>
+            <input
+              type="radio"
+              value="simple"
+              name="content_type"
+              id="simple"
+              checked={"simple" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="simple">Simple</label>
+          </div>
+        </div>
+      </Drawer>
       <Dialog
         aria-labelledby="simple-modal-title"
         aria-describedby="simple-modal-description"
-        open={binIndex >= 0}
+        // open={binIndex >= 0}
+        open={false}
         onClose={closedCallback}
       >
-        <DialogTitle>{title}</DialogTitle>
         <div
           style={{
             display: "flex",
@@ -127,22 +208,6 @@ export function BinEdit({
             alignItems: "center",
           }}
         >
-          <div>
-            <ToggleButtonGroup
-              color="primary"
-              value={binState.content[contentIndex].contentType}
-              exclusive
-              onChange={onToggleButtonChange}
-            >
-              <ToggleButton value="empty">Empty</ToggleButton>
-              <ToggleButton value="bolt">Bolt</ToggleButton>
-              <ToggleButton value="nut">Nut</ToggleButton>
-              <ToggleButton value="screw">Screw</ToggleButton>
-              <ToggleButton value="washer">Washer</ToggleButton>
-              <ToggleButton value="nail">Nail</ToggleButton>
-              <ToggleButton value="simple">Simple</ToggleButton>
-            </ToggleButtonGroup>
-          </div>
           <Box component="form">
             <div
               style={{
