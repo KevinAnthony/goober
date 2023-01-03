@@ -9,6 +9,7 @@ import { Box, TextField } from "@mui/material";
 import { Dropdown } from "../Dropdown";
 import React, { ChangeEvent } from "react";
 import { parseNumber } from "../../../util/utils";
+// import styles from "../drawer.module.css";
 
 export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
   return (

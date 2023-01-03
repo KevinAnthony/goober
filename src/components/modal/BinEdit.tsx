@@ -25,6 +25,7 @@ import { NailEdit } from "./subedit/NailEdit";
 import { NutEdit } from "./subedit/NutEdit";
 import styles from "./drawer.module.css";
 import "./drawer.css";
+import { TextBox } from "../TextBox";
 
 interface props {
   bin: BinObj;
@@ -196,77 +197,50 @@ export function BinEdit({
             <label htmlFor="simple">Simple</label>
           </div>
           <form className={styles.location_controls_form}>
-            <div className={styles.location_controls_container}>
-              <input
-                id="loc-x"
-                type="number"
-                defaultValue={binState.x}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.x = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                className={styles.location_controls_input}
-                placeholder="a"
-              />
-              <label htmlFor="loc-x" className={styles.location_controls_label}>
-                X
-              </label>
-            </div>
-            <div className={styles.location_controls_container}>
-              <input
-                id="loc-y"
-                type="number"
-                defaultValue={binState.y}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.y = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                className={styles.location_controls_input}
-                placeholder="a"
-              />
-              <label htmlFor="loc-y" className={styles.location_controls_label}>
-                Y
-              </label>
-            </div>
-            <div className={styles.location_controls_container}>
-              <input
-                id="width"
-                type="number"
-                defaultValue={binState.width}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.width = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                className={styles.location_controls_input}
-                placeholder="a"
-              />
-              <label htmlFor="width" className={styles.location_controls_label}>
-                Width
-              </label>
-            </div>
-            <div className={styles.location_controls_container}>
-              <input
-                id="height"
-                type="number"
-                defaultValue={binState.height}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.height = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                className={styles.location_controls_input}
-                placeholder="a"
-              />
-              <label
-                htmlFor="height"
-                className={styles.location_controls_label}
-              >
-                Width
-              </label>
-            </div>
+            <TextBox
+              id="loc-x"
+              type="number"
+              defaultValue={binState.x}
+              label="X"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.x = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-y"
+              type="number"
+              defaultValue={binState.y}
+              label="Y"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.y = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-width"
+              type="number"
+              defaultValue={binState.width}
+              label="Width"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.width = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-height"
+              type="number"
+              defaultValue={binState.height}
+              label="Height"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.height = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
           </form>
           <div>
             <fieldset className={styles.color_picker}>
