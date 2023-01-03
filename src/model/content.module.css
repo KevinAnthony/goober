@@ -1,14 +1,15 @@
 .content_table {
 }
 
-.content_th{
+.content_table th{
     border-bottom: solid 0.25em var(--highlight-pink);
 }
 
-.content_td{
+.content_table td{
+    padding:0 4px;
 }
 
-.content_tr {
+.content_table tr {
 }
 
 .content_error{

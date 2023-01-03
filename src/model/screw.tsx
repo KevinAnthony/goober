@@ -47,35 +47,35 @@ export class ScrewObj extends DTO {
         return (
           <table className={styles.content_table}>
             <thead>
-              <tr className={styles.content_tr}>
-                <th className={styles.content_th} colSpan={2}>
-                  Screw
-                </th>
+              <tr>
+                <th colSpan={2}>Screw</th>
               </tr>
             </thead>
             <tbody>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Size</td>
-                <td className={styles.content_td}>{this?._size}</td>
+              <tr>
+                <td>Type</td>
+                <td>{splitAndUppercase(this?._type)}</td>
               </tr>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Length</td>
-                <td className={styles.content_td}>
+              <tr>
+                <td>Size</td>
+                <td>{this?._size}</td>
+              </tr>
+              <tr>
+                <td>Length</td>
+                <td>
                   {decToFraction(this?._length)} {unit}
                 </td>
               </tr>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Head</td>
-                <td className={styles.content_td}>
+              <tr>
+                <td>Head</td>
+                <td>
                   {splitAndUppercase(this?._head)} {"-"}{" "}
                   {splitAndUppercase(this?._drive)}
                 </td>
               </tr>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Finish</td>
-                <td className={styles.content_td}>
-                  {splitAndUppercase(this?.material)}
-                </td>
+              <tr>
+                <td>Finish</td>
+                <td>{splitAndUppercase(this?.material)}</td>
               </tr>
             </tbody>
           </table>

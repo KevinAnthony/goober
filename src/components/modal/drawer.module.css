@@ -40,13 +40,13 @@
     align-items: center;
 }
 
-.content_button {
+.horizontal_toggle_group {
     display: flex;
     margin-bottom: 36px;
     overflow: hidden;
 }
 
-.content_button input {
+.horizontal_toggle_group input {
     position: absolute !important;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -55,7 +55,7 @@
     overflow: hidden;
 }
 
-.content_button label {
+.horizontal_toggle_group label {
     background:var(--dark-color);
     border-color: var(--font-color);
     border-width: 2px;
@@ -69,16 +69,16 @@
     width: 54px;
 }
 
-.content_button input:checked + label {
+.horizontal_toggle_group input:checked + label {
     background-color: var(--dark-color);
     color: var(--highlight-pink);
 }
 
-.content_button label:first-of-type {
+.horizontal_toggle_group label:first-of-type {
     border-radius: 1em 0 0 1em;
 }
 
-.content_button label:last-of-type {
+.horizontal_toggle_group label:last-of-type {
     border-radius: 0 1em 1em 0;
 }
 

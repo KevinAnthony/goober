@@ -1,12 +1,5 @@
 import React from "react";
 import {
-  Button,
-  ButtonGroup,
-  Dialog,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
-import {
   amber,
   blueGrey,
   green,
@@ -17,8 +10,6 @@ import {
 import { Drawer } from "antd";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
 import { BinObj } from "../../model/bin";
-import { OutlinedBox } from "./OutlineBox";
-import { ColorButton } from "./ColorButton";
 import { BoltObj } from "../../model/bolt";
 import { WasherObj } from "../../model/washer";
 import { ScrewObj } from "../../model/screw";
@@ -82,13 +73,6 @@ export function BinEdit({
 
   const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
 
-  function handleColorChange(newColor: string) {
-    setSelectedColor(newColor);
-    binState.color = hex2rgb(newColor);
-    setBin(binState);
-    updateCallback(binState);
-  }
-
   function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
     binState.content[contentIndex].contentType = event.target.value;
     binState.content[contentIndex].bolt = BoltObj.Empty();
@@ -108,6 +92,30 @@ export function BinEdit({
     updateCallback(binState);
   }
 
+  function onUnitChanged(event: React.ChangeEvent<HTMLInputElement>) {
+    setSelectedUnit(event.target.value);
+    binState.unit = event.target.value;
+  }
+
+  function onSave() {
+    updateCallback(binState);
+    saveCallback(binIndex, binState, true);
+    closedCallback();
+  }
+
+  function onCancel() {
+    if (!binState.id) {
+      removeCallback(binIndex);
+      closedCallback();
+
+      return;
+    }
+    net.getBin(binState).then((b) => {
+      updateCallback(b);
+      closedCallback();
+    });
+  }
+
   return (
     <div
       style={{
@@ -123,27 +131,23 @@ export function BinEdit({
         open={binIndex >= 0}
         extra={
           <div className={styles.button_div}>
-            <button
-              className={styles.confirmation_button}
-              onClick={closedCallback}
-            >
+            <button className={styles.confirmation_button} onClick={onSave}>
               Save
             </button>
-            <button
-              className={styles.confirmation_button}
-              onClick={closedCallback}
-            >
+            <button className={styles.confirmation_button} onClick={onCancel}>
               Cancel
             </button>
           </div>
         }
       >
         <div className={styles.drawer_inner}>
-          <div onChange={onContentChanged} className={styles.content_button}>
+          <div
+            onChange={onContentChanged}
+            className={styles.horizontal_toggle_group}
+          >
             <input
               type="radio"
               value="empty"
-              name="content_type"
               id="empty"
               checked={"empty" === binState.content[contentIndex].contentType}
             />
@@ -151,7 +155,6 @@ export function BinEdit({
             <input
               type="radio"
               value="bolt"
-              name="content_type"
               id="bolt"
               checked={"bolt" === binState.content[contentIndex].contentType}
             />
@@ -159,7 +162,6 @@ export function BinEdit({
             <input
               type="radio"
               value="nut"
-              name="content_type"
               id="nut"
               checked={"nut" === binState.content[contentIndex].contentType}
             />
@@ -167,7 +169,6 @@ export function BinEdit({
             <input
               type="radio"
               value="screw"
-              name="content_type"
               id="screw"
               checked={"screw" === binState.content[contentIndex].contentType}
             />
@@ -175,7 +176,6 @@ export function BinEdit({
             <input
               type="radio"
               value="washer"
-              name="content_type"
               id="washer"
               checked={"washer" === binState.content[contentIndex].contentType}
             />
@@ -183,7 +183,6 @@ export function BinEdit({
             <input
               type="radio"
               value="nail"
-              name="content_type"
               id="nail"
               checked={"nail" === binState.content[contentIndex].contentType}
             />
@@ -191,7 +190,6 @@ export function BinEdit({
             <input
               type="radio"
               value="simple"
-              name="content_type"
               id="simple"
               checked={"simple" === binState.content[contentIndex].contentType}
             />
@@ -319,119 +317,37 @@ export function BinEdit({
               </div>
             </fieldset>
           </div>
+          <div
+            onChange={onUnitChanged}
+            className={styles.horizontal_toggle_group}
+            style={{ margin: "18px" }}
+          >
+            <input
+              type="radio"
+              value="in"
+              id="in"
+              checked={"in" === selectedUnit}
+            />
+            <label htmlFor="in">Imperial</label>
+            <input
+              type="radio"
+              value="mm"
+              id="mm"
+              checked={"mm" === selectedUnit}
+            />
+            <label htmlFor="mm">Metric</label>
+            <input
+              type="radio"
+              value="an"
+              id="an"
+              checked={"an" === selectedUnit}
+            />
+            <label htmlFor="an">AN</label>
+          </div>
+          {innerContainer}
         </div>
         {/* end of inner drawer*/}
       </Drawer>
-      <Dialog
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        // open={binIndex >= 0}
-        open={false}
-        onClose={closedCallback}
-      >
-        <OutlinedBox
-          label="Color Picker"
-          style={{
-            margin: "20px",
-          }}
-        >
-          <ToggleButtonGroup value={selectedColor} exclusive>
-            <div
-              style={{
-                margin: "1em",
-                display: "flex",
-                gap: "10px",
-              }}
-            >
-              <ColorButton
-                onChange={handleColorChange}
-                color={binRed}
-                selected={selectedColor}
-              />
-              <ColorButton
-                onChange={handleColorChange}
-                color={binBlue}
-                selected={selectedColor}
-              />
-              <ColorButton
-                onChange={handleColorChange}
-                color={binGreen}
-                selected={selectedColor}
-              />
-              <ColorButton
-                onChange={handleColorChange}
-                color={binYellow}
-                selected={selectedColor}
-              />
-              <ColorButton
-                onChange={handleColorChange}
-                color={binOrange}
-                selected={selectedColor}
-              />
-              <ColorButton
-                onChange={handleColorChange}
-                color={binGrey}
-                selected={selectedColor}
-              />
-            </div>
-          </ToggleButtonGroup>
-        </OutlinedBox>
-        <ToggleButtonGroup
-          color="primary"
-          value={selectedUnit}
-          exclusive
-          onChange={(_e, newUnit: string) => {
-            setSelectedUnit(newUnit);
-            binState.unit = newUnit;
-          }}
-        >
-          <ToggleButton value="in">Imperial</ToggleButton>
-          <ToggleButton value="mm">Metric</ToggleButton>
-          <ToggleButton value="an">AN</ToggleButton>
-        </ToggleButtonGroup>
-        {innerContainer}
-        <ButtonGroup
-          aria-label="contained button group"
-          variant="contained"
-          style={{
-            margin: "1em",
-          }}
-        >
-          <Button
-            style={{
-              width: "16em",
-              height: "4em",
-            }}
-            onClick={() => {
-              updateCallback(binState);
-              saveCallback(binIndex, binState, true);
-              closedCallback();
-            }}
-          >
-            Save
-          </Button>
-          <Button
-            style={{
-              width: "16em",
-              height: "4em",
-            }}
-            onClick={() => {
-              if (!binState.id) {
-                removeCallback(binIndex);
-                closedCallback();
-
-                return;
-              }
-              net.getBin(binState).then((b) => {
-                updateCallback(b);
-                closedCallback();
-              });
-            }}
-          >
-            Cancel
-          </Button>
-        </ButtonGroup>
-      </Dialog>
     </div>
   );
 }

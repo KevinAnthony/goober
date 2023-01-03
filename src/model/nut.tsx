@@ -44,28 +44,24 @@ export class NutObj extends DTO {
         return (
           <table className={styles.content_rable}>
             <thead>
-              <tr className={styles.content_tr}>
-                <th className={styles.content_th} colSpan={2}>
-                  Nut
-                </th>
+              <tr>
+                <th colSpan={2}>Nut</th>
               </tr>
             </thead>
             <tbody>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Type</td>
-                <td className={styles.content_td}>{this?.type}</td>
+              <tr>
+                <td>Type</td>
+                <td>{this?.type}</td>
               </tr>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Thread</td>
-                <td className={styles.content_td}>
+              <tr>
+                <td>Thread</td>
+                <td>
                   {this?.threadSize} - {this?.threadPitch}
                 </td>
               </tr>
-              <tr className={styles.content_tr}>
-                <td className={styles.content_td}>Finish</td>
-                <td className={styles.content_td}>
-                  {splitAndUppercase(this?.material)}
-                </td>
+              <tr>
+                <td>Finish</td>
+                <td>{splitAndUppercase(this?.material)}</td>
               </tr>
             </tbody>
           </table>
