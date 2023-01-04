@@ -34,7 +34,7 @@ export class WasherObj extends DTO {
     };
   }
 
-  public Text(unit: string): JSX.Element {
+  public GetEdit(unit: string): JSX.Element {
     switch (unit) {
       case "mm":
       case "cm":

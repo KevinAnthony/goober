@@ -93,7 +93,7 @@ export function Bin({
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      <div>{bin.Text(0)}</div>
+      <div>{bin.GetEdit(0)}</div>
       <div />
       <BinEdit
         binIndex={editIndex}

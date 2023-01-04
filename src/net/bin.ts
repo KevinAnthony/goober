@@ -50,7 +50,6 @@ export class BinNet extends netCode {
     const json = JSON.stringify(bin.JSON());
     const url = this.getURL();
 
-    console.log(json);
     return window
       .fetch(`${url}/bin/${bin.id}`, {
         method: "PUT",

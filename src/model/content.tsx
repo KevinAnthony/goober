@@ -32,7 +32,6 @@ export class ContentObj extends DTO {
   }
 
   public JSON(): object {
-    console.log("content json", this);
     return {
       id: this._id,
       bin_id: this._binID,
@@ -46,20 +45,20 @@ export class ContentObj extends DTO {
     };
   }
 
-  public Text(unit: string): JSX.Element {
+  public GetEdit(unit: string): JSX.Element {
     switch (this._contentType) {
       case "bolt":
-        return this._bolt.Text(unit);
+        return this._bolt.GetEdit(unit);
       case "washer":
-        return this._washer.Text(unit);
+        return this._washer.GetEdit(unit);
       case "screw":
-        return this._screw.Text(unit);
+        return this._screw.GetEdit(unit);
       case "nail":
-        return this._nail.Text(unit);
+        return this._nail.GetEdit(unit);
       case "simple":
-        return this._simple.Text(unit);
+        return this._simple.GetEdit(unit);
       case "nut":
-        return this._nut.Text(unit);
+        return this._nut.GetEdit(unit);
       case "empty":
         return <div />;
       default:
@@ -99,9 +98,9 @@ export class ContentObj extends DTO {
     this._bolt = BoltObj.Parse(d.bolt);
     this._washer = WasherObj.Parse(d.washer);
     this._screw = ScrewObj.Parse(d.screw);
-    this._simple = SimpleObj.Parse(d.simple);
-    this._nail = NailObj.Parse(d.nail);
     this._nut = NutObj.Parse(d.nut);
+    this._nail = NailObj.Parse(d.nail);
+    this._simple = SimpleObj.Parse(d.simple);
   }
 
   get id(): string {

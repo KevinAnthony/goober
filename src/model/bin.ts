@@ -38,8 +38,8 @@ export class BinObj extends DTO {
     };
   }
 
-  public Text(index: number): JSX.Element {
-    return this._content[index].Text(this.unit);
+  public GetEdit(index: number): JSX.Element {
+    return this._content[index].GetEdit(this.unit);
   }
 
   public SearchText(index: number): string {

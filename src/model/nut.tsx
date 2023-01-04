@@ -36,7 +36,7 @@ export class NutObj extends DTO {
     };
   }
 
-  public Text(unit: string): JSX.Element {
+  public GetEdit(unit: string): JSX.Element {
     switch (unit) {
       case "mm":
       case "cm":
@@ -86,8 +86,8 @@ export class NutObj extends DTO {
     this._contentID = d.content_id;
     this._material = d.material;
     this._type = d.type;
-    this._threadSize = d.threadSize;
-    this._threadPitch = d.threadPitch;
+    this._threadSize = d.thread_size;
+    this._threadPitch = d.thread_pitch;
     this._description = d.description;
   }
 
