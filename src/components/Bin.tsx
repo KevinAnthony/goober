@@ -1,14 +1,12 @@
 import React from "react";
-import Button from "@mui/material/Button";
+import styles from "./Bin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { BinObj } from "../model/bin";
 import { ColorObj } from "../model/color";
 import { BinEdit } from "./modal/BinEdit";
 import { Confirmation } from "./dialog/Confirmation";
 import { BinNet } from "../net/bin";
-import { Typography } from "@mui/material";
 
 interface props {
   bin: BinObj;
@@ -70,50 +68,32 @@ export function Bin({
 
   return (
     <div
-      className="grid-bin"
+      className={styles.bin}
       style={{
         gridColumnStart: startX,
         gridColumnEnd: stopX,
         gridRowStart: startY,
         gridRowEnd: stopY,
-        backgroundColor: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`,
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
         border: isHighlighted ? "0.4rem solid #0cc" : "",
       }}
     >
-      <ButtonGroup
-        fullWidth={true}
-        variant="contained"
-        aria-label="outlined contained button group"
-      >
-        <Button
-          style={{
-            padding: "4px",
-            height: "3em",
-          }}
+      <div className={styles.top_button_bar}>
+        <button
+          className={styles.top_button}
           onClick={() => {
             handleBinEditOpen(index);
           }}
         >
-          <Typography>
-            <FontAwesomeIcon icon={faCog} />
-          </Typography>
-        </Button>
-        <Button
-          style={{
-            padding: "4px",
-            height: "3em",
-          }}
+          <FontAwesomeIcon icon={faCog} />
+        </button>
+        <button
+          className={styles.top_button}
           onClick={() => setDeleteConfirmationOpen(true)}
         >
-          <Typography>
-            <FontAwesomeIcon icon={faTrash} />
-          </Typography>
-        </Button>
-      </ButtonGroup>
-      <Typography variant="bin_content">{bin.Text(0)}</Typography>
+          <FontAwesomeIcon icon={faTrash} />
+        </button>
+      </div>
+      <div>{bin.Text(0)}</div>
       <div />
       <BinEdit
         binIndex={editIndex}
@@ -123,6 +103,12 @@ export function Bin({
         saveCallback={updateCallback}
         removeCallback={removeCallback}
         title={"Edit Bin"}
+      />
+      <div
+        className={styles.bin_color_viewer}
+        style={{
+          background: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`,
+        }}
       />
       <Confirmation
         closedCallback={handleDelete}

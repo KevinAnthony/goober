@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { decToFraction, splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class ScrewObj extends DTO {
   private readonly _id: string;
@@ -38,24 +40,58 @@ export class ScrewObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
+  public Text(unit: string): JSX.Element {
     switch (unit) {
-      case "mm":
+      case "cm":
       case "in":
-        return `Screw
-----------------
-Size:\t${this?._size} X ${decToFraction(this?._length)}${unit}
-Type:\t${splitAndUppercase(this?._type)}
-Head:\t${splitAndUppercase(this?._head)} - ${splitAndUppercase(this?._drive)}
-Finish:\t${splitAndUppercase(this?._material)}`;
+        return (
+          <table className={styles.content_table}>
+            <thead>
+              <tr>
+                <th colSpan={2}>Screw</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Type</td>
+                <td>{splitAndUppercase(this?._type)}</td>
+              </tr>
+              <tr>
+                <td>Size</td>
+                <td>{this?._size}</td>
+              </tr>
+              <tr>
+                <td>Length</td>
+                <td>
+                  {decToFraction(this?._length)} {unit}
+                </td>
+              </tr>
+              <tr>
+                <td>Head</td>
+                <td>
+                  {splitAndUppercase(this?._head)} {"-"}{" "}
+                  {splitAndUppercase(this?._drive)}
+                </td>
+              </tr>
+              <tr>
+                <td>Finish</td>
+                <td>{splitAndUppercase(this?.material)}</td>
+              </tr>
+            </tbody>
+          </table>
+        );
       default:
-        return `${unit} is undefined for screw`;
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for screw
+          </div>
+        );
     }
   }
 
   public SearchText(unit: string): string {
     switch (unit) {
-      case "mm":
+      case "cm":
       case "in":
         return `${this?._size} X ${decToFraction(
           this?._length

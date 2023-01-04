@@ -1,0 +1,120 @@
+.drawer_title{
+    font-size: 2em;
+    font-family: Helvetica, sans-serif;
+    color: var(--font-color);
+}
+
+.button_div {
+    display: flex;
+    justify-content: right;
+    width: 12em;
+}
+
+.confirmation_button {
+    background:var(--dark-color);
+    border-color: var(--font-color);
+    border-width: 2px;
+    border-style: solid;
+    color: var(--font-color);
+    padding: .5em;
+    width: 50%;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: bold;
+}
+
+.confirmation_button:first-child{
+    border-radius: 1em 0 0 1em
+}
+
+.confirmation_button:last-child{
+    border-radius: 0 1em 1em 0;
+    border-width: 2px 2px 2px 0;
+}
+
+.drawer_inner{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.horizontal_toggle_group {
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
+}
+
+.horizontal_toggle_group input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.horizontal_toggle_group label {
+    background:var(--dark-color);
+    border-color: var(--font-color);
+    border-width: 2px;
+    border-style: solid;
+    color: var(--font-color);
+    padding: .75em 1em;
+    text-align: center;
+    font-size: 14px;
+    display: inline-block;
+    font-weight: bold;
+    width: 54px;
+}
+
+.horizontal_toggle_group input:checked + label {
+    background-color: var(--dark-color);
+    color: var(--highlight-pink);
+}
+
+.horizontal_toggle_group label:first-of-type {
+    border-radius: 1em 0 0 1em;
+}
+
+.horizontal_toggle_group label:last-of-type {
+    border-radius: 0 1em 1em 0;
+}
+
+.location_controls_form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap:10px;
+}
+
+.color_picker{
+    margin-top: 14px;
+    border-color: var(--font-color);
+    border-style: solid;
+    border-radius: 1em;
+    border-width: 2px;
+}
+
+.color_picker legend {
+    color: var(--highlight-yellow);
+    font-size: 14px;
+    font-weight: bolder;
+}
+
+.color_picker input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 64px;
+    height: 32px;
+    border-color: var(--dark-color-highlight);
+    border-width: 4px;
+    border-style: solid;
+    border-radius: .25em;
+}
+
+.color_picker input:checked {
+    border-color: var(--highlight-pink)
+}

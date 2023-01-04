@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class NutObj extends DTO {
   private readonly _id: string;
@@ -34,12 +36,43 @@ export class NutObj extends DTO {
     };
   }
 
-  public Text(_: string): string {
-    return `Nut
-----------------
-Type:\t${this?.type}
-Thread:\t${this?.threadSize} - ${this?.threadPitch}
-Finish:\t${splitAndUppercase(this?.material)}`;
+  public Text(unit: string): JSX.Element {
+    switch (unit) {
+      case "mm":
+      case "cm":
+      case "in":
+        return (
+          <table className={styles.content_rable}>
+            <thead>
+              <tr>
+                <th colSpan={2}>Nut</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Type</td>
+                <td>{this?.type}</td>
+              </tr>
+              <tr>
+                <td>Thread</td>
+                <td>
+                  {this?.threadSize} - {this?.threadPitch}
+                </td>
+              </tr>
+              <tr>
+                <td>Finish</td>
+                <td>{splitAndUppercase(this?.material)}</td>
+              </tr>
+            </tbody>
+          </table>
+        );
+      default:
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for nut
+          </div>
+        );
+    }
   }
 
   public SearchText(_: string): string {

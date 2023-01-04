@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class BoltObj extends DTO {
   private readonly _id: string;
@@ -36,23 +38,55 @@ export class BoltObj extends DTO {
     };
   }
 
-  public Text(unit: string): string {
+  public Text(unit: string): JSX.Element {
     switch (unit) {
       case "mm":
+      case "cm":
       case "in":
-        return `Bolt
-----------------
-Size:\t${this?.threadSize} - ${this?.threadPitch} X ${this?.length}${unit}
-Head:\t${splitAndUppercase(this?.head)}
-Finish:\t${splitAndUppercase(this?.material)}`;
+        return (
+          <table className={styles.content_table}>
+            <thead>
+              <tr>
+                <th colSpan={2}>Bolt</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Size</td>
+                <td>
+                  {this?.threadSize} - {this?.threadPitch}
+                </td>
+              </tr>
+              <tr>
+                <td>Length</td>
+                <td>
+                  {this?.length}
+                  {unit}
+                </td>
+              </tr>
+              <tr>
+                <td>Head</td>
+                <td>{splitAndUppercase(this?.head)}</td>
+              </tr>
+              <tr>
+                <td>Finish</td>
+                <td>{splitAndUppercase(this?.material)}</td>
+              </tr>
+            </tbody>
+          </table>
+        );
       default:
-        return `${unit} is undefined for bolt`;
+        return (
+          <div className={styles.content_error}>
+            {unit} is undefined for bolt
+          </div>
+        );
     }
   }
 
   public SearchText(unit: string): string {
     switch (unit) {
-      case "mm":
+      case "cm":
       case "in":
         return `${this?.threadSize} - ${this?.threadPitch} X ${
           this?.length

@@ -1,15 +1,5 @@
 import React from "react";
 import {
-  Box,
-  Button,
-  ButtonGroup,
-  Dialog,
-  DialogTitle,
-  TextField,
-  ToggleButton,
-  ToggleButtonGroup,
-} from "@mui/material";
-import {
   amber,
   blueGrey,
   green,
@@ -17,10 +7,9 @@ import {
   orange,
   red,
 } from "@mui/material/colors";
+import { Drawer } from "antd";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
 import { BinObj } from "../../model/bin";
-import { OutlinedBox } from "./OutlineBox";
-import { ColorButton } from "./ColorButton";
 import { BoltObj } from "../../model/bolt";
 import { WasherObj } from "../../model/washer";
 import { ScrewObj } from "../../model/screw";
@@ -34,6 +23,9 @@ import { parseNumber } from "../../util/utils";
 import { NailObj } from "../../model/nail";
 import { NailEdit } from "./subedit/NailEdit";
 import { NutEdit } from "./subedit/NutEdit";
+import styles from "./drawer.module.css";
+import "./drawer.css";
+import { TextBox } from "../TextBox";
 
 interface props {
   bin: BinObj;
@@ -79,22 +71,11 @@ export function BinEdit({
   const [selectedColor, setSelectedColor] = React.useState<string>(
     rgb2hex(bin.color)
   );
+
   const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
 
-  function handleColorChange(newColor: string) {
-    setSelectedColor(newColor);
-    binState.color = hex2rgb(newColor);
-    setBin(binState);
-    updateCallback(binState);
-  }
-
-  function onToggleButtonChange(
-    _event: React.MouseEvent<HTMLElement>,
-    newType: string
-  ) {
-    console.log("bin content:", contentIndex, binState.content);
-
-    binState.content[contentIndex].contentType = newType;
+  function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
+    binState.content[contentIndex].contentType = event.target.value;
     binState.content[contentIndex].bolt = BoltObj.Empty();
     binState.content[contentIndex].screw = ScrewObj.Empty();
     binState.content[contentIndex].washer = WasherObj.Empty();
@@ -105,6 +86,37 @@ export function BinEdit({
     setContainer(getFieldsForContent(binState, 0, updateCallback));
   }
 
+  function onColorChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setSelectedColor(event.target.value);
+    binState.color = hex2rgb(event.target.value);
+    setBin(binState);
+    updateCallback(binState);
+  }
+
+  function onUnitChanged(event: React.ChangeEvent<HTMLInputElement>) {
+    setSelectedUnit(event.target.value);
+    binState.unit = event.target.value;
+  }
+
+  function onSave() {
+    updateCallback(binState);
+    saveCallback(binIndex, binState, true);
+    closedCallback();
+  }
+
+  function onCancel() {
+    if (!binState.id) {
+      removeCallback(binIndex);
+      closedCallback();
+
+      return;
+    }
+    net.getBin(binState).then((b) => {
+      updateCallback(b);
+      closedCallback();
+    });
+  }
+
   return (
     <div
       style={{
@@ -112,203 +124,204 @@ export function BinEdit({
         backgroundColor: "rgb(77,77,77,1)",
       }}
     >
-      <Dialog
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
+      <Drawer
+        title={<div className={styles.drawer_title}>{title}</div>}
+        placement="right"
+        size="large"
+        closable={false}
         open={binIndex >= 0}
-        onClose={closedCallback}
-      >
-        <DialogTitle>{title}</DialogTitle>
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <div>
-            <ToggleButtonGroup
-              color="primary"
-              value={binState.content[contentIndex].contentType}
-              exclusive
-              onChange={onToggleButtonChange}
-            >
-              <ToggleButton value="empty">Empty</ToggleButton>
-              <ToggleButton value="bolt">Bolt</ToggleButton>
-              <ToggleButton value="nut">Nut</ToggleButton>
-              <ToggleButton value="screw">Screw</ToggleButton>
-              <ToggleButton value="washer">Washer</ToggleButton>
-              <ToggleButton value="nail">Nail</ToggleButton>
-              <ToggleButton value="simple">Simple</ToggleButton>
-            </ToggleButtonGroup>
+        extra={
+          <div className={styles.button_div}>
+            <button className={styles.confirmation_button} onClick={onSave}>
+              Save
+            </button>
+            <button className={styles.confirmation_button} onClick={onCancel}>
+              Cancel
+            </button>
           </div>
-          <Box component="form">
-            <div
-              style={{
-                margin: "1em",
-                display: "flex",
-                gap: "10px",
-              }}
-            >
-              <TextField
-                id="loc-x"
-                variant="outlined"
-                label="Location X"
-                type="number"
-                defaultValue={binState.x}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.x = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                style={{ width: "80px" }}
-              />
-              <TextField
-                id="loc-y"
-                variant="outlined"
-                label="Location Y"
-                type="number"
-                defaultValue={binState.y}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.y = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                style={{ width: "80px" }}
-              />
-              <TextField
-                id="width"
-                variant="outlined"
-                label="Width"
-                type="number"
-                defaultValue={binState.width}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.width = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                style={{ width: "80px" }}
-              />
-              <TextField
-                id="height"
-                variant="outlined"
-                label="Height"
-                type="number"
-                defaultValue={binState.height}
-                onChange={(e) => {
-                  const target = e.target as HTMLInputElement;
-                  binState.height = parseNumber(target.value);
-                  updateCallback(binState);
-                }}
-                style={{ width: "80px" }}
-              />
-            </div>
-          </Box>
-          <OutlinedBox
-            label="Color Picker"
-            style={{
-              margin: "20px",
-            }}
+        }
+      >
+        <div className={styles.drawer_inner}>
+          <div
+            onChange={onContentChanged}
+            className={styles.horizontal_toggle_group}
           >
-            <ToggleButtonGroup value={selectedColor} exclusive>
-              <div
-                style={{
-                  margin: "1em",
-                  display: "flex",
-                  gap: "10px",
-                }}
-              >
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binRed}
-                  selected={selectedColor}
+            <input
+              type="radio"
+              value="empty"
+              id="empty"
+              checked={"empty" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="empty">Empty</label>
+            <input
+              type="radio"
+              value="bolt"
+              id="bolt"
+              checked={"bolt" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="bolt">Bolt</label>
+            <input
+              type="radio"
+              value="nut"
+              id="nut"
+              checked={"nut" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="nut">Nut</label>
+            <input
+              type="radio"
+              value="screw"
+              id="screw"
+              checked={"screw" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="screw">Screw</label>
+            <input
+              type="radio"
+              value="washer"
+              id="washer"
+              checked={"washer" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="washer">Washer</label>
+            <input
+              type="radio"
+              value="nail"
+              id="nail"
+              checked={"nail" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="nail">Nail</label>
+            <input
+              type="radio"
+              value="simple"
+              id="simple"
+              checked={"simple" === binState.content[contentIndex].contentType}
+            />
+            <label htmlFor="simple">Simple</label>
+          </div>
+          <form className={styles.location_controls_form}>
+            <TextBox
+              id="loc-x"
+              type="number"
+              defaultValue={binState.x}
+              label="X"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.x = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-y"
+              type="number"
+              defaultValue={binState.y}
+              label="Y"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.y = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-width"
+              type="number"
+              defaultValue={binState.width}
+              label="Width"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.width = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-height"
+              type="number"
+              defaultValue={binState.height}
+              label="Height"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.height = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+          </form>
+          <div>
+            <fieldset className={styles.color_picker}>
+              <legend>Bin Color</legend>
+              <div onChange={onColorChange}>
+                <input
+                  type="radio"
+                  value={binRed}
+                  id="binRed"
+                  checked={binRed === selectedColor}
+                  style={{ background: binRed }}
                 />
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binBlue}
-                  selected={selectedColor}
+                <input
+                  type="radio"
+                  value={binBlue}
+                  id="binBlue"
+                  checked={binBlue === selectedColor}
+                  style={{ background: binBlue }}
                 />
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binGreen}
-                  selected={selectedColor}
+                <input
+                  type="radio"
+                  value={binGreen}
+                  id="binGreen"
+                  checked={binGreen === selectedColor}
+                  style={{ background: binGreen }}
                 />
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binYellow}
-                  selected={selectedColor}
+                <input
+                  type="radio"
+                  value={binYellow}
+                  id="binYellow"
+                  checked={binYellow === selectedColor}
+                  style={{ background: binYellow }}
                 />
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binOrange}
-                  selected={selectedColor}
+                <input
+                  type="radio"
+                  value={binOrange}
+                  id="binOrange"
+                  checked={binOrange === selectedColor}
+                  style={{ background: binOrange }}
                 />
-                <ColorButton
-                  onChange={handleColorChange}
-                  color={binGrey}
-                  selected={selectedColor}
+                <input
+                  type="radio"
+                  value={binGrey}
+                  id="binGrey"
+                  checked={binGrey === selectedColor}
+                  style={{ background: binGrey }}
                 />
               </div>
-            </ToggleButtonGroup>
-          </OutlinedBox>
-          <ToggleButtonGroup
-            color="primary"
-            value={selectedUnit}
-            exclusive
-            onChange={(_e, newUnit: string) => {
-              setSelectedUnit(newUnit);
-              binState.unit = newUnit;
-            }}
+            </fieldset>
+          </div>
+          <div
+            onChange={onUnitChanged}
+            className={styles.horizontal_toggle_group}
+            style={{ margin: "18px" }}
           >
-            <ToggleButton value="in">Imperial</ToggleButton>
-            <ToggleButton value="mm">Metric</ToggleButton>
-            <ToggleButton value="an">AN</ToggleButton>
-          </ToggleButtonGroup>
+            <input
+              type="radio"
+              value="in"
+              id="in"
+              checked={"in" === selectedUnit}
+            />
+            <label htmlFor="in">Imperial</label>
+            <input
+              type="radio"
+              value="mm"
+              id="mm"
+              checked={"mm" === selectedUnit}
+            />
+            <label htmlFor="mm">Metric</label>
+            <input
+              type="radio"
+              value="an"
+              id="an"
+              checked={"an" === selectedUnit}
+            />
+            <label htmlFor="an">AN</label>
+          </div>
           {innerContainer}
-          <ButtonGroup
-            aria-label="contained button group"
-            variant="contained"
-            style={{
-              margin: "1em",
-            }}
-          >
-            <Button
-              style={{
-                width: "16em",
-                height: "4em",
-              }}
-              onClick={() => {
-                updateCallback(binState);
-                saveCallback(binIndex, binState, true);
-                closedCallback();
-              }}
-            >
-              Save
-            </Button>
-            <Button
-              style={{
-                width: "16em",
-                height: "4em",
-              }}
-              onClick={() => {
-                if (!binState.id) {
-                  removeCallback(binIndex);
-                  closedCallback();
-
-                  return;
-                }
-                net.getBin(binState).then((b) => {
-                  updateCallback(b);
-                  closedCallback();
-                });
-              }}
-            >
-              Cancel
-            </Button>
-          </ButtonGroup>
         </div>
-      </Dialog>
+        {/* end of inner drawer*/}
+      </Drawer>
     </div>
   );
 }

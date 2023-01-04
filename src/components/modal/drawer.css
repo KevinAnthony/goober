@@ -1,0 +1,14 @@
+.ant-drawer-header {
+    background-color: var(--dark-color);
+    border-color: var(--highlight-yellow);
+    border-width: 2px 2px 0 2px;
+    border-style: solid;
+}
+
+
+.ant-drawer-body {
+    background-color: var(--dark-color);
+    border-color: var(--highlight-yellow);
+    border-width: 0 2px 2px 2px;
+    border-style: solid;
+}

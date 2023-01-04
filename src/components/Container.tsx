@@ -1,6 +1,4 @@
 import React from "react";
-import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faCog,
@@ -8,10 +6,7 @@ import {
   faSearch,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
-import { Typography } from "@mui/material";
 import { ContainerObj } from "../model/container";
-import { BackgroundGrid } from "./BackgroundGrid";
-import { ColorObj } from "../model/color";
 import { BinObj } from "../model/bin";
 import { BinNet } from "../net/bin";
 import { Bin } from "./Bin";
@@ -24,6 +19,7 @@ import { SearchBox } from "./modal/Search";
 import { ContainerEdit } from "./modal/ContainerEdit";
 import { ContainerNet } from "../net/container";
 import { Confirmation } from "./dialog/Confirmation";
+import styles from "./Container.module.css";
 
 interface props {
   removeContainer: (container: ContainerObj) => void;
@@ -165,112 +161,48 @@ export function Container({
     );
   }
 
-  let gridGrid = Array(container.width)
-    .fill(null)
-    .map((_, posX) =>
-      Array(container.height)
-        .fill(null)
-        .map((_, posY) => (
-          <BackgroundGrid
-            key={`grid-${posX}-${posY}`}
-            background={ColorObj.Parse({ a: 0 })}
-            x={posX}
-            y={posY}
-          />
-        ))
-    );
-
   return (
     <>
-      <div
-        style={{
-          background: `rgb(${container.color.r}, ${container.color.g}, ${container.color.b})`,
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: `1fr auto 1fr`,
-            fontSize: "32pt",
-            fontFamily: "Helvetica, sans-serif",
-            color: "white",
-            textAlign: "center",
-            padding: "10px",
-          }}
-        >
-          <Typography
-            variant="h2"
-            component="h2"
-            style={{ gridColumnStart: "2" }}
-          >
+      <div className={styles.container}>
+        <div className={styles.container_title}>
+          <div className={styles.container_label}>
             {container.label}
-          </Typography>
-          <div
-            style={{
-              gridColumnStart: "3",
-              display: "flex",
-              alignSelf: "center",
-              justifyContent: "right",
-              flexFlow: "row-reverse",
-            }}
-          >
-            <ButtonGroup
-              variant="contained"
-              aria-label="outlined contained button group"
+            <div
+              className={styles.label_slash}
+              style={{
+                background: `rgb(${container.color.r}, ${container.color.g}, ${container.color.b})`,
+              }}
+            />
+          </div>
+          <div className={styles.container_menu}>
+            <button
+              className={styles.container_menu_button}
+              onClick={handleNewBinOpen}
             >
-              <Button
-                onClick={handleNewBinOpen}
-                style={{
-                  padding: "4px",
-                  width: "4em",
-                  height: "4em",
-                }}
-              >
-                <Typography>
-                  <FontAwesomeIcon icon={faPlus} />
-                </Typography>
-              </Button>
-              <Button
-                onClick={handleEditContainerOpen}
-                style={{
-                  padding: "4px",
-                  width: "4em",
-                  height: "4em",
-                }}
-              >
-                <Typography>
-                  <FontAwesomeIcon icon={faCog} />
-                </Typography>
-              </Button>
-              <Button
-                onClick={handleSearchOpen}
-                style={{
-                  padding: "4px",
-                  width: "4em",
-                  height: "4em",
-                }}
-              >
-                <Typography>
-                  <FontAwesomeIcon icon={faSearch} />
-                </Typography>
-              </Button>
-              <Button
-                style={{
-                  padding: "4px",
-                  width: "4em",
-                  height: "4em",
-                }}
-                onClick={() => setDeleteConfirmationOpen(true)}
-              >
-                <Typography>
-                  <FontAwesomeIcon icon={faTrash} />
-                </Typography>
-              </Button>
-            </ButtonGroup>
+              <FontAwesomeIcon icon={faPlus} />
+            </button>
+            <button
+              className={styles.container_menu_button}
+              onClick={handleEditContainerOpen}
+            >
+              <FontAwesomeIcon icon={faCog} />
+            </button>
+            <button
+              className={styles.container_menu_button}
+              onClick={handleSearchOpen}
+            >
+              <FontAwesomeIcon icon={faSearch} />
+            </button>
+            <button
+              className={styles.container_menu_button}
+              onClick={() => setDeleteConfirmationOpen(true)}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+            </button>
           </div>
         </div>
         <div
-          className={"grid-container"}
+          className={styles.container_inner}
           style={{
             width: `${container.width}${container.unit}`,
             height: `${container.height}${container.unit}`,
@@ -278,7 +210,6 @@ export function Container({
             gridTemplateRows: `repeat(${container.height}, 1${container.unit})`,
           }}
         >
-          {gridGrid}
           {bins.map((bin: BinObj, index: number) => (
             <Bin
               highlight={binToHighlightID === bin.id}

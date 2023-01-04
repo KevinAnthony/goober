@@ -1,5 +1,7 @@
 import { DTO } from "./dto";
 import { splitAndUppercase } from "../util/formatting";
+import React from "react";
+import styles from "./content.module.css";
 
 export class SimpleObj extends DTO {
   private readonly _id: string;
@@ -26,10 +28,21 @@ export class SimpleObj extends DTO {
     };
   }
 
-  public Text(_: string): string {
-    return `Simple
-----------------
-${splitAndUppercase(this?._description)}`;
+  public Text(_: string): JSX.Element {
+    return (
+      <table className={styles.content_table}>
+        <thead>
+          <tr>
+            <th colSpan={2}>Simple</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colSpan={2}>{splitAndUppercase(this?._description)}</td>
+          </tr>
+        </tbody>
+      </table>
+    );
   }
 
   public SearchText(_: string): string {

@@ -1,0 +1,37 @@
+.side_menu{
+    margin-left: 18px;
+    margin-right: 18px;
+    margin-top: 32px;
+    background:var(--dark-color);
+    border-color: var(--font-color);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 1em;
+    color: var(--font-color);
+}
+
+.menu_button{
+    color: var(--font-color);
+    font-family: FontAwesome, sans-serif;
+    font-size: 1em;
+    background: none;
+    width: 16em;
+    height: 4em;
+    padding: .5em;
+    text-align: center;
+    display: inline-block;
+    border-width: 0 0 2px 0;
+    border-color: var(--font-color);
+    border-style: solid;
+}
+
+.menu_button:last-child {
+    border-width: 0;
+}
+.menu_scroll {
+    display:flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    min-height: 0px;
+}
