@@ -6,10 +6,16 @@ interface props {
   onChange: ChangeEventHandler<HTMLInputElement>;
   id: string;
   label: string;
-  type: HTMLInputTypeAttribute;
+  type?: HTMLInputTypeAttribute | undefined;
 }
 
-export function TextBox({ defaultValue, onChange, id, label, type }: props) {
+export function TextBox({
+  defaultValue,
+  onChange,
+  id,
+  label,
+  type = "text",
+}: props) {
   return (
     <div className={styles.ns_textbox}>
       <input

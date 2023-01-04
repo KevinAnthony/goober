@@ -1,6 +1,6 @@
 import { finishes, SubEditProps } from "../SubEditProps";
 import { Box, TextField } from "@mui/material";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../../Dropdown";
 import React, { ChangeEvent } from "react";
 import "./subEditStyle.css";
 import { parseNumber } from "../../../util/utils";
@@ -60,7 +60,6 @@ export function NailEdit({ bin, index, updateCallback }: SubEditProps) {
           <Dropdown
             options={finishes}
             selected={bin.content[index].nail?.material ?? ""}
-            className={"topDropdown"}
             onSelected={(i) => {
               bin.content[index].nail.material = finishes[i];
               updateCallback(bin);
@@ -70,7 +69,6 @@ export function NailEdit({ bin, index, updateCallback }: SubEditProps) {
             id="size"
             variant="outlined"
             label="Description"
-            className={"bottomDropdown"}
             defaultValue={bin.content[index].nail?.description ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const target = e.target as HTMLInputElement;

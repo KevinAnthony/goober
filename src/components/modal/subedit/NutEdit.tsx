@@ -1,6 +1,6 @@
 import { nutTypes, finishes, SubEditProps } from "../SubEditProps";
 import { Box, TextField } from "@mui/material";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../../Dropdown";
 import React, { ChangeEvent } from "react";
 import "./subEditStyle.css";
 
@@ -52,7 +52,6 @@ export function NutEdit({ bin, index, updateCallback }: SubEditProps) {
           <Dropdown
             options={nutTypes}
             selected={bin.content[index].nut.type}
-            className={"bottomDropdown"}
             onSelected={(i) => {
               bin.content[index].nut.type = nutTypes[i];
               updateCallback(bin);
@@ -61,7 +60,6 @@ export function NutEdit({ bin, index, updateCallback }: SubEditProps) {
           <Dropdown
             options={finishes}
             selected={bin.content[index].nut?.material ?? ""}
-            className={"topDropdown"}
             onSelected={(i) => {
               bin.content[index].nut.material = finishes[i];
               updateCallback(bin);
@@ -71,7 +69,6 @@ export function NutEdit({ bin, index, updateCallback }: SubEditProps) {
             id="size"
             variant="outlined"
             label="Description"
-            className={"bottomDropdown"}
             defaultValue={bin.content[index].nut?.description ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const target = e.target as HTMLInputElement;

@@ -1,6 +1,6 @@
 import { boltHeads, finishes, SubEditProps } from "../SubEditProps";
 import { Box, TextField } from "@mui/material";
-import { Dropdown } from "../Dropdown";
+import { Dropdown } from "../../Dropdown";
 import React, { ChangeEvent } from "react";
 import "./subEditStyle.css";
 import { parseNumber } from "../../../util/utils";
@@ -65,7 +65,6 @@ export function BoltEdit({ bin, index, updateCallback }: SubEditProps) {
           <Dropdown
             options={finishes}
             selected={bin.content[index].bolt?.material ?? ""}
-            className={"topDropdown"}
             onSelected={(i) => {
               bin.content[index].bolt.material = finishes[i];
               updateCallback(bin);
@@ -74,7 +73,6 @@ export function BoltEdit({ bin, index, updateCallback }: SubEditProps) {
           <Dropdown
             options={boltHeads}
             selected={bin.content[index].bolt.head}
-            className={"bottomDropdown"}
             onSelected={(i) => {
               bin.content[index].bolt.head = boltHeads[i];
               updateCallback(bin);
