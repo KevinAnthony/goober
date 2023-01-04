@@ -31,7 +31,7 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
           width: "100%",
         }}
       >
-        <Typography>{bin.Text(0)}</Typography>
+        <Typography>{bin.GetEdit(0)}</Typography>
       </Button>
     ));
   }, [results]);

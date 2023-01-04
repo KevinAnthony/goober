@@ -42,8 +42,6 @@ export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
           label="Length"
           defaultValue={bin.content[index].screw?.length ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            console.log("onchange");
-
             const target = e.target as HTMLInputElement;
             bin.content[index].screw.length = parseNumber(target.value);
             updateCallback(bin);
