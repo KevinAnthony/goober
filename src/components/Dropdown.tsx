@@ -7,9 +7,10 @@ interface props {
   options: Array<string>;
   selected: string;
   onSelected: (index: number) => void;
+  style?: React.CSSProperties;
 }
 
-export function Dropdown({ options, selected, onSelected }: props) {
+export function Dropdown({ options, selected, onSelected, style }: props) {
   selected = splitAndUppercase(selected);
   const [selectedState, setSelected] = React.useState(selected);
 
@@ -34,6 +35,7 @@ export function Dropdown({ options, selected, onSelected }: props) {
       options={items}
       className={styles.menu}
       popupClassName={styles.menu_popup}
+      style={style}
     >
       <button onClick={(e) => e.preventDefault()}>{selectedState}</button>
     </Select>

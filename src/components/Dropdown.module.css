@@ -4,6 +4,7 @@
     border-color: var(--font-color);
     border-width: 2px;
     border-style: solid;
+    border-radius: .5em;
     color: var(--font-color);
     padding: .5em;
     text-align: center;

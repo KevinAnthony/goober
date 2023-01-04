@@ -7,6 +7,7 @@ interface props {
   id: string;
   label: string;
   type?: HTMLInputTypeAttribute | undefined;
+  style?: React.CSSProperties;
 }
 
 export function TextBox({
@@ -14,6 +15,7 @@ export function TextBox({
   onChange,
   id,
   label,
+  style,
   type = "text",
 }: props) {
   return (
@@ -25,6 +27,7 @@ export function TextBox({
         onChange={onChange}
         className={styles.ns_textbox_input}
         placeholder="a"
+        style={style}
       />
       <label htmlFor={id} className={styles.ns_textbox_label}>
         {label}
