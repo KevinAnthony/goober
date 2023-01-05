@@ -1,5 +1,5 @@
-.menu{
-    width:100%;
+.dropdown {
+    width:200%;
     background:var(--dark-color);
     border-color: var(--font-color);
     border-width: 2px;
@@ -8,57 +8,7 @@
     color: var(--font-color);
     padding: .5em;
     text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-}
-
-.menu :global .ant-select-arrow {
-    color:transparent;
-}
-
-.menu :global .ant-select-selection {
-    background-color: transparent;
-}
-
-.menu :global .ant-select-selector {
-    background-color: transparent !important;
-    border-width: 0px !important;
-}
-
-.menu :global .ant-select-selection-item {
-    color: var(--font-color);
     font-size: 1.5em;
-    height: 56px;
     font-weight: bold;
 }
-
-.menu_popup {
-    width:100%;
-    background:var(--dark-color);
-    border-color: var(--font-color);
-    border-width: 2px;
-    border-style: solid;
-    padding: 0;
-}
-
-.menu_popup :global .ant-select-item {
-    color: var(--font-color);
-    text-align: center;
-    font-size: 14px;
-    font-weight: bold;
-    border-color: var(--font-color);
-    border-width: 0 0 2px 0;
-    border-style: solid;
-    border-radius: 0;
-}
-
-.menu_popup :global .ant-select-item:last-child {
-    border-width: 0;
-}
-
-.menu_popup :global .ant-select-item-option-selected {
-    background:var(--dark-color) !important;
-    color:var(--highlight-pink) !important;
-}
-
 

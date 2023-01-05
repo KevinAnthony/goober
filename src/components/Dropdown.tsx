@@ -1,7 +1,7 @@
-import React from "react";
+import React, { ChangeEvent } from "react";
 import { splitAndUppercase } from "../util/formatting";
-import { Select } from "antd";
 import styles from "./Dropdown.module.css";
+// import "./Dropdown.css";
 
 interface props {
   options: Array<string>;
@@ -12,32 +12,30 @@ interface props {
 
 export function Dropdown({ options, selected, onSelected, style }: props) {
   selected = splitAndUppercase(selected);
-  const [selectedState, setSelected] = React.useState(selected);
 
-  function onMenuClick(value: string) {
-    const index = parseInt(value);
-    onSelected(index);
-    setSelected(splitAndUppercase(options[index]));
-  }
-
-  let items = [];
+  let new_options: Array<string> = [];
   for (let i = 0; i < options.length; i++) {
-    items?.push({
-      label: <label>{splitAndUppercase(options[i])}</label>,
-      value: i,
-    });
+    new_options.push(splitAndUppercase(options[i]));
   }
 
+  function onMenuClick(e: ChangeEvent<HTMLSelectElement>) {
+    onSelected(new_options.indexOf(e.target.value));
+  }
   return (
-    <Select
+    <select
+      style={style}
       defaultValue={selected}
       onChange={onMenuClick}
-      options={items}
-      className={styles.menu}
-      popupClassName={styles.menu_popup}
-      style={style}
+      className={styles.dropdown}
     >
-      <button onClick={(e) => e.preventDefault()}>{selectedState}</button>
-    </Select>
+      {new_options.map((option: string) => (
+        <option
+          className={styles.dropdown_items}
+          selected={selected === option}
+        >
+          {option}
+        </option>
+      ))}
+    </select>
   );
 }
