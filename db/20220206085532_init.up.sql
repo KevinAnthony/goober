@@ -23,7 +23,7 @@ AS
 CREATE TYPE
     bolt_head_t
 AS
-    ENUM ('hex','cap','round', 'flat', "tnut");
+    ENUM ('hex','cap','round', 'flat', 'tnut');
 
 CREATE TYPE
     material_finish_t

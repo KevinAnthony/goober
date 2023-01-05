@@ -8,6 +8,10 @@
     border-color: var(--dark-color);
     border-radius: .5em;
     padding: .25em;
+    overflow-y: auto;
+    min-height: 75vh;
+    min-width: 75vw;
+    max-height: 90vh;
 }
 
 .container_title{

@@ -50,6 +50,9 @@ export class NutObj extends DTO {
             </thead>
             <tbody>
               <tr>
+                <td colSpan={2}>{this._description}</td>
+              </tr>
+              <tr>
                 <td>Type</td>
                 <td>{this?.type}</td>
               </tr>

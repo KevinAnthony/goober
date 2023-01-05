@@ -52,6 +52,9 @@ export class BoltObj extends DTO {
             </thead>
             <tbody>
               <tr>
+                <td colSpan={2}>{this._description}</td>
+              </tr>
+              <tr>
                 <td>Size</td>
                 <td>
                   {this?.threadSize} - {this?.threadPitch}

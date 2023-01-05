@@ -204,10 +204,9 @@ export function Container({
         <div
           className={styles.container_inner}
           style={{
-            width: `${container.width}${container.unit}`,
-            height: `${container.height}${container.unit}`,
-            gridTemplateColumns: `repeat(${container.width}, 1${container.unit})`,
-            gridTemplateRows: `repeat(${container.height}, 1${container.unit})`,
+            aspectRatio: `${container.width}/${container.height}`,
+            gridTemplateColumns: `repeat(${container.width}, 1fr)`,
+            gridTemplateRows: `repeat(${container.height}, 1fr)`,
           }}
         >
           {bins.map((bin: BinObj, index: number) => (

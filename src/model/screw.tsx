@@ -53,6 +53,9 @@ export class ScrewObj extends DTO {
             </thead>
             <tbody>
               <tr>
+                <td colSpan={2}>{this._description}</td>
+              </tr>
+              <tr>
                 <td>Type</td>
                 <td>{splitAndUppercase(this?._type)}</td>
               </tr>
