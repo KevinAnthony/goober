@@ -37,10 +37,13 @@ const (
 	BoltHeadCarriage BoltHeadType = "carriage"
 )
 const (
-	MaterialFinishStainless  MaterialFinish = "stainless_steel"
-	MaterialFinishZinc       MaterialFinish = "zinc"
-	MaterialFinishYellowZinc MaterialFinish = "yellow_zinc"
-	MaterialFinishBlackOxide MaterialFinish = "black_oxide"
+	MaterialFinishStainless      MaterialFinish = "stainless_steel"
+	MaterialFinishBrass          MaterialFinish = "brass"
+	MaterialFinishZinc           MaterialFinish = "zinc"
+	MaterialFinishYellowZinc     MaterialFinish = "yellow_zinc"
+	MaterialFinishBlackOxide     MaterialFinish = "black_oxide"
+	MaterialFinishBlackPhosphate MaterialFinish = "black_phosphate"
+	MaterialFinishBright         MaterialFinish = "bright"
 )
 const (
 	WasherNormal WasherType = "normal"

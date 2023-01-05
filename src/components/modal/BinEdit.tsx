@@ -126,6 +126,7 @@ export function BinEdit({
     >
       <Drawer
         title={<div className={styles.drawer_title}>{title}</div>}
+        destroyOnClose={true}
         placement="right"
         size="large"
         closable={false}

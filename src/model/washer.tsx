@@ -48,6 +48,9 @@ export class WasherObj extends DTO {
             </thead>
             <tbody>
               <tr>
+                <td colSpan={2}>{this._description}</td>
+              </tr>
+              <tr>
                 <td>Size</td>
                 <td>{this?._size}</td>
               </tr>

@@ -47,6 +47,9 @@ export class NailObj extends DTO {
             </thead>
             <tbody>
               <tr>
+                <td colSpan={2}>{this._description}</td>
+              </tr>
+              <tr>
                 <td>Size</td>
                 <td>{this?._gauge}</td>
               </tr>

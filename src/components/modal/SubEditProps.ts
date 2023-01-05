@@ -7,6 +7,7 @@ export const finishes = [
   "zinc",
   "yellow_zinc",
   "bright",
+  "brass",
 ];
 export const boltHeads = ["cap", "hex", "round", "flat", "flange", "carriage"];
 export const screwHeads = ["round", "flat", "hex", "oval"];
