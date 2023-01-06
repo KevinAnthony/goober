@@ -17,7 +17,7 @@
 .container_title{
     display: flex;
     justify-content: space-between;
-    font-size: 3em;
+    font-size: 3.5em;
     font-family: Helvetica, sans-serif;
     color: var(--font-color);
     padding-left:1em;
@@ -78,21 +78,20 @@
 }
 
 .container_label{
-    border-color: var(--dark-color-highlight);
-    border-width: 2px;
+    margin-left: 64px;
+    border-color: var(--highlight-yellow);
+    border-width: 0  4px 0 0;
     border-style: solid;
-    border-radius: .25em;
     padding:0 12px 0 32px;
     display: flex;
     justify-content: left;
     background: var(--dark-color);
+    clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
 }
 
 .label_slash{
-    border-style: solid;
-    border-color: var(--dark-color-highlight);
-    border-width: 1px;
-    margin: -1px 24px -1px 32px;
-    width:.25em;
+    border: none;
+    margin: 0 18px 0 32px;
+    width: .5em;
     transform: skewX(-25deg);
 }
