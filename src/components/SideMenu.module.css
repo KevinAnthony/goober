@@ -1,37 +1,65 @@
 .side_menu{
-    margin-left: 18px;
-    margin-right: 18px;
-    margin-top: 32px;
-    background:var(--dark-color);
-    border-color: var(--font-color);
-    border-width: 2px;
-    border-style: solid;
-    border-radius: 1em;
+    padding:1em;
     color: var(--font-color);
+    display: flex;
+    flex-flow: row wrap;
+    flex-direction: column;
 }
 
 .menu_button{
+    font-family: Helvetica, sans-serif;
     color: var(--font-color);
-    font-family: FontAwesome, sans-serif;
-    font-size: 1em;
-    background: none;
-    width: 16em;
-    height: 4em;
-    padding: .5em;
-    text-align: center;
-    display: inline-block;
-    border-width: 0 0 2px 0;
-    border-color: var(--font-color);
+    font-size: 1.5em;
+    text-transform: uppercase;
+    background: var(--dark-color);
+    outline: transparent;
+    letter-spacing: 3px;
+    font-weight: bold;
+    width: 280px;
+    height:64px;
+    clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
+    border-width: 0 4px 0 0;
     border-style: solid;
+    border-color: var(--highlight-pink);
 }
 
-.menu_button:last-child {
-    border-width: 0;
-}
-.menu_scroll {
-    display:flex;
+.menu_toggle_button {
     flex-direction: column;
-    flex: 1 1 auto;
-    overflow-y: auto;
-    min-height: 0px;
+    display: flex;
+    margin-bottom: 36px;
+    overflow: hidden;
+}
+
+.menu_toggle_button input {
+    position: absolute !important;
+    clip: rect(0, 0, 0, 0);
+    height: 1px;
+    width: 1px;
+    border: 0;
+    overflow: hidden;
+}
+
+.menu_toggle_button label {
+    margin-top: 10px;
+    background:var(--dark-color);
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    width: 275px;
+    height:64px;
+    font-family: Helvetica, sans-serif;
+    color: var(--font-color);
+    font-size: 1.5em;
+    text-transform: uppercase;
+    background: var(--dark-color);
+    letter-spacing: 3px;
+    font-weight: bold;
+    border-width: 0 4px 0 0;
+    border-style: solid;
+    border-color: var(--highlight-pink);
+    clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
+}
+
+.menu_toggle_button input:checked + label {
+    border-color: var(--highlight-yellow);
 }

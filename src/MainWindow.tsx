@@ -45,14 +45,12 @@ export default function MainWindow() {
         gridTemplateColumns: `auto 1fr`,
       }}
     >
-      <div>
-        <SideMenu
-          containers={containers}
-          setOptionCallback={setContainer}
-          setPopup={setPopupObject}
-        />
-        {newPopupObject}
-      </div>
+      <SideMenu
+        containers={containers}
+        setOptionCallback={setContainer}
+        setPopup={setPopupObject}
+        currentContainer={container}
+      />
       <Container
         removeContainer={removeContainer}
         setPopup={setPopupObject}
@@ -60,6 +58,7 @@ export default function MainWindow() {
         binToHighlightID={highlightID}
         setContainerByBinCallback={setContainerFromBin}
       />
+      {newPopupObject}
     </div>
   );
 }
