@@ -2,10 +2,13 @@ package service
 
 import (
 	"context"
+	"github.com/kevinanthony/goober/app/searcher"
 
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/repository"
 )
+
+var empty = model.Bin{}
 
 type Bin interface {
 	Create(ctx context.Context, bin model.Bin) (model.Bin, error)
@@ -16,6 +19,7 @@ type Bin interface {
 
 type bin struct {
 	binRepo repository.Bin
+	search  searcher.Indexer
 }
 
 func NewBin(repo repository.Bin) Bin {
@@ -29,7 +33,16 @@ func NewBin(repo repository.Bin) Bin {
 }
 
 func (b bin) Create(ctx context.Context, bin model.Bin) (model.Bin, error) {
-	return b.binRepo.Create(ctx, bin)
+	bin, err := b.binRepo.Create(ctx, bin)
+	if err != nil {
+		return empty, err
+	}
+
+	if err := b.search.UpdateBin(bin); err != nil {
+		return empty, err
+	}
+
+	return bin, nil
 }
 
 func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
@@ -37,9 +50,22 @@ func (b bin) Get(ctx context.Context, bin model.Bin) (model.Bin, error) {
 }
 
 func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
-	return b.binRepo.Update(ctx, bin)
+	bin, err := b.binRepo.Update(ctx, bin)
+	if err != nil {
+		return empty, err
+	}
+
+	if err := b.search.UpdateBin(bin); err != nil {
+		return empty, err
+	}
+
+	return bin, nil
 }
 
 func (b bin) Delete(ctx context.Context, bin model.Bin) error {
-	return b.binRepo.Delete(ctx, bin)
+	if err := b.binRepo.Delete(ctx, bin); err != nil {
+		return err
+	}
+
+	return b.search.DeleteBin(bin)
 }

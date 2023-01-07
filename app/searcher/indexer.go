@@ -3,7 +3,6 @@ package searcher
 import (
 	"context"
 	"fmt"
-
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/repository"
 
@@ -18,6 +17,8 @@ const indexPath = "content-search.bleve"
 
 type Indexer interface {
 	GetIDsFromTerm(ctx context.Context, term string) ([]string, error)
+	UpdateBin(bin model.Bin) error
+	DeleteBin(bin model.Bin) error
 }
 
 type indexer struct {
@@ -64,6 +65,25 @@ func (i indexer) GetIDsFromTerm(ctx context.Context, term string) ([]string, err
 	return ids, nil
 }
 
+func (i indexer) UpdateBin(bin model.Bin) error {
+	batch := i.index.NewBatch()
+	for _, content := range bin.Content {
+		if err := indexContent(batch, bin.ID, content); err != nil {
+			panic(err)
+		}
+	}
+
+	if err := i.index.Batch(batch); err != nil {
+		panic(err)
+	}
+
+	return nil
+}
+
+func (i indexer) DeleteBin(bin model.Bin) error {
+	return i.index.Delete(bin.ID)
+}
+
 func (i indexer) buildSearchIndex() bleve.Index {
 	indexMapping := createMapping()
 
@@ -97,7 +117,6 @@ func (i indexer) buildSearchIndex() bleve.Index {
 
 	return index
 }
-
 func createMapping() mapping.IndexMapping {
 	// a generic reusable mapping for english text
 	englishTextFieldMapping := bleve.NewTextFieldMapping()
