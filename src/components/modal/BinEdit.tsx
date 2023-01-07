@@ -75,6 +75,10 @@ export function BinEdit({
   const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
 
   function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
+    if (binState.content[contentIndex].contentType.length === 0) {
+      //TODO remove content
+    }
+
     binState.content[contentIndex].contentType = event.target.value;
     binState.content[contentIndex].bolt = BoltObj.Empty();
     binState.content[contentIndex].screw = ScrewObj.Empty();
