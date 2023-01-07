@@ -30,9 +30,9 @@ func (s Simple) BleveType() string {
 }
 
 func (s Simple) CreateMapping(fieldMapping *mapping.FieldMapping) (string, *mapping.DocumentMapping) {
-	mapping := bleve.NewDocumentMapping()
+	docMapping := bleve.NewDocumentMapping()
 
-	mapping.AddFieldMappingsAt("text", fieldMapping)
+	docMapping.AddFieldMappingsAt("text", fieldMapping)
 
-	return "simple", mapping
+	return "simple", docMapping
 }
