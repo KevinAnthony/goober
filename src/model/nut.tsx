@@ -42,7 +42,7 @@ export class NutObj extends DTO {
       case "cm":
       case "in":
         return (
-          <table className={styles.content_rable}>
+          <table className={styles.content_table}>
             <thead>
               <tr>
                 <th colSpan={2}>Nut</th>
