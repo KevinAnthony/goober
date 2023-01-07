@@ -140,7 +140,7 @@ export class BoltObj extends DTO {
   }
 
   set length(value: number) {
-    if (value < 1) {
+    if (value < 0) {
       throw new Error("length cannot be zero or negitive");
     }
 

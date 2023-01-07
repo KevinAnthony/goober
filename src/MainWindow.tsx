@@ -39,25 +39,27 @@ export default function MainWindow() {
   }
 
   return (
-    <div
-      style={{
-        display: "grid",
-        gridTemplateColumns: `auto 1fr`,
-      }}
-    >
-      <SideMenu
-        containers={containers}
-        setOptionCallback={setContainer}
-        setPopup={setPopupObject}
-        currentContainer={container}
-      />
-      <Container
-        removeContainer={removeContainer}
-        setPopup={setPopupObject}
-        container={container}
-        binToHighlightID={highlightID}
-        setContainerByBinCallback={setContainerFromBin}
-      />
+    <div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: `auto 1fr`,
+        }}
+      >
+        <SideMenu
+          containers={containers}
+          setOptionCallback={setContainer}
+          setPopup={setPopupObject}
+          currentContainer={container}
+        />
+        <Container
+          removeContainer={removeContainer}
+          setPopup={setPopupObject}
+          container={container}
+          binToHighlightID={highlightID}
+          setContainerByBinCallback={setContainerFromBin}
+        />
+      </div>
       {newPopupObject}
     </div>
   );
