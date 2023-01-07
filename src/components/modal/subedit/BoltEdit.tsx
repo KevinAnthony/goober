@@ -74,6 +74,17 @@ export function BoltEdit({ bin, index, updateCallback }: SubEditProps) {
           updateCallback(bin);
         }}
       />
+      <TextBox
+        id="size"
+        label="Description"
+        defaultValue={bin.content[index].nut?.description ?? ""}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          const target = e.target as HTMLInputElement;
+          bin.content[index].nut.description = target.value;
+          updateCallback(bin);
+        }}
+        style={{ width: "300px" }}
+      />
     </div>
   );
 }
