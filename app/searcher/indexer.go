@@ -142,17 +142,17 @@ func createMapping() mapping.IndexMapping {
 func indexContent(batch *bleve.Batch, id string, content model.Content) error {
 	switch content.Type {
 	case model.ContentSimple:
-		return batch.Index(id, content.Simple)
+		return batch.Index(id, &content.Simple)
 	case model.ContentBolt:
-		return batch.Index(id, content.Bolt)
+		return batch.Index(id, &content.Bolt)
 	case model.ContentNut:
-		return batch.Index(id, content.Nail)
+		return batch.Index(id, &content.Nail)
 	case model.ContentWasher:
-		return batch.Index(id, content.Washer)
+		return batch.Index(id, &content.Washer)
 	case model.ContentScrew:
-		return batch.Index(id, content.Screw)
+		return batch.Index(id, &content.Screw)
 	case model.ContentNail:
-		return batch.Index(id, content.Nail)
+		return batch.Index(id, &content.Nail)
 	case model.ContentEmpty:
 		return nil
 	default:
