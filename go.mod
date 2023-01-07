@@ -7,7 +7,7 @@ require (
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/go-chi/chi v1.5.4
 	github.com/go-chi/cors v1.2.1
-	github.com/go-pg/pg/v10 v10.10.7
+	github.com/go-pg/pg/v10 v10.11.0
 	github.com/kevinanthony/gorps v0.1.0
 	github.com/pkg/errors v0.9.1
 )
@@ -53,5 +53,5 @@ require (
 	golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a // indirect
 	google.golang.org/protobuf v1.25.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200313102051-9f266ea9e77c // indirect
-	mellium.im/sasl v0.2.1 // indirect
+	mellium.im/sasl v0.3.1 // indirect
 )
