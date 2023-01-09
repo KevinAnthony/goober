@@ -3,6 +3,7 @@ package searcher
 import (
 	"context"
 	"fmt"
+
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/repository"
 
