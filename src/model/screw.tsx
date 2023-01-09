@@ -92,20 +92,16 @@ export class ScrewObj extends DTO {
     }
   }
 
-  public SearchText(unit: string): string {
-    switch (unit) {
-      case "cm":
-      case "in":
-        return `${this?._size} X ${decToFraction(
-          this?._length
-        )}${unit} -- ${splitAndUppercase(
-          this?._material
-        )} -- ${splitAndUppercase(this?._type)} /-- ${splitAndUppercase(
-          this?._head
-        )}/${splitAndUppercase(this?._drive)}`;
-      default:
-        return `${unit} is undefined for screw`;
-    }
+  public SearchText(unit: string): JSX.Element {
+    return (
+      <label>{`${this?._size} X ${decToFraction(
+        this?._length
+      )}${unit} -- ${splitAndUppercase(this?._material)} -- ${splitAndUppercase(
+        this?._type
+      )} /-- ${splitAndUppercase(this?._head)}/${splitAndUppercase(
+        this?._drive
+      )}`}</label>
+    );
   }
 
   private constructor(d: any) {

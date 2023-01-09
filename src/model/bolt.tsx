@@ -87,18 +87,14 @@ export class BoltObj extends DTO {
     }
   }
 
-  public SearchText(unit: string): string {
-    switch (unit) {
-      case "cm":
-      case "in":
-        return `${this?.threadSize} - ${this?.threadPitch} X ${
-          this?.length
-        }${unit} -- ${splitAndUppercase(this?.material)} -- ${splitAndUppercase(
-          this?.head
-        )}`;
-      default:
-        return `${unit} is undefined for bolt`;
-    }
+  public SearchText(unit: string): JSX.Element {
+    return (
+      <label>{`${this?.threadSize} - ${this?.threadPitch} X ${
+        this?.length
+      }${unit} -- ${splitAndUppercase(this?.material)} -- ${splitAndUppercase(
+        this?.head
+      )}`}</label>
+    );
   }
 
   private constructor(d: any) {

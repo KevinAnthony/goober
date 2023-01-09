@@ -2,10 +2,10 @@ package service
 
 import (
 	"context"
-	"github.com/kevinanthony/goober/app/searcher"
 
 	"github.com/kevinanthony/goober/app/model"
 	"github.com/kevinanthony/goober/app/repository"
+	"github.com/kevinanthony/goober/app/searcher"
 )
 
 var empty = model.Bin{}
