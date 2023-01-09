@@ -76,10 +76,12 @@ export class NailObj extends DTO {
     }
   }
 
-  public SearchText(unit: string): string {
-    return `${this?._gauge}  X ${this?._length}${unit} -- ${splitAndUppercase(
-      this?._material
-    )}`;
+  public SearchText(unit: string): JSX.Element {
+    return (
+      <label>{`${this?._gauge}  X ${
+        this?._length
+      }${unit} -- ${splitAndUppercase(this?._material)}`}</label>
+    );
   }
 
   private constructor(d: any) {

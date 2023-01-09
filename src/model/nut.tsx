@@ -78,8 +78,10 @@ export class NutObj extends DTO {
     }
   }
 
-  public SearchText(_: string): string {
-    return `${this?.type} -- ${this?.threadSize} - ${this?.threadPitch}`;
+  public SearchText(_: string): JSX.Element {
+    return (
+      <label>{`${this?.type} -- ${this?.threadSize} - ${this?.threadPitch}`}</label>
+    );
   }
 
   private constructor(d: any) {

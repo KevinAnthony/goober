@@ -70,7 +70,7 @@ export class ContentObj extends DTO {
     }
   }
 
-  public SearchText(unit: string): string {
+  public SearchText(unit: string): JSX.Element {
     switch (this._contentType) {
       case "bolt":
         return this._bolt.SearchText(unit);
@@ -85,7 +85,11 @@ export class ContentObj extends DTO {
       case "nut":
         return this._nut.SearchText(unit);
       default:
-        return `${this._contentType} is undefined - getText`;
+        return (
+          <div className={styles.content_error}>
+            `${this._contentType} is undefined - get search text`;
+          </div>
+        );
     }
   }
 

@@ -45,8 +45,8 @@ export class SimpleObj extends DTO {
     );
   }
 
-  public SearchText(_: string): string {
-    return splitAndUppercase(this?._description);
+  public SearchText(_: string): JSX.Element {
+    return <label>{splitAndUppercase(this?._description)}</label>;
   }
 
   private constructor(d: any) {
