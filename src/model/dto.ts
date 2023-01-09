@@ -15,5 +15,5 @@ export abstract class DTO {
 
   abstract GetEdit(unit: string | number): JSX.Element;
 
-  abstract SearchText(unit: string | number): string;
+  abstract SearchText(unit: string | number): JSX.Element;
 }

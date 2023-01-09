@@ -42,7 +42,7 @@ export class BinObj extends DTO {
     return this._content[index].GetEdit(this.unit);
   }
 
-  public SearchText(index: number): string {
+  public SearchText(index: number): JSX.Element {
     return this._content[index].SearchText(this.unit);
   }
 

@@ -74,15 +74,12 @@ export class WasherObj extends DTO {
     }
   }
 
-  public SearchText(unit: string): string {
-    switch (unit) {
-      case "cm":
-        return `${this?._size} -- ${splitAndUppercase(
-          this?._material
-        )} -- ${splitAndUppercase(this?._type)}`;
-      default:
-        return `${unit} is undefined for washer`;
-    }
+  public SearchText(_: string): JSX.Element {
+    return (
+      <label>{`${this?._size} -- ${splitAndUppercase(
+        this?._material
+      )} -- ${splitAndUppercase(this?._type)}`}</label>
+    );
   }
 
   private constructor(d: any) {
