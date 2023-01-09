@@ -1,15 +1,9 @@
 import React, { ChangeEvent } from "react";
-import {
-  Button,
-  Dialog,
-  DialogTitle,
-  List,
-  Paper,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { SearchNet } from "../../net/search";
 import { BinObj } from "../../model/bin";
+import { Dialog } from "../Dialog";
+import { TextBox } from "../TextBox";
 
 interface searchProps {
   closedCallback: () => void;
@@ -21,7 +15,6 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
   const [query, setQuery] = React.useState("");
 
   const [results, setResults] = React.useState(() => Array<BinObj>());
-  const [resultList] = React.useState<JSX.Element>(<List />);
 
   React.useEffect(() => {
     results.map((bin: BinObj, _: number) => (
@@ -57,13 +50,7 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
         backgroundColor: "rgb(77,77,77,1)",
       }}
     >
-      <Dialog
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-        open={open}
-        // onClose={closedCallback}
-      >
-        <DialogTitle>Search</DialogTitle>
+      <Dialog opened={open} onClose={closedCallback} title="Search">
         <div
           style={{
             margin: "1em",
@@ -73,9 +60,8 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
             alignItems: "center",
           }}
         >
-          <TextField
+          <TextBox
             id="search"
-            variant="outlined"
             label="Search"
             defaultValue={""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -83,43 +69,45 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
               setQuery(target.value);
             }}
             style={{
-              width: "500px",
-              paddingBottom: "10px",
+              minWidth: "500px",
             }}
           />
-          <Paper style={{ maxHeight: 800, overflow: "auto" }}>
-            {resultList}
-            <List>
-              {results.map((bin: BinObj, index: number) => (
-                <Button
-                  key={index}
-                  variant="outlined"
-                  style={{
-                    width: "100%",
-                  }}
-                  onClick={() => {
-                    setOpen(false);
-                    foundCallback(bin);
-                    closedCallback();
-                  }}
-                >
-                  {bin.SearchText(0)}
-                </Button>
-              ))}
-            </List>
-          </Paper>
-          <Button
-            variant="outlined"
+          <div
             style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
               width: "100%",
+              gap: "20px",
+              paddingBottom: "30px",
             }}
+          >
+            {results.map((bin: BinObj, index: number) => (
+              <button
+                key={index}
+                style={{
+                  width: "100%",
+                  fontSize: "1em",
+                }}
+                onClick={() => {
+                  setOpen(false);
+                  foundCallback(bin);
+                  closedCallback();
+                }}
+              >
+                {bin.SearchText(0)}
+              </button>
+            ))}
+          </div>
+          <button
             onClick={() => {
               setOpen(false);
               closedCallback();
             }}
           >
-            <Typography>Close</Typography>
-          </Button>
+            Close
+          </button>
         </div>
       </Dialog>
     </div>

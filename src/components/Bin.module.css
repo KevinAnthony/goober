@@ -1,7 +1,7 @@
 .bin {
-    background: var(--dark-color);
+    background: rgb(var(--dark-color));
     font-size: 14px;
-    font-family: FontAwesome, sans-serif;
+    font-family: var(--font);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -34,7 +34,7 @@
 }
 
 .top_button{
-    color: var(--font-color);
+    color: rgb(var(--font-color));
     background: inherit;
     padding: 12px;
     height: 3em;

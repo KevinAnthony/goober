@@ -2,10 +2,10 @@
 }
 
 .container_inner {
-    background: var(--dark-color-highlight);
+    background: rgb(var(--dark-color));
     display: grid;
     border-style: solid;
-    border-color: var(--dark-color);
+    border-color: rgb(var(--dark-color));
     border-radius: .5em;
     padding: .25em;
     overflow-y: auto;
@@ -18,8 +18,8 @@
     display: flex;
     justify-content: space-between;
     font-size: 3.5em;
-    font-family: Helvetica, sans-serif;
-    color: var(--font-color);
+    font-family: var(--font);
+    color: rgb(var(--font-color));
     padding-left:1em;
     padding-top:.25em;
     padding-bottom:12px;
@@ -47,11 +47,11 @@
 }
 
 .container_menu_button {
-    background:var(--dark-color);
-    border-color: var(--font-color);
+    background:rgb(var(--dark-color));
+    border-color: rgb(var(--font-color));
     border-width: 2px 0 2px 2px;
     border-style: solid;
-    color: var(--font-color);
+    color: rgb(var(--font-color));
     padding: .5em;
     width: 100%;
     text-align: center;
@@ -79,13 +79,13 @@
 
 .container_label{
     margin-left: 64px;
-    border-color: var(--highlight-yellow);
+    border-color: rgb(var(--highlight-yellow));
     border-width: 0  4px 0 0;
     border-style: solid;
     padding:0 12px 0 32px;
     display: flex;
     justify-content: left;
-    background: var(--dark-color);
+    background: rgb(var(--dark-color));
     clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
 }
 

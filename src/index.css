@@ -1,22 +1,17 @@
 html {
-    --font-color: #05d9e8;
-    --dark-color: #094167;
-    --dark-color-highlight: #0e649e;
-    --background-color: #0e141b;
-    --highlight-pink: #ff2a6d;
-    --highlight-yellow: #f2e600;
+    --font-color: 5, 217, 232;
+    --dark-color: 9, 65, 103;
+    --dark-color-highlight: #14, 100, 158;
+    --background-color: 14, 20, 27;
+    --highlight-pink: 255, 42, 109;
+    --highlight-yellow: 242, 230, 0;
+    /*--font: Helvetica, sans-serif;*/
+    --font: "Fira Code";
 }
 
 body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}

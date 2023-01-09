@@ -1,17 +1,17 @@
 .side_menu{
     padding:1em;
-    color: var(--font-color);
+    color: rgb(var(--font-color));
     display: flex;
     flex-flow: row wrap;
     flex-direction: column;
 }
 
 .menu_button{
-    font-family: Helvetica, sans-serif;
-    color: var(--font-color);
+    font-family: var(--font);
+    color: rgb(var(--font-color));
     font-size: 1.5em;
     text-transform: uppercase;
-    background: var(--dark-color);
+    background: rgb(var(--dark-color));
     outline: transparent;
     letter-spacing: 3px;
     font-weight: bold;
@@ -20,7 +20,7 @@
     clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
     border-width: 0 4px 0 0;
     border-style: solid;
-    border-color: var(--highlight-pink);
+    border-color: rgb(var(--highlight-pink));
 }
 
 .menu_toggle_button {
@@ -41,25 +41,25 @@
 
 .menu_toggle_button label {
     margin-top: 10px;
-    background:var(--dark-color);
+    background:rgb(var(--dark-color));
     align-items: center;
     justify-content: center;
     display: inline-flex;
     width: 275px;
     height:64px;
-    font-family: Helvetica, sans-serif;
-    color: var(--font-color);
+    font-family: var(--font);
+    color: rgb(var(--font-color));
     font-size: 1.5em;
     text-transform: uppercase;
-    background: var(--dark-color);
+    background: rgb(var(--dark-color));
     letter-spacing: 3px;
     font-weight: bold;
     border-width: 0 4px 0 0;
     border-style: solid;
-    border-color: var(--highlight-pink);
+    border-color: rgb(var(--highlight-pink));
     clip-path: polygon(-10% -10%, 110% -10%, 110% 110%, 10% 110%, -10% 40%);
 }
 
 .menu_toggle_button input:checked + label {
-    border-color: var(--highlight-yellow);
+    border-color: rgb(var(--highlight-yellow));
 }
