@@ -28,6 +28,9 @@ export function Dropdown({ options, selected, onSelected, style }: props) {
       onChange={onMenuClick}
       className={styles.dropdown}
     >
+      <option value={""} hidden={true} selected={true}>
+        ---
+      </option>
       {new_options.map((option: string) => (
         <option
           className={styles.dropdown_items}
