@@ -3,6 +3,8 @@ import React from "react";
 import { ContainerObj } from "../../model/container";
 import { ContainerNet } from "../../net/container";
 import { ContainerInner } from "./ContainerInner";
+import { hex2rgb } from "../../util/formatting";
+import { binBoschGreen } from "../../util/colors";
 
 interface props {
   closedCallback: (container: ContainerObj) => void;
@@ -14,10 +16,7 @@ export function ContainerNew({ closedCallback }: props) {
     container.unit = "cm";
     container.height = 25;
     container.width = 33;
-    container.color.r = 6;
-    container.color.g = 74;
-    container.color.b = 108;
-    container.color.a = 255;
+    container.color = hex2rgb(binBoschGreen);
 
     return container;
   }

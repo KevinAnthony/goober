@@ -13,13 +13,13 @@ import { Bin } from "./Bin";
 import { BinEdit } from "./drawer/BinEdit";
 import { ContentObj } from "../model/content";
 import { hex2rgb } from "../util/formatting";
-import { red } from "@mui/material/colors";
 import { isEmpty } from "../util/utils";
 import { SearchBox } from "./dialog/Search";
 import { ContainerEdit } from "./dialog/ContainerEdit";
 import { ContainerNet } from "../net/container";
 import { Confirmation } from "./dialog/Confirmation";
 import styles from "./Container.module.css";
+import { binRed } from "../util/colors";
 
 interface props {
   removeContainer: (container: ContainerObj) => void;
@@ -131,7 +131,7 @@ export function Container({
     newBin.height = 5;
     newBin.x = 0;
     newBin.y = 0;
-    newBin.color = hex2rgb(red[500]);
+    newBin.color = hex2rgb(binRed);
     newBin.unit = "cm";
 
     return newBin;
