@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ContainerObj } from "../model/container";
-import { ContainerNew } from "./modal/ContainerNew";
+import { ContainerNew } from "./dialog/ContainerNew";
 import styles from "./SideMenu.module.css";
 
 interface props {

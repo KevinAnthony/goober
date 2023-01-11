@@ -1,5 +1,4 @@
 import React, { ChangeEvent } from "react";
-import { Button, Typography } from "@mui/material";
 import { SearchNet } from "../../net/search";
 import { BinObj } from "../../model/bin";
 import { Dialog } from "../Dialog";
@@ -18,14 +17,13 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
 
   React.useEffect(() => {
     results.map((bin: BinObj, _: number) => (
-      <Button
-        variant="outlined"
+      <button
         style={{
           width: "100%",
         }}
       >
-        <Typography>{bin.GetEdit(0)}</Typography>
-      </Button>
+        {bin.GetEdit(0)}
+      </button>
     ));
   }, [results]);
 
@@ -45,7 +43,6 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
   return (
     <div
       style={{
-        // position: "absolute",
         width: "1192px",
         backgroundColor: "rgb(77,77,77,1)",
       }}
