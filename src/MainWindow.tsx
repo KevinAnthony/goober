@@ -19,6 +19,7 @@ export default function MainWindow() {
     const netContainer = new ContainerNet();
 
     netContainer.getContainerAll().then((containerList: ContainerObj[]) => {
+      containerList.sort(compareContainer);
       setContainerList(containerList);
       if (containerList.length > 0) {
         setContainer(containerList[0]);
@@ -26,8 +27,13 @@ export default function MainWindow() {
     });
   }, []);
 
+  function compareContainer(a: ContainerObj, b: ContainerObj) {
+    return a.label.toUpperCase() > b.label.toUpperCase() ? 1 : -1;
+  }
+
   function removeContainer(container: ContainerObj) {
     const newContainer = containers.filter((c) => c.id !== container.id);
+    newContainer.sort(compareContainer);
     setContainerList(newContainer);
     setContainer(newContainer[0]);
   }

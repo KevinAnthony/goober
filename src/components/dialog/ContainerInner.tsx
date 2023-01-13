@@ -2,6 +2,10 @@ import React from "react";
 import { ContainerObj } from "../../model/container";
 import { Dialog } from "../Dialog";
 import { TextBox } from "../TextBox";
+import { parseNumber } from "../../util/utils";
+import { ColorPicker } from "../ColorPicker";
+import { hex2rgb, rgb2hex } from "../../util/formatting";
+import { binBoschGreen } from "../../util/colors";
 
 interface props {
   container: ContainerObj;
@@ -26,6 +30,7 @@ export function ContainerInner({ onSave, onCancel, container, title }: props) {
             justifyContent: "center",
             flexDirection: "column",
             alignItems: "center",
+            gap: "10px",
           }}
         >
           <TextBox
@@ -36,6 +41,42 @@ export function ContainerInner({ onSave, onCancel, container, title }: props) {
               container.label = event.target.value;
             }}
             style={{ width: "400px" }}
+          />
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <TextBox
+              id="loc-width"
+              type="number"
+              defaultValue={container.width}
+              label="Width"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                container.width = parseNumber(target.value);
+              }}
+            />
+            <TextBox
+              id="loc-height"
+              type="number"
+              defaultValue={container.height}
+              label="Height"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                container.height = parseNumber(target.value);
+              }}
+            />
+          </div>
+          <ColorPicker
+            onColorChanged={(color: string) => {
+              container.color = hex2rgb(color);
+            }}
+            selectedColor={rgb2hex(container.color)}
+            colors={[binBoschGreen]}
           />
           <div
             style={{

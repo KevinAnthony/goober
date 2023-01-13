@@ -91,7 +91,6 @@
 }
 
 .color_picker{
-    margin-top: 14px;
     border-color: rgb(var(--font-color));
     border-style: solid;
     border-radius: 1em;
