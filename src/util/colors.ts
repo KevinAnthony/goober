@@ -7,4 +7,6 @@ export const binOrange = "#ff9800";
 export const binGrey = "#607d8b";
 
 // Container Colors
-export const binBoschGreen = "#064A6C";
+export const containerBoschGreen = "#064A6C";
+export const containerLawsonBrown = "#33250C";
+export const containerPencoBlue = "#5E92AE";

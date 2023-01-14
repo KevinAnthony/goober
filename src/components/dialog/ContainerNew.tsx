@@ -4,7 +4,7 @@ import { ContainerObj } from "../../model/container";
 import { ContainerNet } from "../../net/container";
 import { ContainerInner } from "./ContainerInner";
 import { hex2rgb } from "../../util/formatting";
-import { binBoschGreen } from "../../util/colors";
+import { containerBoschGreen } from "../../util/colors";
 
 interface props {
   closedCallback: (container: ContainerObj) => void;
@@ -15,7 +15,7 @@ export function ContainerNew({ closedCallback }: props) {
   container.unit = "cm";
   container.height = 25;
   container.width = 33;
-  container.color = hex2rgb(binBoschGreen);
+  container.color = hex2rgb(containerBoschGreen);
 
   const net = new ContainerNet();
 
