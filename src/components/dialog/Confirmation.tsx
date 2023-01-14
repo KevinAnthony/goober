@@ -1,50 +1,58 @@
 import React from "react";
-import {Button, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Typography,} from "@mui/material";
+import { Dialog } from "../Dialog";
 
 interface props {
-    closedCallback: (accepted: boolean) => void;
-    open: boolean;
-    title: string;
-    description: string;
+  closedCallback: (accepted: boolean) => void;
+  open: boolean;
+  title: string;
+  description: string;
 }
 
 export function Confirmation({
-                                 closedCallback,
-                                 open,
-                                 title,
-                                 description,
-                             }: props) {
-    const handleDecline = () => {
-        closedCallback(false);
-    };
+  closedCallback,
+  open,
+  title,
+  description,
+}: props) {
+  const handleDecline = () => {
+    closedCallback(false);
+  };
 
-    const handleAccept = () => {
-        closedCallback(true);
-    };
+  const handleAccept = () => {
+    closedCallback(true);
+  };
 
-    return (
-        <Dialog
-            open={open}
-            onClose={handleDecline}
-            aria-labelledby="alert-dialog-title"
-            aria-describedby="alert-dialog-description"
+  return (
+    <Dialog title={title} opened={open} onClose={handleDecline}>
+      {description}
+      <div
+        style={{
+          marginTop: "25px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gap: "10px",
+        }}
+      >
+        <button
+          style={{
+            width: "16em",
+            height: "4em",
+          }}
+          onClick={handleAccept}
         >
-            <DialogTitle id="alert-dialog-title">
-                <Typography>{title}</Typography>
-            </DialogTitle>
-            <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                    <Typography>{description}</Typography>
-                </DialogContentText>
-            </DialogContent>
-            <DialogActions>
-                <Button onClick={handleDecline}>
-                    <Typography>Cancel</Typography>
-                </Button>
-                <Button onClick={handleAccept} autoFocus>
-                    <Typography>OK</Typography>
-                </Button>
-            </DialogActions>
-        </Dialog>
-    );
+          Ok
+        </button>
+        <button
+          style={{
+            width: "16em",
+            height: "4em",
+          }}
+          onClick={handleDecline}
+        >
+          Cancel
+        </button>
+      </div>
+    </Dialog>
+  );
 }

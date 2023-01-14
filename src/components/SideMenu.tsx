@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { ContainerObj } from "../model/container";
-import { ContainerNew } from "./modal/ContainerNew";
+import { ContainerNew } from "./dialog/ContainerNew";
 import styles from "./SideMenu.module.css";
 
 interface props {
@@ -43,7 +43,7 @@ export function SideMenu({
       >
         New
       </button>
-      <div style={{ position: "relative", height: "100vh" }}>
+      <div className={styles.scrollable}>
         <div className={styles.menu_toggle_button} onChange={onContentChanged}>
           {containers.map((container: ContainerObj) => (
             <div key={container.id} onChange={onContentChanged}>
@@ -59,6 +59,7 @@ export function SideMenu({
           ))}
         </div>
       </div>
+      <div className={styles.footer} />
     </div>
   );
 }

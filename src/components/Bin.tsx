@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { BinObj } from "../model/bin";
 import { ColorObj } from "../model/color";
-import { BinEdit } from "./modal/BinEdit";
+import { BinEdit } from "./drawer/BinEdit";
 import { Confirmation } from "./dialog/Confirmation";
 import { BinNet } from "../net/bin";
 

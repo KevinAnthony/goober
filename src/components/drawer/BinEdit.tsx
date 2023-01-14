@@ -1,13 +1,4 @@
 import React from "react";
-import {
-  amber,
-  blueGrey,
-  green,
-  indigo,
-  orange,
-  red,
-} from "@mui/material/colors";
-import { Drawer } from "antd";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
 import { BinObj } from "../../model/bin";
 import { BoltObj } from "../../model/bolt";
@@ -26,6 +17,16 @@ import { NutEdit } from "./subedit/NutEdit";
 import styles from "./drawer.module.css";
 import "./drawer.css";
 import { TextBox } from "../TextBox";
+import {
+  binBlue,
+  binGreen,
+  binGrey,
+  binOrange,
+  binRed,
+  binYellow,
+} from "../../util/colors";
+import { ColorPicker } from "../ColorPicker";
+import { Drawer } from "../Drawer";
 
 interface props {
   bin: BinObj;
@@ -59,15 +60,6 @@ export function BinEdit({
     setBin(bin);
   }, [bin, binIndex, binState, updateCallback]);
 
-  const [binRed, binBlue, binGreen, binYellow, binOrange, binGrey] = [
-    red[500],
-    indigo[500],
-    green[500],
-    amber[500],
-    orange[500],
-    blueGrey[500],
-  ];
-
   const [selectedColor, setSelectedColor] = React.useState<string>(
     rgb2hex(bin.color)
   );
@@ -90,9 +82,9 @@ export function BinEdit({
     setContainer(getFieldsForContent(binState, 0, updateCallback));
   }
 
-  function onColorChange(event: React.ChangeEvent<HTMLInputElement>) {
-    setSelectedColor(event.target.value);
-    binState.color = hex2rgb(event.target.value);
+  function onColorChange(color: string) {
+    setSelectedColor(color);
+    binState.color = hex2rgb(color);
     setBin(binState);
     updateCallback(binState);
   }
@@ -130,11 +122,8 @@ export function BinEdit({
     >
       <Drawer
         title={<div className={styles.drawer_title}>{title}</div>}
-        destroyOnClose={true}
-        placement="right"
-        size="large"
-        closable={false}
-        open={binIndex >= 0}
+        opened={binIndex >= 0}
+        onClose={onCancel}
         extra={
           <div className={styles.button_div}>
             <button className={styles.confirmation_button} onClick={onSave}>
@@ -247,55 +236,12 @@ export function BinEdit({
               }}
             />
           </form>
-          <div>
-            <fieldset className={styles.color_picker}>
-              <legend>Bin Color</legend>
-              <div onChange={onColorChange}>
-                <input
-                  type="radio"
-                  value={binRed}
-                  id="binRed"
-                  checked={binRed === selectedColor}
-                  style={{ background: binRed }}
-                />
-                <input
-                  type="radio"
-                  value={binBlue}
-                  id="binBlue"
-                  checked={binBlue === selectedColor}
-                  style={{ background: binBlue }}
-                />
-                <input
-                  type="radio"
-                  value={binGreen}
-                  id="binGreen"
-                  checked={binGreen === selectedColor}
-                  style={{ background: binGreen }}
-                />
-                <input
-                  type="radio"
-                  value={binYellow}
-                  id="binYellow"
-                  checked={binYellow === selectedColor}
-                  style={{ background: binYellow }}
-                />
-                <input
-                  type="radio"
-                  value={binOrange}
-                  id="binOrange"
-                  checked={binOrange === selectedColor}
-                  style={{ background: binOrange }}
-                />
-                <input
-                  type="radio"
-                  value={binGrey}
-                  id="binGrey"
-                  checked={binGrey === selectedColor}
-                  style={{ background: binGrey }}
-                />
-              </div>
-            </fieldset>
-          </div>
+          <ColorPicker
+            onColorChanged={onColorChange}
+            selectedColor={selectedColor}
+            colors={[binRed, binBlue, binGreen, binYellow, binOrange, binGrey]}
+          />
+
           <div
             onChange={onUnitChanged}
             className={styles.horizontal_toggle_group}

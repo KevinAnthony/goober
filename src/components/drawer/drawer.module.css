@@ -1,21 +1,22 @@
 .drawer_title{
     font-size: 2em;
-    font-family: Helvetica, sans-serif;
-    color: var(--font-color);
+    font-family: var(--font);
+    color: rgb(var(--font-color));
 }
 
 .button_div {
     display: flex;
     justify-content: right;
-    width: 12em;
+    width: 240px;
+    height: 48px;
 }
 
 .confirmation_button {
-    background:var(--dark-color);
-    border-color: var(--font-color);
+    background:rgb(var(--dark-color));
+    border-color: rgb(var(--font-color));
     border-width: 2px;
     border-style: solid;
-    color: var(--font-color);
+    color: rgb(var(--font-color));
     padding: .5em;
     width: 50%;
     text-align: center;
@@ -56,11 +57,11 @@
 }
 
 .horizontal_toggle_group label {
-    background:var(--dark-color);
-    border-color: var(--font-color);
+    background:rgb(var(--dark-color));
+    border-color: rgb(var(--font-color));
     border-width: 2px;
     border-style: solid;
-    color: var(--font-color);
+    color: rgb(var(--font-color));
     padding: .75em 1em;
     text-align: center;
     font-size: 14px;
@@ -70,8 +71,8 @@
 }
 
 .horizontal_toggle_group input:checked + label {
-    background-color: var(--dark-color);
-    color: var(--highlight-pink);
+    background-color: rgb(var(--dark-color));
+    color: rgb(var(--highlight-pink));
 }
 
 .horizontal_toggle_group label:first-of-type {
@@ -91,15 +92,14 @@
 }
 
 .color_picker{
-    margin-top: 14px;
-    border-color: var(--font-color);
+    border-color: rgb(var(--font-color));
     border-style: solid;
     border-radius: 1em;
     border-width: 2px;
 }
 
 .color_picker legend {
-    color: var(--highlight-yellow);
+    color: rgb(var(--highlight-yellow));
     font-size: 14px;
     font-weight: bolder;
 }
@@ -109,12 +109,12 @@
     -webkit-appearance: none;
     width: 64px;
     height: 32px;
-    border-color: var(--dark-color-highlight);
+    border-color: rgb(var(--dark-color));
     border-width: 4px;
     border-style: solid;
     border-radius: .25em;
 }
 
 .color_picker input:checked {
-    border-color: var(--highlight-pink)
+    border-color: rgb(var(--highlight-pink))
 }
