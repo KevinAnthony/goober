@@ -63,13 +63,9 @@ export function Container({
   }
 
   function drawNewBin(bin: BinObj) {
-    console.log(container.bin);
-    console.log(bin.x, bin.y, bin.width, bin.height);
     setNewBin(bin);
     setNewBinIndex(newBinIndex);
     setRedrawBin(true);
-
-    return;
   }
 
   function closePopup() {
@@ -105,7 +101,6 @@ export function Container({
 
   React.useEffect(() => {
     setRedrawBin(false);
-
     if (newBinIndex < 0) {
       setPopup(<div />);
     } else {
@@ -123,7 +118,6 @@ export function Container({
   }, [newBinIndex, newBin, redrawBin]);
 
   function createNewBin(): BinObj {
-    console.log("here");
     const newContent = ContentObj.Empty();
     newContent.contentType = "empty";
 
