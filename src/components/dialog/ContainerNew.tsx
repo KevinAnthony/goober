@@ -11,16 +11,11 @@ interface props {
 }
 
 export function ContainerNew({ closedCallback }: props) {
-  function initContainer(): ContainerObj {
-    let container = ContainerObj.Empty();
-    container.unit = "cm";
-    container.height = 25;
-    container.width = 33;
-    container.color = hex2rgb(binBoschGreen);
-
-    return container;
-  }
-  let [container, _] = React.useState<ContainerObj>(() => initContainer());
+  let container = ContainerObj.Empty();
+  container.unit = "cm";
+  container.height = 25;
+  container.width = 33;
+  container.color = hex2rgb(binBoschGreen);
 
   const net = new ContainerNet();
 
