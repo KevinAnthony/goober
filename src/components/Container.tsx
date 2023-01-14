@@ -63,6 +63,8 @@ export function Container({
   }
 
   function drawNewBin(bin: BinObj) {
+    console.log(container.bin);
+    console.log(bin.x, bin.y, bin.width, bin.height);
     setNewBin(bin);
     setNewBinIndex(newBinIndex);
     setRedrawBin(true);
@@ -98,7 +100,7 @@ export function Container({
   }
 
   const [newBinIndex, setNewBinIndex] = React.useState<number>(-1);
-  const [newBin, setNewBin] = React.useState<BinObj>(createNewBin());
+  const [newBin, setNewBin] = React.useState<BinObj>(() => createNewBin());
   const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
 
   React.useEffect(() => {
@@ -121,6 +123,7 @@ export function Container({
   }, [newBinIndex, newBin, redrawBin]);
 
   function createNewBin(): BinObj {
+    console.log("here");
     const newContent = ContentObj.Empty();
     newContent.contentType = "empty";
 
@@ -143,7 +146,8 @@ export function Container({
   }
 
   function handleNewBinOpen() {
-    setNewBinIndex(container.bin.length + 1);
+    container.bin.push(newBin);
+    setNewBinIndex(container.bin.length);
   }
 
   function handleEditContainerOpen() {
