@@ -221,6 +221,13 @@ export function Container({
           ))}
         </div>
       </div>
+
+      <Confirmation
+        closedCallback={handleDelete}
+        open={deleteConfirmationOpen}
+        title={"Delete Container"}
+        description={"if you delete this container, it will be unrecoverable"}
+      />
       <BinEdit
         bin={newBin}
         title={"New Bin"}
@@ -229,12 +236,6 @@ export function Container({
         updateCallback={drawNewBin}
         removeCallback={removeBin}
         saveCallback={saveBin}
-      />
-      <Confirmation
-        closedCallback={handleDelete}
-        open={deleteConfirmationOpen}
-        title={"Delete Container"}
-        description={"if you delete this container, it will be unrecoverable"}
       />
     </>
   );

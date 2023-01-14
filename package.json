@@ -15,8 +15,6 @@
     "@types/jest": "^27.5.2",
     "@types/react": "^17.0.52",
     "@types/react-dom": "^17.0.18",
-    "antd": "^5.1.2",
-    "material-ui-popup-state": "^2.0.1",
     "mathjs": "^10.6.4",
     "react-hot-toast": "^2.4.0",
     "react-scripts": "5.0.1",

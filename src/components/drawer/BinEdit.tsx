@@ -1,5 +1,4 @@
 import React from "react";
-import { Drawer } from "antd";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
 import { BinObj } from "../../model/bin";
 import { BoltObj } from "../../model/bolt";
@@ -27,6 +26,7 @@ import {
   binYellow,
 } from "../../util/colors";
 import { ColorPicker } from "../ColorPicker";
+import { Drawer } from "../Drawer";
 
 interface props {
   bin: BinObj;
@@ -122,11 +122,8 @@ export function BinEdit({
     >
       <Drawer
         title={<div className={styles.drawer_title}>{title}</div>}
-        destroyOnClose={true}
-        placement="right"
-        size="large"
-        closable={false}
-        open={binIndex >= 0}
+        opened={binIndex >= 0}
+        onClose={onCancel}
         extra={
           <div className={styles.button_div}>
             <button className={styles.confirmation_button} onClick={onSave}>
