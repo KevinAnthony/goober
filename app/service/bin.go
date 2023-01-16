@@ -22,13 +22,17 @@ type bin struct {
 	search  searcher.Indexer
 }
 
-func NewBin(repo repository.Bin) Bin {
+func NewBin(repo repository.Bin, search searcher.Indexer) Bin {
 	if repo == nil {
 		panic("bin repository is required")
+	}
+	if search == nil {
+		panic("search indexer is required")
 	}
 
 	return &bin{
 		binRepo: repo,
+		search:  search,
 	}
 }
 

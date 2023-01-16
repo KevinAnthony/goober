@@ -21,8 +21,10 @@ export function ColorPicker({ onColorChanged, selectedColor, colors }: props) {
               type="radio"
               value={color}
               id={`color-${index}`}
+              key={`color-${color}`}
               checked={color === selectedColor}
               style={{ background: color }}
+              onChange={() => {}}
             />
           ))}
         </div>

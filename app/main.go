@@ -25,7 +25,7 @@ func main() {
 
 	indexer := searcher.NewIndexer(ctrRepo)
 
-	binSvc := service.NewBin(binRepo)
+	binSvc := service.NewBin(binRepo, indexer)
 	ctrSvc := service.NewContainer(ctrRepo)
 	searchSvc := service.NewSearch(indexer, binRepo)
 

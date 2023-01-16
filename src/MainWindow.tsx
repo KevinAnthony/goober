@@ -4,6 +4,9 @@ import { ContainerObj } from "./model/container";
 import { Container } from "./components/Container";
 import { BinObj } from "./model/bin";
 import { SideMenu } from "./components/SideMenu";
+import { Toaster } from "react-hot-toast";
+import styles from "./MainWindow.module.css";
+import { BackgroundColor, HighlightPink, HighlightYellow } from "./util/colors";
 
 export default function MainWindow() {
   const [containers, setContainerList] = React.useState<Array<ContainerObj>>(
@@ -46,6 +49,25 @@ export default function MainWindow() {
 
   return (
     <div>
+      <div>
+        <Toaster
+          toastOptions={{
+            className: styles.toast,
+            success: {
+              iconTheme: {
+                primary: BackgroundColor,
+                secondary: HighlightYellow,
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: HighlightPink,
+                secondary: HighlightYellow,
+              },
+            },
+          }}
+        />
+      </div>
       <div
         style={{
           display: "grid",

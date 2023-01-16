@@ -24,14 +24,10 @@ export function SideMenu({
   }
 
   function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(event);
-
     setOptionCallback(
       containers.find((c) => c.id === event.target.value) ?? currentContainer
     );
   }
-
-  console.log(currentContainer);
 
   return (
     <div className={styles.side_menu}>
@@ -53,6 +49,7 @@ export function SideMenu({
                 type={"radio"}
                 value={container.id}
                 className={styles.menu_button}
+                onChange={() => {}}
               />
               <label htmlFor={container.label}>{container.label}</label>
             </div>

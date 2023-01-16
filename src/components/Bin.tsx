@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./Bin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faCog,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { BinObj } from "../model/bin";
 import { ColorObj } from "../model/color";
 import { BinEdit } from "./drawer/BinEdit";
@@ -30,7 +35,10 @@ export function Bin({
   const [startY, setStartY] = React.useState<number>(bin.y + 1);
   const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width);
   const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height);
-  const [editIndex, setEditIndex] = React.useState<number>(-1);
+  const [editIndex, setEditIndex] = React.useState<number>(() => {
+    return bin.id?.length > 0 ? -1 : index;
+  });
+
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
     React.useState<boolean>(false);
   const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
@@ -78,14 +86,33 @@ export function Bin({
       }}
     >
       <div className={styles.top_button_bar}>
-        <button
-          className={styles.top_button}
-          onClick={() => {
-            handleBinEditOpen(index);
-          }}
-        >
-          <FontAwesomeIcon icon={faCog} />
-        </button>
+        <div>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faCog} />
+          </button>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        </div>
+
         <button
           className={styles.top_button}
           onClick={() => setDeleteConfirmationOpen(true)}
@@ -102,7 +129,7 @@ export function Bin({
         updateCallback={handleRedraw}
         saveCallback={updateCallback}
         removeCallback={removeCallback}
-        title={"Edit Bin"}
+        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
       />
       <div
         className={styles.bin_color_viewer}

@@ -145,6 +145,7 @@ export function BinEdit({
               value="empty"
               id="empty"
               checked={"empty" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="empty">Empty</label>
             <input
@@ -152,6 +153,7 @@ export function BinEdit({
               value="bolt"
               id="bolt"
               checked={"bolt" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="bolt">Bolt</label>
             <input
@@ -159,6 +161,7 @@ export function BinEdit({
               value="nut"
               id="nut"
               checked={"nut" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="nut">Nut</label>
             <input
@@ -166,6 +169,7 @@ export function BinEdit({
               value="screw"
               id="screw"
               checked={"screw" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="screw">Screw</label>
             <input
@@ -173,6 +177,7 @@ export function BinEdit({
               value="washer"
               id="washer"
               checked={"washer" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="washer">Washer</label>
             <input
@@ -180,6 +185,7 @@ export function BinEdit({
               value="nail"
               id="nail"
               checked={"nail" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="nail">Nail</label>
             <input
@@ -187,6 +193,7 @@ export function BinEdit({
               value="simple"
               id="simple"
               checked={"simple" === binState.content[contentIndex].contentType}
+              onChange={() => {}}
             />
             <label htmlFor="simple">Simple</label>
           </div>
@@ -252,6 +259,7 @@ export function BinEdit({
               value="in"
               id="in"
               checked={"in" === selectedUnit}
+              onChange={() => {}}
             />
             <label htmlFor="in">Imperial</label>
             <input
@@ -259,6 +267,7 @@ export function BinEdit({
               value="mm"
               id="mm"
               checked={"mm" === selectedUnit}
+              onChange={() => {}}
             />
             <label htmlFor="mm">Metric</label>
             <input
@@ -266,6 +275,7 @@ export function BinEdit({
               value="an"
               id="an"
               checked={"an" === selectedUnit}
+              onChange={() => {}}
             />
             <label htmlFor="an">AN</label>
           </div>

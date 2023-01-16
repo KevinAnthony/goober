@@ -10,15 +10,14 @@ import { ContainerObj } from "../model/container";
 import { BinObj } from "../model/bin";
 import { BinNet } from "../net/bin";
 import { Bin } from "./Bin";
-import { BinEdit } from "./drawer/BinEdit";
-import { ContentObj } from "../model/content";
-import { hex2rgb } from "../util/formatting";
 import { isEmpty } from "../util/utils";
 import { SearchBox } from "./dialog/Search";
 import { ContainerEdit } from "./dialog/ContainerEdit";
 import { ContainerNet } from "../net/container";
 import { Confirmation } from "./dialog/Confirmation";
 import styles from "./Container.module.css";
+import { ContentObj } from "../model/content";
+import { hex2rgb } from "../util/formatting";
 import { binRed } from "../util/colors";
 
 interface props {
@@ -62,19 +61,12 @@ export function Container({
     setBins([...container.bin]);
   }
 
-  function drawNewBin(bin: BinObj) {
-    setNewBin(bin);
-    setNewBinIndex(newBinIndex);
-    setRedrawBin(true);
-
-    return;
-  }
-
   function closePopup() {
     setPopup(<div />);
   }
 
   function saveBin(index: number, bin: BinObj, save: boolean) {
+    console.log("here", bin.id);
     if (!save) {
       container.bin.splice(index, 1, bin);
       setBins([...container.bin]);
@@ -97,53 +89,53 @@ export function Container({
     }
   }
 
-  const [newBinIndex, setNewBinIndex] = React.useState<number>(-1);
-  const [newBin, setNewBin] = React.useState<BinObj>(createNewBin());
-  const [redrawBin, setRedrawBin] = React.useState<boolean>(false);
-
-  React.useEffect(() => {
-    setRedrawBin(false);
-
-    if (newBinIndex < 0) {
-      setPopup(<div />);
-    } else {
-      setPopup(
-        <Bin
-          highlight={false}
-          bin={newBin}
-          index={newBinIndex}
-          removeCallback={removeBin}
-          updateCallback={saveBin}
-        />
-      );
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newBinIndex, newBin, redrawBin]);
-
   function createNewBin(): BinObj {
+    let [x, y] = getFirstOpenSpot();
     const newContent = ContentObj.Empty();
     newContent.contentType = "empty";
 
     const newBin = BinObj.Empty();
     newBin.content.push(newContent);
-    //TODO lets try and figure out where this goes in reality
+
     newBin.width = 5;
     newBin.height = 5;
-    newBin.x = 0;
-    newBin.y = 0;
+    newBin.x = x;
+    newBin.y = y;
     newBin.color = hex2rgb(binRed);
     newBin.unit = "cm";
 
     return newBin;
   }
 
-  function handleNewBinClosed() {
-    setNewBinIndex(-1);
-    setNewBin(createNewBin());
+  function handleNewBinOpen() {
+    container.bin.push(createNewBin());
+    setBins([...container.bin]);
   }
 
-  function handleNewBinOpen() {
-    setNewBinIndex(container.bin.length + 1);
+  function getFirstOpenSpot() {
+    for (let y = 0; y < container.height; y++) {
+      for (let x = 0; x < container.width; x++) {
+        if (
+          container.bin.find((bin) => isPointWithinBin(x, y, bin)) === undefined
+        ) {
+          return [x, y];
+        }
+      }
+    }
+
+    return [0, 0];
+  }
+
+  function isPointWithinBin(x: number, y: number, bin: BinObj) {
+    if (x < bin.x || x > bin.x + bin.width - 1) {
+      return false;
+    }
+
+    if (y < bin.y || y > bin.y + bin.height - 1) {
+      return false;
+    }
+
+    return true;
   }
 
   function handleEditContainerOpen() {
@@ -228,15 +220,15 @@ export function Container({
         title={"Delete Container"}
         description={"if you delete this container, it will be unrecoverable"}
       />
-      <BinEdit
-        bin={newBin}
-        title={"New Bin"}
-        binIndex={newBinIndex}
-        closedCallback={handleNewBinClosed}
-        updateCallback={drawNewBin}
-        removeCallback={removeBin}
-        saveCallback={saveBin}
-      />
+      {/*<BinEdit*/}
+      {/*  bin={newBin}*/}
+      {/*  title={"New Bin"}*/}
+      {/*  binIndex={newBinIndex}*/}
+      {/*  closedCallback={handleNewBinClosed}*/}
+      {/*  updateCallback={drawNewBin}*/}
+      {/*  removeCallback={removeBin}*/}
+      {/*  saveCallback={saveBin}*/}
+      {/*/>*/}
     </>
   );
 }

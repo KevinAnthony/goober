@@ -5,7 +5,12 @@ import { TextBox } from "../TextBox";
 import { parseNumber } from "../../util/utils";
 import { ColorPicker } from "../ColorPicker";
 import { hex2rgb, rgb2hex } from "../../util/formatting";
-import { binBoschGreen } from "../../util/colors";
+import "../../util/colors";
+import {
+  containerBoschGreen,
+  containerLawsonBrown,
+  containerPencoBlue,
+} from "../../util/colors";
 
 interface props {
   container: ContainerObj;
@@ -76,7 +81,11 @@ export function ContainerInner({ onSave, onCancel, container, title }: props) {
               container.color = hex2rgb(color);
             }}
             selectedColor={rgb2hex(container.color)}
-            colors={[binBoschGreen]}
+            colors={[
+              containerBoschGreen,
+              containerLawsonBrown,
+              containerPencoBlue,
+            ]}
           />
           <div
             style={{

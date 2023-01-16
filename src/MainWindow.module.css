@@ -1,0 +1,11 @@
+.toast {
+    border-color: rgb(var(--dark-color-highlight));
+    border-style: solid;
+    border-width: 4px;
+    padding: 16px;
+    color: rgb(var(--font-color));
+    background: rgb(var(--dark-color));
+    font: var(--font);
+    font-size: 1.75em;
+    min-width: 300px;
+}
