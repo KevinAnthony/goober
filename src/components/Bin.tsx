@@ -1,7 +1,12 @@
 import React from "react";
 import styles from "./Bin.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCog, faTrash } from "@fortawesome/free-solid-svg-icons";
+import {
+  faChevronLeft,
+  faChevronRight,
+  faCog,
+  faTrash,
+} from "@fortawesome/free-solid-svg-icons";
 import { BinObj } from "../model/bin";
 import { ColorObj } from "../model/color";
 import { BinEdit } from "./drawer/BinEdit";
@@ -78,14 +83,33 @@ export function Bin({
       }}
     >
       <div className={styles.top_button_bar}>
-        <button
-          className={styles.top_button}
-          onClick={() => {
-            handleBinEditOpen(index);
-          }}
-        >
-          <FontAwesomeIcon icon={faCog} />
-        </button>
+        <div>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faChevronLeft} />
+          </button>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faCog} />
+          </button>
+          <button
+            className={styles.top_button}
+            onClick={() => {
+              handleBinEditOpen(index);
+            }}
+          >
+            <FontAwesomeIcon icon={faChevronRight} />
+          </button>
+        </div>
+
         <button
           className={styles.top_button}
           onClick={() => setDeleteConfirmationOpen(true)}

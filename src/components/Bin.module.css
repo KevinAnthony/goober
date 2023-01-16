@@ -25,10 +25,8 @@
 
 .top_button_bar {
     margin-top: 2px;
-    margin-left: 2px;
-    margin-right: 2px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-around;
     width:100%;
 }
 
