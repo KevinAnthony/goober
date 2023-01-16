@@ -35,7 +35,10 @@ export function Bin({
   const [startY, setStartY] = React.useState<number>(bin.y + 1);
   const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width);
   const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height);
-  const [editIndex, setEditIndex] = React.useState<number>(-1);
+  const [editIndex, setEditIndex] = React.useState<number>(() => {
+    return bin.id?.length > 0 ? -1 : index;
+  });
+
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
     React.useState<boolean>(false);
   const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
@@ -126,7 +129,7 @@ export function Bin({
         updateCallback={handleRedraw}
         saveCallback={updateCallback}
         removeCallback={removeCallback}
-        title={"Edit Bin"}
+        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
       />
       <div
         className={styles.bin_color_viewer}
