@@ -36,7 +36,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
 
   const [editBin, setEditBin] = React.useState<JSX.Element>(() => {
     if (bin.id?.length > 0) {
-      return <div />;
+      return <div style={{ position: "absolute" }} />;
     }
 
     return getEditPopover();
@@ -52,7 +52,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   }, [contentIndex, bin]);
 
   const [deleteConfirmation, setDeleteConfirmation] =
-    React.useState<JSX.Element>(<div />);
+    React.useState<JSX.Element>(<div style={{ position: "absolute" }} />);
   const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
     () => highlight
   );
@@ -62,7 +62,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   }
 
   function handleBinEditClose() {
-    setEditBin(<div />);
+    setEditBin(<div style={{ position: "absolute" }} />);
   }
 
   function handleBinEditOpen() {
@@ -98,7 +98,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
       }
     }
 
-    setDeleteConfirmation(<div />);
+    setDeleteConfirmation(<div style={{ position: "absolute" }} />);
   }
 
   function getEditPopover(): JSX.Element {
@@ -190,15 +190,14 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
         </button>
       </div>
       <div className={styles.bin_table}>{bin.GetContentText(contentIndex)}</div>
-      <div />
       {editBin}
+      {deleteConfirmation}
       <div
         className={styles.bin_color_viewer}
         style={{
           background: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`,
         }}
       />
-      {deleteConfirmation}
     </div>
   );
 }
