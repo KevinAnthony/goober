@@ -147,8 +147,14 @@ func (b bin) Update(ctx context.Context, bin model.Bin) (model.Bin, error) {
 		}
 		//todo own repos
 		for _, content := range bin.Content {
-			if _, err := tx.Model(&content).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
-				return errors.Wrap(err, "update content")
+			if len(content.ID) == 0 {
+				if _, err := tx.Model(&content).Context(ctx).Returning("*").Insert(); err != nil {
+					return errors.Wrap(err, "insert content")
+				}
+			} else {
+				if _, err := tx.Model(&content).WherePK().Context(ctx).Returning("*").UpdateNotZero(); err != nil {
+					return errors.Wrap(err, "update content")
+				}
 			}
 
 			if content.Bolt != nil {

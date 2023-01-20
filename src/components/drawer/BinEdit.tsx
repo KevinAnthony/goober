@@ -31,6 +31,7 @@ import { ContentObj } from "../../model/content";
 
 interface props {
   bin: BinObj;
+  contentIndex: number;
   updateCallback: (bin: BinObj) => void;
   closedCallback: () => void;
   saveCallback: (bin: BinObj, save: boolean) => void;
@@ -40,6 +41,7 @@ interface props {
 
 export function BinEdit({
   bin,
+  contentIndex,
   closedCallback,
   updateCallback,
   saveCallback,
@@ -47,15 +49,15 @@ export function BinEdit({
   title,
 }: props) {
   const net = new BinNet();
-  const [innerContainer, setContainer] = React.useState<JSX.Element>();
+  const [subEditJSX, setSubEditJSX] = React.useState<JSX.Element>();
   const [binState, setBin] = React.useState<BinObj>(bin);
-  const [contentIndex] = React.useState<number>(0);
 
   React.useEffect(() => {
-    setContainer(
+    console.log("here");
+    setSubEditJSX(
       getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
     );
-  }, [bin, binState, updateCallback]);
+  }, [bin, binState, updateCallback, contentIndex, onSubeditUpdated]);
 
   const [selectedColor, setSelectedColor] = React.useState<string>(
     rgb2hex(bin.color)
@@ -72,7 +74,7 @@ export function BinEdit({
     binState.content[contentIndex].simple = SimpleObj.Empty();
 
     setBin(binState);
-    setContainer(
+    setSubEditJSX(
       getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
     );
   }
@@ -274,7 +276,7 @@ export function BinEdit({
             />
             <label htmlFor="an">AN</label>
           </div>
-          {innerContainer}
+          {subEditJSX}
         </div>
         {/* end of inner drawer*/}
       </Drawer>
@@ -286,6 +288,7 @@ function getFieldsForContent(
   content: ContentObj,
   updateCallback: () => void
 ): JSX.Element {
+  console.log(content);
   switch (content.contentType) {
     case undefined: {
       return <p>content_type undefined</p>;

@@ -5,6 +5,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faCog,
+  faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { BinObj } from "../model/bin";
@@ -12,6 +13,7 @@ import { ColorObj } from "../model/color";
 import { BinEdit } from "./drawer/BinEdit";
 import { Confirmation } from "./dialog/Confirmation";
 import { BinNet } from "../net/bin";
+import { ContentObj } from "../model/content";
 
 interface props {
   bin: BinObj;
@@ -28,22 +30,23 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   const [startY, setStartY] = React.useState<number>(bin.y + 1);
   const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width);
   const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height);
-  const [editBin, setEditBin] = React.useState<React.ReactNode>(() => {
+  const [contentIndex, setContextIndex] = React.useState<number>(0);
+
+  const [editBin, setEditBin] = React.useState<JSX.Element>(() => {
     if (bin.id?.length > 0) {
       return <div />;
     }
 
-    return (
-      <BinEdit
-        bin={bin}
-        closedCallback={handleBinEditClose}
-        updateCallback={handleRedraw}
-        saveCallback={updateCallback}
-        removeCallback={removeCallback}
-        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
-      />
-    );
+    return getEditPopover();
   });
+
+  React.useEffect(() => {
+    if (bin.content[contentIndex].id?.length > 0) {
+      return;
+    }
+
+    handleBinEditOpen();
+  }, [contentIndex]);
 
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
     React.useState<boolean>(false);
@@ -60,16 +63,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   }
 
   function handleBinEditOpen() {
-    setEditBin(
-      <BinEdit
-        bin={bin}
-        closedCallback={handleBinEditClose}
-        updateCallback={handleRedraw}
-        saveCallback={updateCallback}
-        removeCallback={removeCallback}
-        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
-      />
-    );
+    setEditBin(getEditPopover());
   }
 
   function handleRedraw(b: BinObj) {
@@ -89,6 +83,20 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
     setDeleteConfirmationOpen(false);
   }
 
+  function getEditPopover(): JSX.Element {
+    return (
+      <BinEdit
+        bin={bin}
+        contentIndex={contentIndex}
+        closedCallback={handleBinEditClose}
+        updateCallback={handleRedraw}
+        saveCallback={updateCallback}
+        removeCallback={removeCallback}
+        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
+      />
+    );
+  }
+
   return (
     <div
       className={styles.bin}
@@ -104,8 +112,9 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
         <div>
           <button
             className={styles.top_button}
+            disabled={contentIndex === 0}
             onClick={() => {
-              handleBinEditOpen();
+              setContextIndex(contentIndex - 1);
             }}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -121,7 +130,17 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           <button
             className={styles.top_button}
             onClick={() => {
-              handleBinEditOpen();
+              bin.content.push(ContentObj.NewContent(bin.id));
+              setContextIndex(bin.content.length - 1);
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+          <button
+            className={styles.top_button}
+            disabled={contentIndex === bin.content.length - 1}
+            onClick={() => {
+              setContextIndex(contentIndex + 1);
             }}
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -135,7 +154,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      <div className={styles.bin_table}>{bin.GetCotentText(0)}</div>
+      <div className={styles.bin_table}>{bin.GetCotentText(contentIndex)}</div>
       <div />
       {editBin}
       <div
