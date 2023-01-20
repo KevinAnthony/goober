@@ -36,7 +36,7 @@ export class NutObj extends DTO {
     };
   }
 
-  public GetCotentText(unit: string): JSX.Element {
+  public GetContentText(unit: string): JSX.Element {
     switch (unit) {
       case "mm":
       case "cm":

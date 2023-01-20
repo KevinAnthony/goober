@@ -49,20 +49,20 @@ export class ContentObj extends DTO {
     };
   }
 
-  public GetCotentText(unit: string): JSX.Element {
+  public GetContentText(unit: string): JSX.Element {
     switch (this._contentType) {
       case "bolt":
-        return this._bolt.GetCotentText(unit);
+        return this._bolt.GetContentText(unit);
       case "washer":
-        return this._washer.GetCotentText(unit);
+        return this._washer.GetContentText(unit);
       case "screw":
-        return this._screw.GetCotentText(unit);
+        return this._screw.GetContentText(unit);
       case "nail":
-        return this._nail.GetCotentText(unit);
+        return this._nail.GetContentText(unit);
       case "simple":
-        return this._simple.GetCotentText(unit);
+        return this._simple.GetContentText(unit);
       case "nut":
-        return this._nut.GetCotentText(unit);
+        return this._nut.GetContentText(unit);
       case "empty":
         return <div />;
       default:

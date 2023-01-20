@@ -40,7 +40,7 @@ export class ScrewObj extends DTO {
     };
   }
 
-  public GetCotentText(unit: string): JSX.Element {
+  public GetContentText(unit: string): JSX.Element {
     switch (unit) {
       case "cm":
       case "in":

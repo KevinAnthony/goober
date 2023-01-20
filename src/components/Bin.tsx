@@ -14,6 +14,7 @@ import { BinEdit } from "./drawer/BinEdit";
 import { Confirmation } from "./dialog/Confirmation";
 import { BinNet } from "../net/bin";
 import { ContentObj } from "../model/content";
+import { ContentNet } from "../net/content";
 
 interface props {
   bin: BinObj;
@@ -24,6 +25,7 @@ interface props {
 
 export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   const binNet = new BinNet();
+  const contentNet = new ContentNet();
 
   const [color, setColor] = React.useState<ColorObj>(bin.color);
   const [startX, setStartX] = React.useState<number>(bin.x + 1);
@@ -82,10 +84,19 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
 
   function handleDelete(accepted: boolean) {
     if (accepted) {
-      binNet.deleteBin(bin).then(() => {
-        removeCallback(bin);
-      });
+      if (bin.content.length > 1) {
+        contentNet.deleteContent(bin.content[contentIndex]).then(() => {
+          binNet.getBin(bin).then((b: BinObj) => {
+            updateCallback(b, false);
+          });
+        });
+      } else {
+        binNet.deleteBin(bin).then(() => {
+          removeCallback(bin);
+        });
+      }
     }
+
     setDeleteConfirmation(<div />);
   }
 
@@ -177,7 +188,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      <div className={styles.bin_table}>{bin.GetCotentText(contentIndex)}</div>
+      <div className={styles.bin_table}>{bin.GetContentText(contentIndex)}</div>
       <div />
       {editBin}
       <div

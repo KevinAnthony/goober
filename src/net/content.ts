@@ -1,7 +1,7 @@
 import { netCode } from "./net";
 import { ContentObj } from "../model/content";
 
-export class ContainerNet extends netCode {
+export class ContentNet extends netCode {
   deleteContent(content: ContentObj): Promise<ContentObj> {
     return window
       .fetch(`${this.getURL()}/content/${content.id}`, {

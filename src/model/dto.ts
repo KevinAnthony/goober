@@ -13,7 +13,7 @@ export abstract class DTO {
 
   abstract JSON(): object;
 
-  abstract GetCotentText(unit: string | number): JSX.Element;
+  abstract GetContentText(unit: string | number): JSX.Element;
 
   abstract SearchText(unit: string | number): JSX.Element;
 }
