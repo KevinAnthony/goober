@@ -28,7 +28,7 @@ export class SimpleObj extends DTO {
     };
   }
 
-  public GetEdit(_: string): JSX.Element {
+  public GetCotentText(_: string): JSX.Element {
     return (
       <table className={styles.content_table}>
         <thead>

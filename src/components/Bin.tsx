@@ -135,7 +135,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      <div className={styles.bin_table}>{bin.GetEdit(0)}</div>
+      <div className={styles.bin_table}>{bin.GetCotentText(0)}</div>
       <div />
       {editBin}
       <div

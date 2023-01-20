@@ -22,7 +22,7 @@ export const SearchBox = ({ closedCallback, foundCallback }: searchProps) => {
           width: "100%",
         }}
       >
-        {bin.GetEdit(0)}
+        {bin.GetCotentText(0)}
       </button>
     ));
   }, [results]);
