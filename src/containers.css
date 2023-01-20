@@ -1,9 +1,0 @@
-body {
-    background: var(--background-color);
-}
-
-.grid-grid {
-    border: 1px grey dashed;
-    z-index: 1;
-}
-

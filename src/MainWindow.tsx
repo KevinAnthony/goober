@@ -72,6 +72,7 @@ export default function MainWindow() {
         style={{
           display: "grid",
           gridTemplateColumns: `auto 1fr`,
+          paddingLeft: "30px",
         }}
       >
         <SideMenu

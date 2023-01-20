@@ -32,7 +32,7 @@ export function SideMenu({
   return (
     <div className={styles.side_menu}>
       <button
-        className={styles.menu_button}
+        className={styles.top_button}
         onClick={() => {
           setPopup(<ContainerNew closedCallback={closePopup} />);
         }}

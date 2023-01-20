@@ -157,7 +157,7 @@ export function Container({
   }
 
   return (
-    <>
+    <div>
       <div className={styles.container}>
         <div className={styles.container_title}>
           <div className={styles.container_label}>
@@ -222,6 +222,6 @@ export function Container({
         title={"Delete Container"}
         description={"if you delete this container, it will be unrecoverable"}
       />
-    </>
+    </div>
   );
 }
