@@ -31,6 +31,10 @@ export class ContentObj extends DTO {
     return new ContentObj({});
   }
 
+  public static NewContent(binID: string): ContentObj {
+    return new ContentObj({ bin_id: binID, content_type: "empty" });
+  }
+
   public JSON(): object {
     return {
       id: this._id,
