@@ -1,5 +1,5 @@
 body {
-    background-color: rgb(var(--background-color));
+    background: var(--background-color);
 }
 
 .grid-grid {
