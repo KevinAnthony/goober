@@ -7,8 +7,7 @@
 .ns_textbox_input {
     height: 100%;
     width:80px;
-    border: 2px solid rgb(var(--font-color));
-    border-radius: 7px;
+    border:none;
     font-size: 16px;
     padding: 5px 20px 0 20px;
     outline: none;
@@ -17,38 +16,19 @@
     color:rgb(var(--font-color));
 }
 
-::placeholder {
-    color: transparent;
+.ns_textbox_border {
+    border-width: 2px;
+    border-style: solid;
+    border-color: rgb(var(--font-color));
+    border-radius: 7px;
 }
 
-.ns_textbox_label {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    padding: 0 4px;
-    color: rgb(var(--highlight-yellow));
-    font-size: 16px;
-    transition: 0.5s;
-    z-index: 0;
-}
-
-.ns_textbox_input:focus + .ns_textbox_label {
-    top: 0;
-    left: 3px;
-    z-index: 10;
-    font-size: 14px;
-    font-weight: 600;
-    color: rgb(var(--highlight-pink));
-}
-
-.ns_textbox_input:focus {
+.ns_textbox_border:focus-within {
     border: 2px solid rgb(var(--highlight-pink));
 }
 
-.ns_textbox_input:not(:placeholder-shown)+ .ns_textbox_label {
-    top: 0;
-    left: 3px;
-    z-index: 10;
-    font-size: 14px;
-    font-weight: 600;
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }
