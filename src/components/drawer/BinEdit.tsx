@@ -52,11 +52,11 @@ export function BinEdit({
   const [subEditJSX, setSubEditJSX] = React.useState<JSX.Element>();
   const [binState, setBin] = React.useState<BinObj>(bin);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   React.useEffect(() => {
     setSubEditJSX(
       getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
     );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [bin, binState, updateCallback, contentIndex]);
 
   const [selectedColor, setSelectedColor] = React.useState<string>(

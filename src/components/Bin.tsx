@@ -48,7 +48,8 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
     }
 
     handleBinEditOpen();
-  }, [contentIndex]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentIndex, bin]);
 
   const [deleteConfirmation, setDeleteConfirmation] =
     React.useState<JSX.Element>(<div />);
