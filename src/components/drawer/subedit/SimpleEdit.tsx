@@ -2,7 +2,7 @@ import { SubEditProps } from "../SubEditProps";
 import React, { ChangeEvent } from "react";
 import { TextBox } from "../../TextBox";
 
-export function SimpleEdit({ bin, index, updateCallback }: SubEditProps) {
+export function SimpleEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -22,11 +22,11 @@ export function SimpleEdit({ bin, index, updateCallback }: SubEditProps) {
         <TextBox
           id="size"
           label="Description"
-          defaultValue={bin.content[index].simple?.description ?? ""}
+          defaultValue={content.simple?.description ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].simple.description = target.value;
-            updateCallback(bin);
+            content.simple.description = target.value;
+            updateCallback();
           }}
           style={{ width: "300px" }}
         />

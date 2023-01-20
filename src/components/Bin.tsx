@@ -15,19 +15,12 @@ import { BinNet } from "../net/bin";
 
 interface props {
   bin: BinObj;
-  index: number;
   highlight: boolean;
-  removeCallback: (index: number) => void;
-  updateCallback: (index: number, bin: BinObj, save: boolean) => void;
+  removeCallback: (bin: BinObj) => void;
+  updateCallback: (bin: BinObj, save: boolean) => void;
 }
 
-export function Bin({
-  removeCallback,
-  updateCallback,
-  bin,
-  index,
-  highlight,
-}: props) {
+export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   const binNet = new BinNet();
 
   const [color, setColor] = React.useState<ColorObj>(bin.color);
@@ -35,8 +28,21 @@ export function Bin({
   const [startY, setStartY] = React.useState<number>(bin.y + 1);
   const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width);
   const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height);
-  const [editIndex, setEditIndex] = React.useState<number>(() => {
-    return bin.id?.length > 0 ? -1 : index;
+  const [editBin, setEditBin] = React.useState<React.ReactNode>(() => {
+    if (bin.id?.length > 0) {
+      return <div />;
+    }
+
+    return (
+      <BinEdit
+        bin={bin}
+        closedCallback={handleBinEditClose}
+        updateCallback={handleRedraw}
+        saveCallback={updateCallback}
+        removeCallback={removeCallback}
+        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
+      />
+    );
   });
 
   const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
@@ -50,11 +56,20 @@ export function Bin({
   }
 
   function handleBinEditClose() {
-    setEditIndex(-1);
+    setEditBin(<div />);
   }
 
-  function handleBinEditOpen(index: number) {
-    setEditIndex(index);
+  function handleBinEditOpen() {
+    setEditBin(
+      <BinEdit
+        bin={bin}
+        closedCallback={handleBinEditClose}
+        updateCallback={handleRedraw}
+        saveCallback={updateCallback}
+        removeCallback={removeCallback}
+        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
+      />
+    );
   }
 
   function handleRedraw(b: BinObj) {
@@ -68,7 +83,7 @@ export function Bin({
   function handleDelete(accepted: boolean) {
     if (accepted) {
       binNet.deleteBin(bin).then(() => {
-        removeCallback(index);
+        removeCallback(bin);
       });
     }
     setDeleteConfirmationOpen(false);
@@ -90,7 +105,7 @@ export function Bin({
           <button
             className={styles.top_button}
             onClick={() => {
-              handleBinEditOpen(index);
+              handleBinEditOpen();
             }}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -98,7 +113,7 @@ export function Bin({
           <button
             className={styles.top_button}
             onClick={() => {
-              handleBinEditOpen(index);
+              handleBinEditOpen();
             }}
           >
             <FontAwesomeIcon icon={faCog} />
@@ -106,7 +121,7 @@ export function Bin({
           <button
             className={styles.top_button}
             onClick={() => {
-              handleBinEditOpen(index);
+              handleBinEditOpen();
             }}
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -122,15 +137,7 @@ export function Bin({
       </div>
       <div className={styles.bin_table}>{bin.GetEdit(0)}</div>
       <div />
-      <BinEdit
-        binIndex={editIndex}
-        bin={bin}
-        closedCallback={handleBinEditClose}
-        updateCallback={handleRedraw}
-        saveCallback={updateCallback}
-        removeCallback={removeCallback}
-        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
-      />
+      {editBin}
       <div
         className={styles.bin_color_viewer}
         style={{

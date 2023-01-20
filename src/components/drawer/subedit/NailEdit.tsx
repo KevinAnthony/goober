@@ -5,7 +5,7 @@ import "./subEditStyle.css";
 import { parseNumber } from "../../../util/utils";
 import { TextBox } from "../../TextBox";
 
-export function NailEdit({ bin, index, updateCallback }: SubEditProps) {
+export function NailEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -34,42 +34,42 @@ export function NailEdit({ bin, index, updateCallback }: SubEditProps) {
           <TextBox
             id="gauge"
             label="Gauge"
-            defaultValue={bin.content[index].nail?.gauge ?? ""}
+            defaultValue={content.nail?.gauge ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const target = e.target as HTMLInputElement;
-              bin.content[index].nail.gauge = target.value;
-              updateCallback(bin);
+              content.nail.gauge = target.value;
+              updateCallback();
             }}
             style={{ width: "110px" }}
           />
           <TextBox
             id="length"
             label="Length"
-            defaultValue={bin.content[index].nail?.length ?? ""}
+            defaultValue={content.nail?.length ?? ""}
             onChange={(e: ChangeEvent<HTMLInputElement>) => {
               const target = e.target as HTMLInputElement;
-              bin.content[index].nail.length = parseNumber(target.value);
-              updateCallback(bin);
+              content.nail.length = parseNumber(target.value);
+              updateCallback();
             }}
             style={{ width: "110px" }}
           />
         </div>
         <Dropdown
           options={finishes}
-          selected={bin.content[index].nail?.material ?? ""}
+          selected={content.nail?.material ?? ""}
           onSelected={(i) => {
-            bin.content[index].nail.material = finishes[i];
-            updateCallback(bin);
+            content.nail.material = finishes[i];
+            updateCallback();
           }}
         />
         <TextBox
           id="size"
           label="Description"
-          defaultValue={bin.content[index].nail?.description ?? ""}
+          defaultValue={content.nail?.description ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].nail.description = target.value;
-            updateCallback(bin);
+            content.nail.description = target.value;
+            updateCallback();
           }}
           style={{
             width: "300px",

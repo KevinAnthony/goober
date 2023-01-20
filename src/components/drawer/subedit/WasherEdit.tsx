@@ -3,7 +3,7 @@ import React, { ChangeEvent } from "react";
 import { finishes, SubEditProps, washerTypes } from "../SubEditProps";
 import { TextBox } from "../../TextBox";
 
-export function WasherEdit({ bin, index, updateCallback }: SubEditProps) {
+export function WasherEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -24,39 +24,39 @@ export function WasherEdit({ bin, index, updateCallback }: SubEditProps) {
         <TextBox
           id="size"
           label="Size"
-          defaultValue={bin.content[index].washer?.size ?? ""}
+          defaultValue={content.washer?.size ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].washer.size = target.value;
-            updateCallback(bin);
+            content.washer.size = target.value;
+            updateCallback();
           }}
           style={{ width: "330" }}
         />
       </div>
       <Dropdown
         options={finishes}
-        selected={bin.content[index].washer.material}
+        selected={content.washer.material}
         onSelected={(i) => {
-          bin.content[index].washer.material = finishes[i];
-          updateCallback(bin);
+          content.washer.material = finishes[i];
+          updateCallback();
         }}
       />
       <Dropdown
         options={washerTypes}
-        selected={bin.content[index].washer.type}
+        selected={content.washer.type}
         onSelected={(i) => {
-          bin.content[index].washer.type = washerTypes[i];
-          updateCallback(bin);
+          content.washer.type = washerTypes[i];
+          updateCallback();
         }}
       />
       <TextBox
         id="size"
         label="Description"
-        defaultValue={bin.content[index].nut?.description ?? ""}
+        defaultValue={content.nut?.description ?? ""}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           const target = e.target as HTMLInputElement;
-          bin.content[index].nut.description = target.value;
-          updateCallback(bin);
+          content.nut.description = target.value;
+          updateCallback();
         }}
         style={{ width: "300px" }}
       />

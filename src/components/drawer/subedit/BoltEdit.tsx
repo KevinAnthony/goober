@@ -5,7 +5,7 @@ import "./subEditStyle.css";
 import { parseNumber } from "../../../util/utils";
 import { TextBox } from "../../TextBox";
 
-export function BoltEdit({ bin, index, updateCallback }: SubEditProps) {
+export function BoltEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -27,61 +27,61 @@ export function BoltEdit({ bin, index, updateCallback }: SubEditProps) {
         <TextBox
           id="size"
           label="Size"
-          defaultValue={bin.content[index].bolt?.threadSize ?? ""}
+          defaultValue={content.bolt?.threadSize ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].bolt.threadSize = target.value;
-            updateCallback(bin);
+            content.bolt.threadSize = target.value;
+            updateCallback();
           }}
           style={{ width: "110px" }}
         />
         <TextBox
           id="pitch"
           label="Pitch"
-          defaultValue={bin.content[index].bolt?.threadPitch ?? ""}
+          defaultValue={content.bolt?.threadPitch ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].bolt.threadPitch = target.value;
-            updateCallback(bin);
+            content.bolt.threadPitch = target.value;
+            updateCallback();
           }}
           style={{ width: "110px" }}
         />
         <TextBox
           id="length"
           label="length"
-          defaultValue={bin.content[index].bolt?.length ?? ""}
+          defaultValue={content.bolt?.length ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = (e.target as HTMLInputElement).value;
-            bin.content[index].bolt.length = parseNumber(target);
-            updateCallback(bin);
+            content.bolt.length = parseNumber(target);
+            updateCallback();
           }}
           style={{ width: "110px" }}
         />
       </div>
       <Dropdown
         options={finishes}
-        selected={bin.content[index].bolt?.material ?? ""}
+        selected={content.bolt?.material ?? ""}
         onSelected={(i) => {
-          bin.content[index].bolt.material = finishes[i];
-          updateCallback(bin);
+          content.bolt.material = finishes[i];
+          updateCallback();
         }}
       />
       <Dropdown
         options={boltHeads}
-        selected={bin.content[index].bolt.head}
+        selected={content.bolt.head}
         onSelected={(i) => {
-          bin.content[index].bolt.head = boltHeads[i];
-          updateCallback(bin);
+          content.bolt.head = boltHeads[i];
+          updateCallback();
         }}
       />
       <TextBox
         id="size"
         label="Description"
-        defaultValue={bin.content[index].nut?.description ?? ""}
+        defaultValue={content.nut?.description ?? ""}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           const target = e.target as HTMLInputElement;
-          bin.content[index].nut.description = target.value;
-          updateCallback(bin);
+          content.nut.description = target.value;
+          updateCallback();
         }}
         style={{ width: "300px" }}
       />
