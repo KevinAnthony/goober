@@ -67,11 +67,17 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   }
 
   function handleRedraw(b: BinObj) {
+    if (contentIndex >= b.content.length) {
+      setContextIndex(b.content.length - 1);
+    }
+
     setColor(b.color);
     setStartX(b.x + 1);
     setStartY(b.y + 1);
     setStopX(b.x + 1 + b.width);
     setStopY(b.y + 1 + b.height);
+
+    updateCallback(b, false);
   }
 
   function handleDelete(accepted: boolean) {

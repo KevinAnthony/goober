@@ -53,11 +53,10 @@ export function BinEdit({
   const [binState, setBin] = React.useState<BinObj>(bin);
 
   React.useEffect(() => {
-    console.log("here");
     setSubEditJSX(
       getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
     );
-  }, [bin, binState, updateCallback, contentIndex, onSubeditUpdated]);
+  }, [bin, binState, updateCallback, contentIndex]);
 
   const [selectedColor, setSelectedColor] = React.useState<string>(
     rgb2hex(bin.color)
@@ -104,6 +103,7 @@ export function BinEdit({
 
       return;
     }
+
     net.getBin(binState).then((b) => {
       updateCallback(b);
       closedCallback();
@@ -288,7 +288,6 @@ function getFieldsForContent(
   content: ContentObj,
   updateCallback: () => void
 ): JSX.Element {
-  console.log(content);
   switch (content.contentType) {
     case undefined: {
       return <p>content_type undefined</p>;
