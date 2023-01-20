@@ -48,8 +48,8 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
     handleBinEditOpen();
   }, [contentIndex]);
 
-  const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
-    React.useState<boolean>(false);
+  const [deleteConfirmation, setDeleteConfirmation] =
+    React.useState<JSX.Element>(<div />);
   const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
     () => highlight
   );
@@ -86,7 +86,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
         removeCallback(bin);
       });
     }
-    setDeleteConfirmationOpen(false);
+    setDeleteConfirmation(<div />);
   }
 
   function getEditPopover(): JSX.Element {
@@ -99,6 +99,23 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
         saveCallback={updateCallback}
         removeCallback={removeCallback}
         title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
+      />
+    );
+  }
+
+  function getDeletePopover(): JSX.Element {
+    let title = "Delete Bin";
+    let description = "If you delete this bin, it will be unrecoverable";
+    if (bin.content.length > 1) {
+      title = `Delete ${bin.content[contentIndex].contentType}`;
+      description = `If you delete this ${bin.content[contentIndex].contentType}, it will be unrecoverable`;
+    }
+    return (
+      <Confirmation
+        closedCallback={handleDelete}
+        open={true}
+        title={title}
+        description={description}
       />
     );
   }
@@ -155,7 +172,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
 
         <button
           className={styles.top_button}
-          onClick={() => setDeleteConfirmationOpen(true)}
+          onClick={() => setDeleteConfirmation(getDeletePopover)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>
@@ -169,12 +186,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           background: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`,
         }}
       />
-      <Confirmation
-        closedCallback={handleDelete}
-        open={deleteConfirmationOpen}
-        title={"Delete Bin"}
-        description={"if you delete this bin, it will be unrecoverable"}
-      />
+      {deleteConfirmation}
     </div>
   );
 }

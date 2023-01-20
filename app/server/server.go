@@ -15,7 +15,13 @@ type HTTPServer struct {
 	mux *chi.Mux
 }
 
-func NewServer(reqh http.RequestHandler, bin handler.Bin, ctr handler.Container, search handler.Search) HTTPServer {
+func NewServer(
+	reqh http.RequestHandler,
+	content handler.Content,
+	bin handler.Bin,
+	ctr handler.Container,
+	search handler.Search,
+) HTTPServer {
 	server := HTTPServer{
 		mux: chi.NewRouter(),
 	}
@@ -38,6 +44,8 @@ func NewServer(reqh http.RequestHandler, bin handler.Bin, ctr handler.Container,
 	server.mux.Get("/container/{containerID}", reqh.Handle(ctr.GetSingle))
 	server.mux.Put("/container/{containerID}", reqh.Handle(ctr.Update))
 	server.mux.Delete("/container/{containerID}", reqh.Handle(ctr.Delete))
+
+	server.mux.Delete("/content/{contentID}", reqh.Handle(content.Delete))
 
 	server.mux.Get("/search/bin", reqh.Handle(search.Find))
 
