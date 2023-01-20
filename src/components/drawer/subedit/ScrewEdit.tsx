@@ -18,11 +18,11 @@ export function ScrewEdit({ content, updateCallback }: SubEditProps) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
+        gap: "inherit",
       }}
     >
       <div
         style={{
-          margin: "1em",
           display: "flex",
           gap: "10px",
         }}
@@ -48,59 +48,50 @@ export function ScrewEdit({ content, updateCallback }: SubEditProps) {
           }}
         />
       </div>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-          alignItems: "center",
-          gap: "10px",
+
+      <Dropdown
+        options={finishes}
+        selected={content.screw.material}
+        onSelected={(i) => {
+          content.screw.material = finishes[i];
+          updateCallback();
         }}
-      >
-        <Dropdown
-          options={finishes}
-          selected={content.screw.material}
-          onSelected={(i) => {
-            content.screw.material = finishes[i];
-            updateCallback();
-          }}
-        />
-        <Dropdown
-          options={screwHeads}
-          selected={content.screw.head}
-          onSelected={(i) => {
-            content.screw.head = screwHeads[i];
-            updateCallback();
-          }}
-        />
-        <Dropdown
-          options={screwDrive}
-          selected={content.screw.drive}
-          onSelected={(i) => {
-            content.screw.drive = screwDrive[i];
-            updateCallback();
-          }}
-        />
-        <Dropdown
-          options={screwTypes}
-          selected={content.screw.type}
-          onSelected={(i) => {
-            content.screw.type = screwTypes[i];
-            updateCallback();
-          }}
-        />
-        <TextBox
-          id="size"
-          label="Description"
-          defaultValue={content.nut?.description ?? ""}
-          onChange={(e: ChangeEvent<HTMLInputElement>) => {
-            const target = e.target as HTMLInputElement;
-            content.nut.description = target.value;
-            updateCallback();
-          }}
-          style={{ width: "300px" }}
-        />
-      </div>
+      />
+      <Dropdown
+        options={screwHeads}
+        selected={content.screw.head}
+        onSelected={(i) => {
+          content.screw.head = screwHeads[i];
+          updateCallback();
+        }}
+      />
+      <Dropdown
+        options={screwDrive}
+        selected={content.screw.drive}
+        onSelected={(i) => {
+          content.screw.drive = screwDrive[i];
+          updateCallback();
+        }}
+      />
+      <Dropdown
+        options={screwTypes}
+        selected={content.screw.type}
+        onSelected={(i) => {
+          content.screw.type = screwTypes[i];
+          updateCallback();
+        }}
+      />
+      <TextBox
+        id="size"
+        label="Description"
+        defaultValue={content.nut?.description ?? ""}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+          const target = e.target as HTMLInputElement;
+          content.nut.description = target.value;
+          updateCallback();
+        }}
+        style={{ width: "300px" }}
+      />
     </div>
   );
 }

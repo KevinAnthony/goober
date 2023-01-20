@@ -12,12 +12,11 @@ export function NutEdit({ content, updateCallback }: SubEditProps) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        gap: "20px",
+        gap: "inherit",
       }}
     >
       <div
         style={{
-          margin: "1em",
           display: "flex",
           justifyContent: "center",
           gap: "10px",

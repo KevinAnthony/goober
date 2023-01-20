@@ -11,12 +11,11 @@ export function WasherEdit({ content, updateCallback }: SubEditProps) {
         justifyContent: "center",
         flexDirection: "column",
         alignItems: "center",
-        gap: "20px",
+        gap: "inherit",
       }}
     >
       <div
         style={{
-          margin: "1em",
           display: "flex",
           gap: "10px",
         }}

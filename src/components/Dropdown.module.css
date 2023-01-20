@@ -1,5 +1,5 @@
 .dropdown {
-    width:200%;
+    width:100%;
     background:rgb(var(--dark-color));
     border-color: rgb(var(--font-color));
     border-width: 2px;

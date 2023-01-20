@@ -34,16 +34,8 @@
     border-width: 2px 2px 2px 0;
 }
 
-.drawer_inner{
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-    align-items: center;
-}
-
 .horizontal_toggle_group {
     display: flex;
-    margin-bottom: 36px;
     overflow: hidden;
 }
 
@@ -65,9 +57,7 @@
     padding: .75em 1em;
     text-align: center;
     font-size: 14px;
-    display: inline-block;
     font-weight: bold;
-    width: 54px;
 }
 
 .horizontal_toggle_group input:checked + label {
@@ -89,6 +79,25 @@
     align-items: center;
     flex-direction: row;
     gap:10px;
+}
+
+.edit_fieldset{
+    border-color: rgb(var(--font-color));
+    border-style: solid;
+    border-radius: 1em;
+    border-width: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+}
+
+.edit_fieldset legend {
+    color: rgb(var(--highlight-yellow));
+    font-size: 1.3em;
+    font-weight: bolder;
 }
 
 .color_picker{
