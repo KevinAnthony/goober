@@ -55,7 +55,8 @@ export function Container({
     setBins(container.bin);
   }, [container]);
 
-  function removeBin(index: number) {
+  function removeBin(bin: BinObj) {
+    const index = container.bin.map((e) => e.id).indexOf(bin.id);
     container.bin.splice(index, 1);
 
     setBins([...container.bin]);
@@ -65,8 +66,8 @@ export function Container({
     setPopup(<div />);
   }
 
-  function saveBin(index: number, bin: BinObj, save: boolean) {
-    console.log("here", bin.id);
+  function saveBin(bin: BinObj, save: boolean) {
+    const index = container.bin.map((e) => e.id).indexOf(bin.id);
     if (!save) {
       container.bin.splice(index, 1, bin);
       setBins([...container.bin]);
@@ -201,13 +202,12 @@ export function Container({
             gridTemplateRows: `repeat(${container.height}, 1fr)`,
           }}
         >
-          {bins.map((bin: BinObj, index: number) => (
+          {bins.map((bin: BinObj) => (
             <Bin
               highlight={binToHighlightID === bin.id}
               removeCallback={removeBin}
               updateCallback={saveBin}
               key={`bin-${bin.id}`}
-              index={index}
               bin={bin}
             />
           ))}
@@ -220,15 +220,6 @@ export function Container({
         title={"Delete Container"}
         description={"if you delete this container, it will be unrecoverable"}
       />
-      {/*<BinEdit*/}
-      {/*  bin={newBin}*/}
-      {/*  title={"New Bin"}*/}
-      {/*  binIndex={newBinIndex}*/}
-      {/*  closedCallback={handleNewBinClosed}*/}
-      {/*  updateCallback={drawNewBin}*/}
-      {/*  removeCallback={removeBin}*/}
-      {/*  saveCallback={saveBin}*/}
-      {/*/>*/}
     </>
   );
 }

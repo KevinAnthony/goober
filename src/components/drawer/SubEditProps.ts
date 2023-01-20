@@ -1,4 +1,4 @@
-import { BinObj } from "../../model/bin";
+import { ContentObj } from "../../model/content";
 
 export const finishes = [
   "stainless_steel",
@@ -32,7 +32,6 @@ export const screwTypes = ["machine", "wood", "drywall", "self_tapping"];
 export const washerTypes = ["normal", "fender", "split_lock"];
 
 export interface SubEditProps {
-  bin: BinObj;
-  index: number;
-  updateCallback: (bin: BinObj) => void;
+  content: ContentObj;
+  updateCallback: () => void;
 }

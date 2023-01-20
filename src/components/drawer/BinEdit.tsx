@@ -27,25 +27,24 @@ import {
 } from "../../util/colors";
 import { ColorPicker } from "../ColorPicker";
 import { Drawer } from "../Drawer";
+import { ContentObj } from "../../model/content";
 
 interface props {
   bin: BinObj;
-  binIndex: number;
   updateCallback: (bin: BinObj) => void;
   closedCallback: () => void;
-  saveCallback: (index: number, bin: BinObj, save: boolean) => void;
-  removeCallback: (index: number) => void;
+  saveCallback: (bin: BinObj, save: boolean) => void;
+  removeCallback: (bin: BinObj) => void;
   title: string;
 }
 
 export function BinEdit({
-  binIndex,
   bin,
   closedCallback,
   updateCallback,
   saveCallback,
-  title,
   removeCallback,
+  title,
 }: props) {
   const net = new BinNet();
   const [innerContainer, setContainer] = React.useState<JSX.Element>();
@@ -53,12 +52,10 @@ export function BinEdit({
   const [contentIndex] = React.useState<number>(0);
 
   React.useEffect(() => {
-    if (binIndex >= 0) {
-      setContainer(getFieldsForContent(binState, 0, updateCallback));
-    }
-
-    setBin(bin);
-  }, [bin, binIndex, binState, updateCallback]);
+    setContainer(
+      getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
+    );
+  }, [bin, binState, updateCallback]);
 
   const [selectedColor, setSelectedColor] = React.useState<string>(
     rgb2hex(bin.color)
@@ -67,10 +64,6 @@ export function BinEdit({
   const [selectedUnit, setSelectedUnit] = React.useState<string>(bin.unit);
 
   function onContentChanged(event: React.ChangeEvent<HTMLInputElement>) {
-    if (binState.content[contentIndex].contentType.length === 0) {
-      //TODO remove content
-    }
-
     binState.content[contentIndex].contentType = event.target.value;
     binState.content[contentIndex].bolt = BoltObj.Empty();
     binState.content[contentIndex].screw = ScrewObj.Empty();
@@ -79,7 +72,9 @@ export function BinEdit({
     binState.content[contentIndex].simple = SimpleObj.Empty();
 
     setBin(binState);
-    setContainer(getFieldsForContent(binState, 0, updateCallback));
+    setContainer(
+      getFieldsForContent(binState.content[contentIndex], onSubeditUpdated)
+    );
   }
 
   function onColorChange(color: string) {
@@ -96,13 +91,13 @@ export function BinEdit({
 
   function onSave() {
     updateCallback(binState);
-    saveCallback(binIndex, binState, true);
+    saveCallback(binState, true);
     closedCallback();
   }
 
   function onCancel() {
     if (!binState.id) {
-      removeCallback(binIndex);
+      removeCallback(binState);
       closedCallback();
 
       return;
@@ -111,6 +106,10 @@ export function BinEdit({
       updateCallback(b);
       closedCallback();
     });
+  }
+
+  function onSubeditUpdated() {
+    updateCallback(binState);
   }
 
   return (
@@ -122,7 +121,7 @@ export function BinEdit({
     >
       <Drawer
         title={<div className={styles.drawer_title}>{title}</div>}
-        opened={binIndex >= 0}
+        opened={true}
         onClose={onCancel}
         extra={
           <div className={styles.button_div}>
@@ -136,16 +135,13 @@ export function BinEdit({
         }
       >
         <div className={styles.drawer_inner}>
-          <div
-            onChange={onContentChanged}
-            className={styles.horizontal_toggle_group}
-          >
+          <div className={styles.horizontal_toggle_group}>
             <input
               type="radio"
               value="empty"
               id="empty"
               checked={"empty" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="empty">Empty</label>
             <input
@@ -153,7 +149,7 @@ export function BinEdit({
               value="bolt"
               id="bolt"
               checked={"bolt" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="bolt">Bolt</label>
             <input
@@ -161,7 +157,7 @@ export function BinEdit({
               value="nut"
               id="nut"
               checked={"nut" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="nut">Nut</label>
             <input
@@ -169,7 +165,7 @@ export function BinEdit({
               value="screw"
               id="screw"
               checked={"screw" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="screw">Screw</label>
             <input
@@ -177,7 +173,7 @@ export function BinEdit({
               value="washer"
               id="washer"
               checked={"washer" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="washer">Washer</label>
             <input
@@ -185,7 +181,7 @@ export function BinEdit({
               value="nail"
               id="nail"
               checked={"nail" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="nail">Nail</label>
             <input
@@ -193,7 +189,7 @@ export function BinEdit({
               value="simple"
               id="simple"
               checked={"simple" === binState.content[contentIndex].contentType}
-              onChange={() => {}}
+              onChange={onContentChanged}
             />
             <label htmlFor="simple">Simple</label>
           </div>
@@ -250,7 +246,6 @@ export function BinEdit({
           />
 
           <div
-            onChange={onUnitChanged}
             className={styles.horizontal_toggle_group}
             style={{ margin: "18px" }}
           >
@@ -259,7 +254,7 @@ export function BinEdit({
               value="in"
               id="in"
               checked={"in" === selectedUnit}
-              onChange={() => {}}
+              onChange={onUnitChanged}
             />
             <label htmlFor="in">Imperial</label>
             <input
@@ -267,7 +262,7 @@ export function BinEdit({
               value="mm"
               id="mm"
               checked={"mm" === selectedUnit}
-              onChange={() => {}}
+              onChange={onUnitChanged}
             />
             <label htmlFor="mm">Metric</label>
             <input
@@ -275,7 +270,7 @@ export function BinEdit({
               value="an"
               id="an"
               checked={"an" === selectedUnit}
-              onChange={() => {}}
+              onChange={onUnitChanged}
             />
             <label htmlFor="an">AN</label>
           </div>
@@ -288,41 +283,28 @@ export function BinEdit({
 }
 
 function getFieldsForContent(
-  bin: BinObj,
-  index: number,
-  updateCallback: (bin: BinObj) => void
+  content: ContentObj,
+  updateCallback: () => void
 ): JSX.Element {
-  switch (bin.content[index].contentType) {
+  switch (content.contentType) {
     case undefined: {
       return <p>content_type undefined</p>;
     }
     case "empty":
       return <div />;
     case "bolt":
-      return (
-        <BoltEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <BoltEdit content={content} updateCallback={updateCallback} />;
     case "nut":
-      return (
-        <NutEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <NutEdit content={content} updateCallback={updateCallback} />;
     case "washer":
-      return (
-        <WasherEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <WasherEdit content={content} updateCallback={updateCallback} />;
     case "screw":
-      return (
-        <ScrewEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <ScrewEdit content={content} updateCallback={updateCallback} />;
     case "simple":
-      return (
-        <SimpleEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <SimpleEdit content={content} updateCallback={updateCallback} />;
     case "nail":
-      return (
-        <NailEdit bin={bin} index={index} updateCallback={updateCallback} />
-      );
+      return <NailEdit content={content} updateCallback={updateCallback} />;
     default:
-      return <p>{`${bin.content[index].contentType} is undefined`}</p>;
+      return <p>{`content_type ${content.contentType} is undefined`}</p>;
   }
 }

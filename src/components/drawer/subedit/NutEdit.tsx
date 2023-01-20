@@ -4,7 +4,7 @@ import React, { ChangeEvent } from "react";
 import "./subEditStyle.css";
 import { TextBox } from "../../TextBox";
 
-export function NutEdit({ bin, index, updateCallback }: SubEditProps) {
+export function NutEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -26,50 +26,50 @@ export function NutEdit({ bin, index, updateCallback }: SubEditProps) {
         <TextBox
           id="size"
           label="Size"
-          defaultValue={bin.content[index].nut?.threadSize ?? ""}
+          defaultValue={content.nut?.threadSize ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].nut.threadSize = target.value;
-            updateCallback(bin);
+            content.nut.threadSize = target.value;
+            updateCallback();
           }}
           style={{ width: "110px" }}
         />
         <TextBox
           id="pitch"
           label="Pitch"
-          defaultValue={bin.content[index].nut?.threadPitch ?? ""}
+          defaultValue={content.nut?.threadPitch ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].nut.threadPitch = target.value;
-            updateCallback(bin);
+            content.nut.threadPitch = target.value;
+            updateCallback();
           }}
           style={{ width: "110px" }}
         />
       </div>
       <Dropdown
         options={nutTypes}
-        selected={bin.content[index].nut.type}
+        selected={content.nut.type}
         onSelected={(i) => {
-          bin.content[index].nut.type = nutTypes[i];
-          updateCallback(bin);
+          content.nut.type = nutTypes[i];
+          updateCallback();
         }}
       />
       <Dropdown
         options={finishes}
-        selected={bin.content[index].nut?.material ?? ""}
+        selected={content.nut?.material ?? ""}
         onSelected={(i) => {
-          bin.content[index].nut.material = finishes[i];
-          updateCallback(bin);
+          content.nut.material = finishes[i];
+          updateCallback();
         }}
       />
       <TextBox
         id="size"
         label="Description"
-        defaultValue={bin.content[index].nut?.description ?? ""}
+        defaultValue={content.nut?.description ?? ""}
         onChange={(e: ChangeEvent<HTMLInputElement>) => {
           const target = e.target as HTMLInputElement;
-          bin.content[index].nut.description = target.value;
-          updateCallback(bin);
+          content.nut.description = target.value;
+          updateCallback();
         }}
         style={{ width: "300px" }}
       />

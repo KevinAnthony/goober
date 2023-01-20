@@ -10,7 +10,7 @@ import React, { ChangeEvent } from "react";
 import { parseNumber } from "../../../util/utils";
 import { TextBox } from "../../TextBox";
 
-export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
+export function ScrewEdit({ content, updateCallback }: SubEditProps) {
   return (
     <div
       style={{
@@ -30,21 +30,21 @@ export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
         <TextBox
           id="size"
           label="Size"
-          defaultValue={bin.content[index].screw?.size ?? ""}
+          defaultValue={content.screw?.size ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].screw.size = target.value;
-            updateCallback(bin);
+            content.screw.size = target.value;
+            updateCallback();
           }}
         />
         <TextBox
           id="length"
           label="Length"
-          defaultValue={bin.content[index].screw?.length ?? ""}
+          defaultValue={content.screw?.length ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].screw.length = parseNumber(target.value);
-            updateCallback(bin);
+            content.screw.length = parseNumber(target.value);
+            updateCallback();
           }}
         />
       </div>
@@ -59,44 +59,44 @@ export function ScrewEdit({ bin, index, updateCallback }: SubEditProps) {
       >
         <Dropdown
           options={finishes}
-          selected={bin.content[index].screw.material}
+          selected={content.screw.material}
           onSelected={(i) => {
-            bin.content[index].screw.material = finishes[i];
-            updateCallback(bin);
+            content.screw.material = finishes[i];
+            updateCallback();
           }}
         />
         <Dropdown
           options={screwHeads}
-          selected={bin.content[index].screw.head}
+          selected={content.screw.head}
           onSelected={(i) => {
-            bin.content[index].screw.head = screwHeads[i];
-            updateCallback(bin);
+            content.screw.head = screwHeads[i];
+            updateCallback();
           }}
         />
         <Dropdown
           options={screwDrive}
-          selected={bin.content[index].screw.drive}
+          selected={content.screw.drive}
           onSelected={(i) => {
-            bin.content[index].screw.drive = screwDrive[i];
-            updateCallback(bin);
+            content.screw.drive = screwDrive[i];
+            updateCallback();
           }}
         />
         <Dropdown
           options={screwTypes}
-          selected={bin.content[index].screw.type}
+          selected={content.screw.type}
           onSelected={(i) => {
-            bin.content[index].screw.type = screwTypes[i];
-            updateCallback(bin);
+            content.screw.type = screwTypes[i];
+            updateCallback();
           }}
         />
         <TextBox
           id="size"
           label="Description"
-          defaultValue={bin.content[index].nut?.description ?? ""}
+          defaultValue={content.nut?.description ?? ""}
           onChange={(e: ChangeEvent<HTMLInputElement>) => {
             const target = e.target as HTMLInputElement;
-            bin.content[index].nut.description = target.value;
-            updateCallback(bin);
+            content.nut.description = target.value;
+            updateCallback();
           }}
           style={{ width: "300px" }}
         />
