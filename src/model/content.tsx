@@ -31,6 +31,10 @@ export class ContentObj extends DTO {
     return new ContentObj({});
   }
 
+  public static NewContent(binID: string): ContentObj {
+    return new ContentObj({ bin_id: binID, content_type: "empty" });
+  }
+
   public JSON(): object {
     return {
       id: this._id,
@@ -45,20 +49,20 @@ export class ContentObj extends DTO {
     };
   }
 
-  public GetEdit(unit: string): JSX.Element {
+  public GetContentText(unit: string): JSX.Element {
     switch (this._contentType) {
       case "bolt":
-        return this._bolt.GetEdit(unit);
+        return this._bolt.GetContentText(unit);
       case "washer":
-        return this._washer.GetEdit(unit);
+        return this._washer.GetContentText(unit);
       case "screw":
-        return this._screw.GetEdit(unit);
+        return this._screw.GetContentText(unit);
       case "nail":
-        return this._nail.GetEdit(unit);
+        return this._nail.GetContentText(unit);
       case "simple":
-        return this._simple.GetEdit(unit);
+        return this._simple.GetContentText(unit);
       case "nut":
-        return this._nut.GetEdit(unit);
+        return this._nut.GetContentText(unit);
       case "empty":
         return <div />;
       default:

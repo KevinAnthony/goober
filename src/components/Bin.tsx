@@ -5,6 +5,7 @@ import {
   faChevronLeft,
   faChevronRight,
   faCog,
+  faPlus,
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 import { BinObj } from "../model/bin";
@@ -12,6 +13,8 @@ import { ColorObj } from "../model/color";
 import { BinEdit } from "./drawer/BinEdit";
 import { Confirmation } from "./dialog/Confirmation";
 import { BinNet } from "../net/bin";
+import { ContentObj } from "../model/content";
+import { ContentNet } from "../net/content";
 
 interface props {
   bin: BinObj;
@@ -22,31 +25,34 @@ interface props {
 
 export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   const binNet = new BinNet();
+  const contentNet = new ContentNet();
 
   const [color, setColor] = React.useState<ColorObj>(bin.color);
   const [startX, setStartX] = React.useState<number>(bin.x + 1);
   const [startY, setStartY] = React.useState<number>(bin.y + 1);
   const [stopX, setStopX] = React.useState<number>(bin.x + 1 + bin.width);
   const [stopY, setStopY] = React.useState<number>(bin.y + 1 + bin.height);
-  const [editBin, setEditBin] = React.useState<React.ReactNode>(() => {
+  const [contentIndex, setContextIndex] = React.useState<number>(0);
+
+  const [editBin, setEditBin] = React.useState<JSX.Element>(() => {
     if (bin.id?.length > 0) {
       return <div />;
     }
 
-    return (
-      <BinEdit
-        bin={bin}
-        closedCallback={handleBinEditClose}
-        updateCallback={handleRedraw}
-        saveCallback={updateCallback}
-        removeCallback={removeCallback}
-        title={bin.id?.length > 0 ? "Edit Bin" : "New Bin"}
-      />
-    );
+    return getEditPopover();
   });
 
-  const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
-    React.useState<boolean>(false);
+  React.useEffect(() => {
+    if (bin.content[contentIndex].id?.length > 0) {
+      return;
+    }
+
+    handleBinEditOpen();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [contentIndex, bin]);
+
+  const [deleteConfirmation, setDeleteConfirmation] =
+    React.useState<JSX.Element>(<div />);
   const [isHighlighted, setIsHighlighted] = React.useState<boolean>(
     () => highlight
   );
@@ -60,9 +66,46 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
   }
 
   function handleBinEditOpen() {
-    setEditBin(
+    setEditBin(getEditPopover());
+  }
+
+  function handleRedraw(b: BinObj) {
+    if (contentIndex >= b.content.length) {
+      setContextIndex(b.content.length - 1);
+    }
+
+    setColor(b.color);
+    setStartX(b.x + 1);
+    setStartY(b.y + 1);
+    setStopX(b.x + 1 + b.width);
+    setStopY(b.y + 1 + b.height);
+
+    updateCallback(b, false);
+  }
+
+  function handleDelete(accepted: boolean) {
+    if (accepted) {
+      if (bin.content.length > 1) {
+        contentNet.deleteContent(bin.content[contentIndex]).then(() => {
+          binNet.getBin(bin).then((b: BinObj) => {
+            updateCallback(b, false);
+          });
+        });
+      } else {
+        binNet.deleteBin(bin).then(() => {
+          removeCallback(bin);
+        });
+      }
+    }
+
+    setDeleteConfirmation(<div />);
+  }
+
+  function getEditPopover(): JSX.Element {
+    return (
       <BinEdit
         bin={bin}
+        contentIndex={contentIndex}
         closedCallback={handleBinEditClose}
         updateCallback={handleRedraw}
         saveCallback={updateCallback}
@@ -72,21 +115,21 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
     );
   }
 
-  function handleRedraw(b: BinObj) {
-    setColor(b.color);
-    setStartX(b.x + 1);
-    setStartY(b.y + 1);
-    setStopX(b.x + 1 + b.width);
-    setStopY(b.y + 1 + b.height);
-  }
-
-  function handleDelete(accepted: boolean) {
-    if (accepted) {
-      binNet.deleteBin(bin).then(() => {
-        removeCallback(bin);
-      });
+  function getDeletePopover(): JSX.Element {
+    let title = "Delete Bin";
+    let description = "If you delete this bin, it will be unrecoverable";
+    if (bin.content.length > 1) {
+      title = `Delete ${bin.content[contentIndex].contentType}`;
+      description = `If you delete this ${bin.content[contentIndex].contentType}, it will be unrecoverable`;
     }
-    setDeleteConfirmationOpen(false);
+    return (
+      <Confirmation
+        closedCallback={handleDelete}
+        open={true}
+        title={title}
+        description={description}
+      />
+    );
   }
 
   return (
@@ -104,8 +147,9 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
         <div>
           <button
             className={styles.top_button}
+            disabled={contentIndex === 0}
             onClick={() => {
-              handleBinEditOpen();
+              setContextIndex(contentIndex - 1);
             }}
           >
             <FontAwesomeIcon icon={faChevronLeft} />
@@ -121,7 +165,17 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           <button
             className={styles.top_button}
             onClick={() => {
-              handleBinEditOpen();
+              bin.content.push(ContentObj.NewContent(bin.id));
+              setContextIndex(bin.content.length - 1);
+            }}
+          >
+            <FontAwesomeIcon icon={faPlus} />
+          </button>
+          <button
+            className={styles.top_button}
+            disabled={contentIndex === bin.content.length - 1}
+            onClick={() => {
+              setContextIndex(contentIndex + 1);
             }}
           >
             <FontAwesomeIcon icon={faChevronRight} />
@@ -130,12 +184,12 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
 
         <button
           className={styles.top_button}
-          onClick={() => setDeleteConfirmationOpen(true)}
+          onClick={() => setDeleteConfirmation(getDeletePopover)}
         >
           <FontAwesomeIcon icon={faTrash} />
         </button>
       </div>
-      <div className={styles.bin_table}>{bin.GetEdit(0)}</div>
+      <div className={styles.bin_table}>{bin.GetContentText(contentIndex)}</div>
       <div />
       {editBin}
       <div
@@ -144,12 +198,7 @@ export function Bin({ removeCallback, updateCallback, bin, highlight }: props) {
           background: `rgba(${color.r}, ${color.g}, ${color.b}, 1)`,
         }}
       />
-      <Confirmation
-        closedCallback={handleDelete}
-        open={deleteConfirmationOpen}
-        title={"Delete Bin"}
-        description={"if you delete this bin, it will be unrecoverable"}
-      />
+      {deleteConfirmation}
     </div>
   );
 }

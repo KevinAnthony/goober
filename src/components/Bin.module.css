@@ -38,6 +38,10 @@
     border:none;
 }
 
+.top_button:disabled {
+    color:rgb(var(--dark-color-highlight));
+}
+
 .bin_color_viewer {
     height: 1.5em;
     width: 66%;

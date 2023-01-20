@@ -35,7 +35,7 @@ export function Container({
   setContainerByBinCallback,
   binToHighlightID,
 }: props) {
-  const [bins, setBins] = React.useState(() => container.bin);
+  const [bins, setBins] = React.useState(container.bin);
   const binNet = new BinNet();
   const containerNet = new ContainerNet();
 
@@ -69,7 +69,7 @@ export function Container({
   function saveBin(bin: BinObj, save: boolean) {
     const index = container.bin.map((e) => e.id).indexOf(bin.id);
     if (!save) {
-      container.bin.splice(index, 1, bin);
+      container.bin[index] = bin;
       setBins([...container.bin]);
 
       return;
@@ -82,12 +82,14 @@ export function Container({
         container.bin.push(b);
         setBins([...container.bin]);
       });
-    } else {
-      binNet.putBin(bin).then((b: BinObj) => {
-        container.bin.splice(index, 1, b);
-        setBins([...container.bin]);
-      });
+
+      return;
     }
+
+    binNet.putBin(bin).then((b: BinObj) => {
+      container.bin.splice(index, 1, b);
+      setBins([...container.bin]);
+    });
   }
 
   function createNewBin(): BinObj {
