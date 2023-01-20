@@ -2,8 +2,10 @@ package repository
 
 import (
 	"context"
-	"github.com/go-pg/pg/v10"
+
 	"github.com/kevinanthony/goober/app/model"
+
+	"github.com/go-pg/pg/v10"
 )
 
 type Content interface {
