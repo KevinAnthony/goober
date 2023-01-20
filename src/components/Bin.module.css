@@ -15,12 +15,13 @@
 }
 
 .bin_table {
-    width: 90%;
+    min-width: 90%;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow-y: auto;
     overflow-x: hidden;
+    height: 90%;
 }
 
 .top_button_bar {
@@ -36,6 +37,10 @@
     padding: 12px;
     height: 3em;
     border:none;
+}
+
+.top_button:disabled {
+    color:rgb(var(--dark-color-highlight));
 }
 
 .bin_color_viewer {

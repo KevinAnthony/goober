@@ -31,6 +31,7 @@ import { ContentObj } from "../../model/content";
 
 interface props {
   bin: BinObj;
+  contentIndex: number;
   updateCallback: (bin: BinObj) => void;
   closedCallback: () => void;
   saveCallback: (bin: BinObj, save: boolean) => void;
@@ -40,6 +41,7 @@ interface props {
 
 export function BinEdit({
   bin,
+  contentIndex,
   closedCallback,
   updateCallback,
   saveCallback,
@@ -49,7 +51,6 @@ export function BinEdit({
   const net = new BinNet();
   const [innerContainer, setContainer] = React.useState<JSX.Element>();
   const [binState, setBin] = React.useState<BinObj>(bin);
-  const [contentIndex] = React.useState<number>(0);
 
   React.useEffect(() => {
     setContainer(
