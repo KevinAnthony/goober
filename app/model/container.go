@@ -1,6 +1,7 @@
 package model
 
 import (
+	"fmt"
 	"time"
 )
 
@@ -18,4 +19,8 @@ type Container struct {
 	Label     string     `json:"label" pg:"label"`
 	Unit      UnitType   `json:"unit"  pg:"unit,type:goober.unit_t"`
 	Bins      []Bin      `json:"bins" pg:"rel:has-many"`
+}
+
+func (c Container) String() string {
+	return fmt.Sprintf("%s[%s]", c.Label, c.ID)
 }

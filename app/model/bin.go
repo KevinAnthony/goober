@@ -25,6 +25,10 @@ type Bin struct {
 	Content      []Content  `json:"content" pg:"rel:has-many"`
 }
 
+func (b Bin) String() string {
+	return fmt.Sprintf("x: %d y: %d w: %d h %d", b.ColumnStartX, b.ColumnStartY, b.Width, b.Height)
+}
+
 type Content struct {
 	//nolint:structcheck,unused
 	tableName struct{} `pg:"goober.content,alias:content"`

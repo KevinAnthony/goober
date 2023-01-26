@@ -45,8 +45,9 @@
 .bin_color_viewer {
     height: 1.5em;
     width: 66%;
-    border-width: 4px;
     border-style: solid;
-    margin-bottom: -4px;
+    margin-bottom: -5px;
     -webkit-transform: perspective(150px) rotateX(45deg);
+    box-shadow: rgb(0 0 0 / 8%) 0 0 12px 0 inset;
 }
+

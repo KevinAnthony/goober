@@ -29,16 +29,20 @@ func GetDBConnection(cfg config.Postgres) *pg.DB {
 		panic(err)
 	}
 
-	conn.AddQueryHook(&hook{})
+	conn.AddQueryHook(&hook{enabled: false})
 	return conn
 }
 
-type hook struct{}
+type hook struct {
+	enabled bool
+}
 
 func (h hook) BeforeQuery(ctx context.Context, event *pg.QueryEvent) (context.Context, error) {
 	query, _ := event.FormattedQuery()
-	
-	fmt.Println(string(query))
+
+	if h.enabled {
+		fmt.Println(string(query))
+	}
 
 	return ctx, nil
 }
