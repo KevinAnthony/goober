@@ -40,18 +40,27 @@ export function SideMenu({
         New
       </button>
       <div className={styles.scrollable}>
-        <div className={styles.menu_toggle_button} onChange={onContentChanged}>
+        <div className={styles.menu_toggle_group} onChange={onContentChanged}>
           {containers.map((container: ContainerObj) => (
-            <div key={container.id} onChange={onContentChanged}>
+            <div
+              key={container.id}
+              onChange={onContentChanged}
+              className={styles.menu_button}
+            >
               <input
                 id={container.label}
                 checked={container.id === currentContainer.id}
                 type={"radio"}
                 value={container.id}
-                className={styles.menu_button}
+                className={styles.menu_button_input}
                 onChange={() => {}}
               />
-              <label htmlFor={container.label}>{container.label}</label>
+              <label
+                htmlFor={container.label}
+                className={styles.menu_button_label}
+              >
+                {container.label}
+              </label>
             </div>
           ))}
         </div>

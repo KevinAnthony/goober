@@ -1,15 +1,14 @@
 .container{
     width: fit-content;
     margin-top: 30px;
-    border-color: rgb(var(--dark-color));
+
 }
 
 .container_inner {
     background: rgba(var(--dark-color), .5);
     display: grid;
     border-style: solid;
-    border-color: inherit;
-    border-radius: .5em;
+    border-color: rgb(var(--dark-color));
     padding: .25em;
     overflow-y: auto;
     width: 75dvw;
@@ -29,7 +28,6 @@
     border-style: none;
     padding:0 12px 0 32px;
     display: flex;
-    justify-content: left;
     background: rgb(var(--dark-color));
 }
 
@@ -49,19 +47,7 @@
     background:rgb(var(--dark-color));
     border-style: none;
     color: rgb(var(--font-color));
-    padding: .5em;
     width: 120px;
     height: 80px;
-    text-align: center;
     font-size: .5em;
-    display: inline-block;
 }
-
-/*.container_menu_button:first-child{*/
-/*    border-radius: 1em 0 0 1em*/
-/*}*/
-
-/*.container_menu_button:last-child{*/
-/*    border-radius: 0 1em 1em 0;*/
-/*    border-width: 2px;*/
-/*}*/

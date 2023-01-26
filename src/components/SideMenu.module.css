@@ -27,14 +27,19 @@
     margin-bottom: 10px;
 }
 
-.menu_toggle_button {
+.menu_toggle_group {
     flex-direction: column;
     display: flex;
     overflow: hidden;
     gap: 5px;
+    position: relative;
 }
 
-.menu_toggle_button input {
+.menu_button{
+
+}
+
+.menu_button_input {
     position: absolute !important;
     clip: rect(0, 0, 0, 0);
     height: 1px;
@@ -43,7 +48,7 @@
     overflow: hidden;
 }
 
-.menu_toggle_button label {
+.menu_button_label {
     background: rgba(var(--background-color),1);
     align-items: center;
     justify-content: center;
@@ -62,7 +67,7 @@
     margin: 0 8px ;
 }
 
-.menu_toggle_button input:checked + label {
+.menu_button:checked + label {
     border-color: rgb(var(--highlight-yellow));
 }
 
