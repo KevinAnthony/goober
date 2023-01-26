@@ -137,7 +137,62 @@ export function BinEdit({
           </div>
         }
       >
-        <div className={styles.drawer_inner}>
+        <fieldset className={styles.edit_fieldset}>
+          <legend>Bin</legend>
+          <form className={styles.location_controls_form}>
+            <TextBox
+              id="loc-x"
+              type="number"
+              defaultValue={binState.x}
+              label="X"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.x = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-y"
+              type="number"
+              defaultValue={binState.y}
+              label="Y"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.y = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-width"
+              type="number"
+              defaultValue={binState.width}
+              label="Width"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.width = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+            <TextBox
+              id="loc-height"
+              type="number"
+              defaultValue={binState.height}
+              label="Height"
+              onChange={(e) => {
+                const target = e.target as HTMLInputElement;
+                binState.height = parseNumber(target.value);
+                updateCallback(binState);
+              }}
+            />
+          </form>
+          <ColorPicker
+            onColorChanged={onColorChange}
+            selectedColor={selectedColor}
+            colors={[binRed, binBlue, binGreen, binYellow, binOrange, binGrey]}
+          />
+        </fieldset>
+        <fieldset className={styles.edit_fieldset}>
+          <legend>Content</legend>
           <div className={styles.horizontal_toggle_group}>
             <input
               type="radio"
@@ -196,62 +251,7 @@ export function BinEdit({
             />
             <label htmlFor="simple">Simple</label>
           </div>
-          <form className={styles.location_controls_form}>
-            <TextBox
-              id="loc-x"
-              type="number"
-              defaultValue={binState.x}
-              label="X"
-              onChange={(e) => {
-                const target = e.target as HTMLInputElement;
-                binState.x = parseNumber(target.value);
-                updateCallback(binState);
-              }}
-            />
-            <TextBox
-              id="loc-y"
-              type="number"
-              defaultValue={binState.y}
-              label="Y"
-              onChange={(e) => {
-                const target = e.target as HTMLInputElement;
-                binState.y = parseNumber(target.value);
-                updateCallback(binState);
-              }}
-            />
-            <TextBox
-              id="loc-width"
-              type="number"
-              defaultValue={binState.width}
-              label="Width"
-              onChange={(e) => {
-                const target = e.target as HTMLInputElement;
-                binState.width = parseNumber(target.value);
-                updateCallback(binState);
-              }}
-            />
-            <TextBox
-              id="loc-height"
-              type="number"
-              defaultValue={binState.height}
-              label="Height"
-              onChange={(e) => {
-                const target = e.target as HTMLInputElement;
-                binState.height = parseNumber(target.value);
-                updateCallback(binState);
-              }}
-            />
-          </form>
-          <ColorPicker
-            onColorChanged={onColorChange}
-            selectedColor={selectedColor}
-            colors={[binRed, binBlue, binGreen, binYellow, binOrange, binGrey]}
-          />
-
-          <div
-            className={styles.horizontal_toggle_group}
-            style={{ margin: "18px" }}
-          >
+          <div className={styles.horizontal_toggle_group}>
             <input
               type="radio"
               value="in"
@@ -278,7 +278,8 @@ export function BinEdit({
             <label htmlFor="an">AN</label>
           </div>
           {subEditJSX}
-        </div>
+        </fieldset>
+
         {/* end of inner drawer*/}
       </Drawer>
     </div>

@@ -1,17 +1,16 @@
 .bin {
     background: rgb(var(--dark-color));
-    font-size: 14px;
+    font-size: 13px;
+    font-weight: bold;
     font-family: var(--font);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-    margin: 3px;
-    position: relative;
+    margin: 5px;
     color: #04e1f9;
     border-width: 2px;
     border-style: solid;
-    border-radius: 1em;
 }
 
 .bin_table {
@@ -45,8 +44,9 @@
 .bin_color_viewer {
     height: 1.5em;
     width: 66%;
-    border-width: 2px;
     border-style: solid;
-    margin-bottom: -4px;
+    margin-bottom: -5px;
     -webkit-transform: perspective(150px) rotateX(45deg);
+    box-shadow: rgb(0 0 0 / 8%) 0 0 12px 0 inset;
 }
+

@@ -2,10 +2,10 @@ html {
     --font-color: 5, 217, 232;
     --dark-color: 9, 65, 103;
     --dark-color-highlight: 14, 100, 158;
-    --background-color: 14, 20, 27;
+    --background-color: 36, 0, 5;
+    --background-gradient: linear-gradient(0deg, rgba(0,0,0,1) 0%, rgba(var(--background-color), 1) 100%);
     --highlight-pink: 255, 42, 109;
     --highlight-yellow: 242, 230, 0;
-    /*--font: "Comic Sans MS";*/
     --font: "Fira Code";
 }
 
@@ -13,5 +13,26 @@ body {
     margin: 0;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    background: var(--background-gradient);
+    height: 100vh;
 }
 
+/* width */
+::-webkit-scrollbar {
+    width: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: transparent;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background:transparent;
+}

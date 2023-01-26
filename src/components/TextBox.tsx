@@ -14,24 +14,21 @@ export function TextBox({
   defaultValue,
   onChange,
   id,
-  label,
   style,
+  label,
   type = "text",
 }: props) {
   return (
-    <div className={styles.ns_textbox}>
+    <fieldset className={styles.ns_textbox_border}>
+      <legend>{label}</legend>
       <input
         id={id}
         type={type}
         defaultValue={defaultValue}
         onChange={onChange}
         className={styles.ns_textbox_input}
-        placeholder="a"
         style={style}
       />
-      <label htmlFor={id} className={styles.ns_textbox_label}>
-        {label}
-      </label>
-    </div>
+    </fieldset>
   );
 }
