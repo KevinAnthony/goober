@@ -1,5 +1,5 @@
 .side_menu {
-    color: rgb(var(--pink-color));
+    color: rgb(var(--yellow-color));
     background: rgba(var(--dark-blue-color), .5);
     display: flex;
     flex-direction: column;
@@ -16,14 +16,14 @@
     color: rgb(var(--cyan-color));
     font-size: 1.5em;
     text-transform: uppercase;
-    background: rgba(var(--pink-color),.333);
+    background: rgba(var(--yellow-color),.333);
     outline: transparent;
     letter-spacing: 3px;
     font-weight: bold;
     height:48px;
     border-width: 0 0 3px 0;
     border-style: solid;
-    border-color: rgb(var(--pink-color));
+    border-color: rgb(var(--yellow-color));
     margin-bottom: 10px;
 }
 
@@ -63,12 +63,12 @@
     font-weight: bold;
     border-width: 2px ;
     border-style: solid;
-    border-color: rgb(var(--pink-color));
+    border-color: rgb(var(--yellow-color));
     margin: 0 8px ;
 }
 
-.menu_button:checked + label {
-    border-color: rgb(var(--yellow-color));
+.menu_button_input:checked + label {
+    border-color: rgb(var(--pink-color));
 }
 
 .scrollable {
@@ -78,12 +78,12 @@
 
 .footer{
     color: rgb(var(--cyan-color));
-    background: rgba(var(--pink-color),.333);
+    background: rgba(var(--yellow-color),.333);
     outline: transparent;
     height:48px;
     border-width: 0 0 3px 0;
     border-style: solid;
-    border-color: rgb(var(--pink-color));
+    border-color: rgb(var(--yellow-color));
     margin-top: 8px;
 }
 
