@@ -5,10 +5,10 @@
 }
 
 .container_inner {
-    background: rgba(var(--dark-color), .5);
+    background: rgba(var(--dark-blue-color), .5);
     display: grid;
     border-style: solid;
-    border-color: rgb(var(--dark-color));
+    border-color: rgb(var(--dark-blue-color));
     padding: .25em;
     overflow-y: auto;
     width: 75dvw;
@@ -20,7 +20,7 @@
     justify-content: center;
     font-size: 3.5em;
     font-family: var(--font);
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
     margin-bottom:20px;
 }
 
@@ -28,7 +28,7 @@
     border-style: none;
     padding:0 12px 0 32px;
     display: flex;
-    background: rgb(var(--dark-color));
+    background: rgb(var(--dark-blue-color));
 }
 
 .label_slash{
@@ -44,9 +44,9 @@
 }
 
 .container_menu_button {
-    background:rgb(var(--dark-color));
+    background:rgb(var(--dark-blue-color));
     border-style: none;
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
     width: 120px;
     height: 80px;
     font-size: .5em;

@@ -1,5 +1,5 @@
 .bin {
-    background: rgb(var(--dark-color));
+    background: rgb(var(--dark-blue-color));
     font-size: 13px;
     font-weight: bold;
     font-family: var(--font);
@@ -30,7 +30,7 @@
 }
 
 .top_button{
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
     background: inherit;
     padding: 12px;
     height: 3em;
@@ -38,7 +38,7 @@
 }
 
 .top_button:disabled {
-    color:rgb(var(--dark-color-highlight));
+    color:rgb(var(--medium-blue-color));
 }
 
 .bin_color_viewer {

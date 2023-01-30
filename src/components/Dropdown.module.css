@@ -1,11 +1,11 @@
 .dropdown {
     width:100%;
-    background:rgb(var(--dark-color));
-    border-color: rgb(var(--font-color));
+    background:rgb(var(--dark-blue-color));
+    border-color: rgb(var(--cyan-color));
     border-width: 2px;
     border-style: solid;
     border-radius: .5em;
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
     padding: .5em;
     text-align: center;
     font-size: 1.5em;

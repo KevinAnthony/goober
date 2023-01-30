@@ -3,7 +3,7 @@
 }
 
 .content_table th{
-    border-bottom: solid 0.25em rgb(var(--highlight-pink));
+    border-bottom: solid 0.25em rgb(var(--pink-color));
 }
 
 .content_table td{
@@ -16,5 +16,5 @@
 
 .content_error{
     font-weight:bold;
-    color: rgb(var(--highlight-pink));
+    color: rgb(var(--pink-color));
 }
