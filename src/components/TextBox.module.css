@@ -13,18 +13,18 @@
     outline: none;
     background: none;
     z-index: 1;
-    color:rgb(var(--font-color));
+    color:rgb(var(--cyan-color));
 }
 
 .ns_textbox_border {
     border-width: 2px;
     border-style: solid;
-    border-color: rgb(var(--font-color));
+    border-color: rgb(var(--cyan-color));
     border-radius: 7px;
 }
 
 .ns_textbox_border:focus-within {
-    border: 2px solid rgb(var(--highlight-pink));
+    border: 2px solid rgb(var(--pink-color));
 }
 
 input[type=number]::-webkit-inner-spin-button,

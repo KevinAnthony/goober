@@ -1,13 +1,13 @@
 .ant-drawer-header {
-    background-color: rgb(var(--dark-color));
-    border-color: rgb(var(--highlight-yellow));
+    background-color: rgb(var(--dark-blue-color));
+    border-color: rgb(var(--yellow-color));
     border-width: 2px 2px 0 2px;
     border-style: solid;
 }
 
 .ant-drawer-body {
-    background-color: rgb(var(--dark-color));
-    border-color: rgb(var(--highlight-yellow));
+    background-color: rgb(var(--dark-blue-color));
+    border-color: rgb(var(--yellow-color));
     border-width: 0 2px 2px 2px;
     border-style: solid;
 }

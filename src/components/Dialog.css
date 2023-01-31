@@ -16,10 +16,10 @@
     z-index: 995;
     background: repeating-linear-gradient(
             45deg,
-            rgba(var(--highlight-yellow), .25),
-            rgba(var(--highlight-yellow), .25) 45px,
-            rgba(var(--dark-color), .3) 45px,
-            rgba(var(--dark-color), .3) 90px
+            rgba(var(--yellow-color), .25),
+            rgba(var(--yellow-color), .25) 45px,
+            rgba(var(--dark-blue-color), .3) 45px,
+            rgba(var(--dark-blue-color), .3) 90px
     );
 }
 
@@ -33,11 +33,11 @@
     overflow: auto;
     padding: 20px;
     border-radius: 1em;
-    background-color: rgb(var(--dark-color));
-    border-color: rgb(var(--highlight-pink));
+    background-color: rgb(var(--dark-blue-color));
+    border-color: rgb(var(--pink-color));
     border-width: 2px;
     border-style: solid;
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
 }
 
 .modal .modal_content > h2 {
@@ -72,11 +72,11 @@
 }
 
 .modal button {
-    background:rgb(var(--dark-color));
-    border-color: rgb(var(--font-color));
+    background:rgb(var(--dark-blue-color));
+    border-color: rgb(var(--cyan-color));
     border-width: 2px;
     border-style: solid;
-    color: rgb(var(--font-color));
+    color: rgb(var(--cyan-color));
     padding: .5em;
     width: 50%;
     text-align: center;
