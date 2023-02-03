@@ -57,7 +57,7 @@ export function TopMenu({
   }
 
   return (
-    <div style={{ ...style }}>
+    <div className={styles.top_bar} style={{ ...style }}>
       <div className={styles.title}>
         <div className={styles.label}>
           {container.label}

@@ -89,12 +89,6 @@ export default function MainWindow() {
         setPopup={setPopupObject}
         setContainerByBinCallback={setContainerFromBin}
         setDeleteConfirmationOpen={setDeleteConfirmationOpen}
-        style={{
-          height: "5vh",
-          borderStyle: "solid",
-          borderWidth: "0 0 4px 0",
-          borderColor: "red",
-        }}
       ></TopMenu>
       <div
         style={{
