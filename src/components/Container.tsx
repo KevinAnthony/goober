@@ -4,14 +4,7 @@ import { BinObj } from "../model/bin";
 import { BinNet } from "../net/bin";
 import { Bin } from "./Bin";
 import { isEmpty } from "../util/utils";
-import { SearchBox } from "./dialog/Search";
-import { ContainerEdit } from "./dialog/ContainerEdit";
-import { ContainerNet } from "../net/container";
-import { Confirmation } from "./dialog/Confirmation";
 import styles from "./Container.module.css";
-import { ContentObj } from "../model/content";
-import { hex2rgb } from "../util/formatting";
-import { binRed } from "../util/colors";
 
 interface props {
   removeContainer: (container: ContainerObj) => void;
