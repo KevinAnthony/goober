@@ -1,0 +1,41 @@
+.top_bar {
+    height: 5vh;
+    border-style: solid;
+    border-width: 0 0 1px 0;
+    border-color: rgba(var(--green-color), 1);
+}
+
+.title{
+    display: flex;
+    font-size: 3em;
+    font-family: var(--font);
+    color: rgb(var(--cyan-color));
+}
+
+.label{
+    margin-left: 300px;
+    border-style: none;
+    padding:0 12px 0 32px;
+    display: flex;
+}
+
+.slash{
+    border: none;
+    margin: 0 18px 0 32px;
+    width: .75em;
+    transform: skewX(-25deg);
+}
+
+.menu{
+    display: flex;
+    margin-left:auto;
+}
+
+.menu button {
+    background:transparent;
+    border-style: none;
+    color: rgb(var(--cyan-color));
+    width: 120px;
+    height: 100%;
+    font-size: .5em;
+}

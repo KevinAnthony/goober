@@ -8,6 +8,7 @@ interface props {
   currentContainer: ContainerObj;
   containers: Array<ContainerObj>;
   setOptionCallback: Dispatch<SetStateAction<ContainerObj>>;
+  style?: React.CSSProperties;
 }
 
 export function SideMenu({
@@ -15,6 +16,7 @@ export function SideMenu({
   containers,
   currentContainer,
   setOptionCallback,
+  style,
 }: props) {
   function closePopup(container: ContainerObj) {
     if (container.id.length > 0) {
@@ -30,7 +32,7 @@ export function SideMenu({
   }
 
   return (
-    <div className={styles.side_menu}>
+    <div className={styles.side_menu} style={{ ...style }}>
       <button
         className={styles.top_button}
         onClick={() => {

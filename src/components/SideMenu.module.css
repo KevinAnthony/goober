@@ -6,9 +6,7 @@
     border-color: var(--yellow-color);
     border-width: 3px;
     border-style: solid;
-    height:95vh;
-    margin-top: 30px;
-    margin-right: 30px;
+    height: available;
 }
 
 .top_button {
@@ -72,7 +70,7 @@
 }
 
 .scrollable {
-    height: 90vh;
+    height: 100%;
     overflow-y: auto;
 }
 

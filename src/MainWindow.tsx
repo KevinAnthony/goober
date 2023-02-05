@@ -7,8 +7,14 @@ import { SideMenu } from "./components/SideMenu";
 import { Toaster } from "react-hot-toast";
 import styles from "./MainWindow.module.css";
 import { BackgroundColor, HighlightPink, HighlightYellow } from "./util/colors";
+import { TopMenu } from "./components/TopMenu";
+import { Confirmation } from "./components/dialog/Confirmation";
 
 export default function MainWindow() {
+  const containerNet = new ContainerNet();
+  const [deleteConfirmationOpen, setDeleteConfirmationOpen] =
+    React.useState<boolean>(false);
+
   const [containers, setContainerList] = React.useState<Array<ContainerObj>>(
     []
   );
@@ -47,6 +53,15 @@ export default function MainWindow() {
     setContainer(found ?? container);
   }
 
+  function handleDelete(accepted: boolean) {
+    if (accepted) {
+      containerNet.deleteContainer(container).then(() => {
+        removeContainer(container);
+      });
+    }
+    setDeleteConfirmationOpen(false);
+  }
+
   return (
     <div>
       <div>
@@ -68,11 +83,17 @@ export default function MainWindow() {
           }}
         />
       </div>
+      <TopMenu
+        container={container}
+        containers={containers}
+        setPopup={setPopupObject}
+        setContainerByBinCallback={setContainerFromBin}
+        setDeleteConfirmationOpen={setDeleteConfirmationOpen}
+      ></TopMenu>
       <div
         style={{
-          display: "grid",
-          gridTemplateColumns: `auto 1fr`,
-          paddingLeft: "30px",
+          display: "flex",
+          height: "95vh",
         }}
       >
         <SideMenu
@@ -83,13 +104,17 @@ export default function MainWindow() {
         />
         <Container
           removeContainer={removeContainer}
-          setPopup={setPopupObject}
           container={container}
           binToHighlightID={highlightID}
-          setContainerByBinCallback={setContainerFromBin}
         />
       </div>
       {newPopupObject}
+      <Confirmation
+        closedCallback={handleDelete}
+        open={deleteConfirmationOpen}
+        title={"Delete Container"}
+        description={"if you delete this container, it will be unrecoverable"}
+      />
     </div>
   );
 }
